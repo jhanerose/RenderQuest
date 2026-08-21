@@ -67,36 +67,13 @@
         }
 
         .header-content h1 {
-            margin: 0;
-            font-size: 1.15rem;
-            font-weight: 600;
-            letter-spacing: -0.02em;
+            margin: 0; font-size: 1.15rem; font-weight: 600;
         }
 
         .container {
             max-width: 900px;
             margin: 40px auto;
             padding: 0 20px;
-        }
-
-        .section-title {
-            font-family: var(--font-mono);
-            color: var(--accent-cyan);
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 20px;
-            margin-top: 50px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .section-title::after {
-            content: "";
-            flex-grow: 1;
-            height: 1px;
-            background: var(--border-subtle);
         }
 
         .question-card {
@@ -106,13 +83,6 @@
             padding: 24px;
             margin-bottom: 24px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            transition: border-color 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .question-card:hover {
-            border-color: #52525b;
         }
 
         .question-card p.q-text {
@@ -123,167 +93,76 @@
             color: #fff;
         }
 
-        .options-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
+        .options-grid { display: flex; flex-direction: column; gap: 10px; }
 
         .option-label {
-            display: flex;
-            align-items: center;
+            display: flex; align-items: center;
             padding: 12px 16px;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--border-subtle);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-size: 0.95rem;
+            border-radius: 8px; cursor: pointer;
+            transition: all 0.2s; font-size: 0.95rem;
         }
 
-        .option-label:hover {
-            background: var(--bg-surface-hover);
-        }
+        .option-label:hover { background: var(--bg-surface-hover); }
 
         .option-label input[type="radio"] {
-            appearance: none;
-            width: 18px;
-            height: 18px;
-            border: 2px solid var(--text-muted);
-            border-radius: 50%;
-            margin-right: 12px;
-            outline: none;
-            position: relative;
-            cursor: pointer;
-            flex-shrink: 0;
+            appearance: none; width: 18px; height: 18px;
+            border: 2px solid var(--text-muted); border-radius: 50%;
+            margin-right: 12px; cursor: pointer; position: relative;
         }
 
-        .option-label input[type="radio"]:checked {
-            border-color: var(--accent-cyan);
-        }
-
+        .option-label input[type="radio"]:checked { border-color: var(--accent-cyan); }
         .option-label input[type="radio"]:checked::after {
-            content: '';
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
+            content: ''; position: absolute;
+            top: 50%; left: 50%; transform: translate(-50%, -50%);
             width: 8px; height: 8px;
-            background: var(--accent-cyan);
-            border-radius: 50%;
+            background: var(--accent-cyan); border-radius: 50%;
         }
 
         .option-label.correct {
             border-color: var(--accent-green);
-            background: rgba(74, 222, 128, 0.1);
-            color: var(--accent-green);
+            background: rgba(74, 222, 128, 0.1); color: var(--accent-green);
         }
         
         .option-label.incorrect {
             border-color: var(--accent-red);
-            background: rgba(248, 113, 113, 0.1);
-            color: var(--accent-red);
-        }
-
-        textarea {
-            width: 100%;
-            height: 90px;
-            background: rgba(0,0,0,0.2);
-            border: 1px solid var(--border-subtle);
-            border-radius: 8px;
-            color: var(--text-main);
-            font-family: var(--font-mono);
-            font-size: 0.9rem;
-            padding: 16px;
-            box-sizing: border-box;
-            resize: vertical;
-            transition: all 0.2s;
-        }
-
-        textarea:focus {
-            outline: none;
-            border-color: var(--accent-cyan);
-            box-shadow: 0 0 0 2px rgba(34, 211, 238, 0.2);
+            background: rgba(248, 113, 113, 0.1); color: var(--accent-red);
         }
 
         .visualizer-container {
-            margin-bottom: 20px;
-            background: #000;
-            border-radius: 8px;
-            border: 1px solid var(--border-subtle);
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 180px;
-            position: relative;
+            margin-bottom: 20px; background: #000;
+            border-radius: 8px; border: 1px solid var(--border-subtle);
+            display: flex; align-items: center; justify-content: center;
+            height: 180px; position: relative; overflow: hidden;
         }
         
         .visualizer-label {
-            position: absolute;
-            top: 8px;
-            left: 12px;
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            color: var(--accent-cyan);
-            opacity: 0.85;
-        }
-
-        canvas {
-            display: block;
+            position: absolute; top: 8px; left: 12px;
+            font-family: var(--font-mono); font-size: 0.75rem;
+            color: var(--accent-cyan); opacity: 0.85; z-index: 10;
         }
 
         .btn-primary {
-            display: block;
-            width: 100%;
-            padding: 16px;
-            background: var(--text-main);
-            color: var(--bg-base);
-            font-family: var(--font-sans);
-            font-size: 1.05rem;
-            font-weight: 600;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: transform 0.1s, background 0.2s;
-            margin: 40px 0;
+            display: block; width: 100%; padding: 16px;
+            background: var(--text-main); color: var(--bg-base);
+            font-size: 1.05rem; font-weight: 600;
+            border: none; border-radius: 8px; cursor: pointer;
+            margin: 40px 0; transition: transform 0.1s;
         }
 
-        .btn-primary:hover {
-            background: #fff;
-            transform: translateY(-1px);
-        }
-
-        .btn-primary:active {
-            transform: translateY(1px);
-        }
+        .btn-primary:hover { background: #fff; transform: translateY(-1px); }
 
         #answer-key {
-            display: none;
-            margin-top: 40px;
-            padding-top: 40px;
+            display: none; padding: 20px;
             border-top: 1px solid var(--border-subtle);
+            background: rgba(34, 211, 238, 0.05);
+            border-radius: 8px; margin-bottom: 40px;
         }
 
-        #answer-key.visible {
-            display: block;
-            animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .answer-block {
-            background: var(--bg-surface);
-            padding: 16px;
-            border-radius: 8px;
-            margin-bottom: 12px;
-            border-left: 3px solid var(--accent-cyan);
-            font-size: 0.95rem;
-        }
-
-        .answer-block strong { color: #fff; }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        #answer-key.visible { display: block; }
+        .exp-text { display: none; font-size: 0.9rem; color: var(--text-muted); margin-top: 8px; }
+        .show-exp .exp-text { display: block; }
     </style>
 </head>
 <body>
@@ -292,420 +171,346 @@
         <div class="header-content">
             <div class="brand">
                 <h1>RenderQuest</h1>
-                <span class="brand-badge">OpenGL 4.x // Core</span>
+                <span class="brand-badge">Computer Graphics Programming</span>
             </div>
-            <div id="score-display" style="font-family: var(--font-mono); color: var(--accent-cyan); font-weight: 500;"></div>
+            <div id="score-display" style="font-family: var(--font-mono); color: var(--accent-cyan); font-weight: 500;">Score: --/50</div>
         </div>
     </header>
 
     <div class="container">
-        
-        <div id="exam-form">
-            <div class="section-title">Part 1: Multiple Choice (Q1-Q12)</div>
-
-            <div class="question-card">
-                <p class="q-text">1. How many stages exist in the complete rendering pipeline, and how many of them are programmable?</p>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="q1"> A) 5 stages, 2 programmable</label>
-                    <label class="option-label"><input type="radio" name="q1"> B) 9 stages, 4 programmable</label>
-                    <label class="option-label"><input type="radio" name="q1"> C) 7 stages, 3 programmable</label>
-                    <label class="option-label"><input type="radio" name="q1"> D) 9 stages, 5 programmable</label>
-                </div>
-            </div>
-
-            <div class="question-card">
-                <p class="q-text">2. Which of the following best describes the difference between a VAO and a VBO?</p>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="q2"> A) A VAO holds numerical data, while a VBO defines shader access.</label>
-                    <label class="option-label"><input type="radio" name="q2"> B) A VAO holds shader code, while a VBO holds matrix transformations.</label>
-                    <label class="option-label"><input type="radio" name="q2"> C) A VAO defines what data each vertex carries, while a VBO holds actual data in GPU memory.</label>
-                    <label class="option-label"><input type="radio" name="q2"> D) A VAO is generated per frame, while a VBO is generated once at startup.</label>
-                </div>
-            </div>
-
-            <div class="question-card">
-                <p class="q-text">3. What does the Vertex Shader do, and is it optional?</p>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="q3"> A) It processes per-pixel color and is optional.</label>
-                    <label class="option-label"><input type="radio" name="q3"> B) It runs once per vertex to position it, and it is mandatory.</label>
-                    <label class="option-label"><input type="radio" name="q3"> C) It splits one primitive into many finer ones, and it is mandatory.</label>
-                    <label class="option-label"><input type="radio" name="q3"> D) It runs once per vertex to calculate lighting, and it is optional.</label>
-                </div>
-            </div>
-
-            <!-- Q4 & Q5 with VECTOR VISUALIZER -->
-            <div class="question-card">
-                <div class="visualizer-container">
-                    <div class="visualizer-label">// LIVE: Vector Angle & Dot Product Math</div>
-                    <canvas id="canvas-vectors" width="800" height="180"></canvas>
-                </div>
-                <p class="q-text">4. When calculating lighting, which mathematical operation is used to find the angle between a surface and a light source?</p>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="q4"> A) Cross Product</label>
-                    <label class="option-label"><input type="radio" name="q4"> B) Matrix Transposition</label>
-                    <label class="option-label"><input type="radio" name="q4"> C) Vector Addition</label>
-                    <label class="option-label"><input type="radio" name="q4"> D) Dot Product</label>
-                </div>
-            </div>
-
-            <div class="question-card">
-                <p class="q-text">5. What is the output of a Cross Product operation?</p>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="q5"> A) A single scalar number representing an angle.</label>
-                    <label class="option-label"><input type="radio" name="q5"> B) A 4x4 transformation matrix.</label>
-                    <label class="option-label"><input type="radio" name="q5"> C) A new vector perpendicular (at right angles) to the two input vectors.</label>
-                    <label class="option-label"><input type="radio" name="q5"> D) A unit vector of length 1.</label>
-                </div>
-            </div>
-
-            <div class="question-card">
-                <p class="q-text">6. Which statement accurately describes a "Uniform" variable in GLSL?</p>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="q6"> A) Its value changes for every vertex processed in a draw call.</label>
-                    <label class="option-label"><input type="radio" name="q6"> B) It is used exclusively to pass texture coordinates.</label>
-                    <label class="option-label"><input type="radio" name="q6"> C) It is a global value that remains the same for every vertex during an entire draw call.</label>
-                    <label class="option-label"><input type="radio" name="q6"> D) It is automatically generated by the graphics card.</label>
-                </div>
-            </div>
-
-            <div class="question-card">
-                <p class="q-text">7. In modern OpenGL, what are the bounds of Normalized Device Coordinates (NDC)?</p>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="q7"> A) 0 to 1 on all axes.</label>
-                    <label class="option-label"><input type="radio" name="q7"> B) 0 to 100 on the X and Y axes.</label>
-                    <label class="option-label"><input type="radio" name="q7"> C) -1 to 1 on all axes, with (0,0) in the middle of the screen.</label>
-                    <label class="option-label"><input type="radio" name="q7"> D) Depends entirely on the monitor's pixel resolution.</label>
-                </div>
-            </div>
-
-            <!-- Q8 with 3D CUBE VISUALIZER -->
-            <div class="question-card">
-                <div class="visualizer-container">
-                    <div class="visualizer-label">// LIVE: Matrix Transformation (Model -> View -> Projection)</div>
-                    <canvas id="canvas-cube" width="800" height="180"></canvas>
-                </div>
-                <p class="q-text">8. What is the correct order of coordinate spaces an object travels through before appearing on screen?</p>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="q8"> A) World, Model, Clip, View, Screen</label>
-                    <label class="option-label"><input type="radio" name="q8"> B) Model, World, View, Clip, Screen</label>
-                    <label class="option-label"><input type="radio" name="q8"> C) View, World, Model, Screen, Clip</label>
-                    <label class="option-label"><input type="radio" name="q8"> D) Model, View, World, Screen, Clip</label>
-                </div>
-            </div>
-
-            <div class="question-card">
-                <p class="q-text">9. What does the glDrawArrays function do in your C++ application?</p>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="q9"> A) It compiles the shader program.</label>
-                    <label class="option-label"><input type="radio" name="q9"> B) It uploads vertex data from the CPU to the GPU.</label>
-                    <label class="option-label"><input type="radio" name="q9"> C) It initiates the draw call, starting the rest of the GPU rendering pipeline.</label>
-                    <label class="option-label"><input type="radio" name="q9"> D) It calculates the dot product for lighting.</label>
-                </div>
-            </div>
-
-            <!-- Q10 with PHONG LIGHTING VISUALIZER -->
-            <div class="question-card">
-                <div class="visualizer-container">
-                    <div class="visualizer-label">// LIVE: Phong Reflection Model (Ambient + Diffuse + Specular)</div>
-                    <canvas id="canvas-phong" width="800" height="180"></canvas>
-                </div>
-                <p class="q-text">10. According to the Phong lighting model, what is "Specular" light?</p>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="q10"> A) A base level of light that reaches every surface evenly.</label>
-                    <label class="option-label"><input type="radio" name="q10"> B) Brightness based on the angle between the surface and the light.</label>
-                    <label class="option-label"><input type="radio" name="q10"> C) The bright, shiny highlight seen on glossy surfaces.</label>
-                    <label class="option-label"><input type="radio" name="q10"> D) The shadow cast by an object.</label>
-                </div>
-            </div>
-
-            <div class="question-card">
-                <p class="q-text">11. Which pipeline stage is responsible for converting vector shapes into fragments (potential pixels)?</p>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="q11"> A) Vertex Specification</label>
-                    <label class="option-label"><input type="radio" name="q11"> B) Tessellation</label>
-                    <label class="option-label"><input type="radio" name="q11"> C) Rasterization</label>
-                    <label class="option-label"><input type="radio" name="q11"> D) Per-Sample Operations</label>
-                </div>
-            </div>
-
-            <div class="question-card">
-                <p class="q-text">12. When you use glGetUniformLocation, what are you asking OpenGL to do?</p>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="q12"> A) Find the memory location/ID of a specific uniform variable so you can send data to it.</label>
-                    <label class="option-label"><input type="radio" name="q12"> B) Upload a 4x4 matrix into the shader.</label>
-                    <label class="option-label"><input type="radio" name="q12"> C) Specify where the camera is located in World Space.</label>
-                    <label class="option-label"><input type="radio" name="q12"> D) Link the vertex shader to the fragment shader.</label>
-                </div>
-            </div>
-
-            <div class="section-title">Part 2: Short Answer (Q13-Q50)</div>
-
-            <!-- Existing Short Answers -->
-            <div class="question-card"><p class="q-text">13. Briefly explain the difference between an 'in' variable and a 'uniform' variable in a vertex shader.</p><textarea></textarea></div>
-            <div class="question-card"><p class="q-text">14. What is the formula to find the magnitude of a 3D vector [vx, vy, vz], and how do you use it to create a "Unit Vector"?</p><textarea></textarea></div>
-            <div class="question-card"><p class="q-text">15. Describe the primary function of the Fragment Shader (Stage 8).</p><textarea></textarea></div>
-            <div class="question-card"><p class="q-text">16. What is a Shader Program? Briefly describe the steps required to create one in OpenGL.</p><textarea></textarea></div>
-            <div class="question-card"><p class="q-text">17. In Per-Sample Operations, what is the purpose of the "Depth test"?</p><textarea></textarea></div>
-            <div class="question-card"><p class="q-text">18. The dot product can be calculated using components. Write out the second formula, which uses magnitudes and an angle.</p><textarea></textarea></div>
-            <div class="question-card"><p class="q-text">19. What does the glBufferData function do during the Vertex Specification stage?</p><textarea></textarea></div>
-            <div class="question-card"><p class="q-text">20. Why do the vertex coordinates for a basic flat triangle usually have a Z-value of 0.0f in NDC?</p><textarea></textarea></div>
-
-            <!-- New Expanded Bank (21-50) -->
-            <div class="question-card"><p class="q-text">21. What is an Element Buffer Object (EBO) and why does it save memory?</p><textarea></textarea></div>
-            <div class="question-card"><p class="q-text">22. Explain the concept of "Double Buffering" and what visual artifact it prevents.</p><textarea></textarea></div>
-            <div class="question-card"><p class="q-text">23. What specific role does the View Matrix play in the coordinate transformation pipeline?</p><textarea></textarea></div>
-            <div class="question-card"><p class="q-text">24. What is the key visual difference between Orthographic and Perspective projection matrices?</p><textarea></textarea></div>
-            <div class="question-card"><p class="q-text">25. What is a Texture Atlas, and why is it preferred over binding many individual textures in a 2D game?</p><textarea></textarea></div>
-            <div class="question-card"><p class="q-text">26. What are Mipmaps, and what two rendering problems do they solve?</p><textarea></textarea></div>
-            <div class="question-card"><p class="q-text">27. In texture sampling, what is the visual difference between GL_NEAREST and GL_LINEAR filtering?</p><textarea></textarea></div>
-            <div class="question-card"><p class="q-text">28. What does "Backface Culling" achieve, and how does OpenGL determine which face is the back?</p><textarea></textarea></div>
-            <div class="question-card"><p class="q-text">29. What is a Framebuffer Object (FBO) and name one common use-case for it.</p><textarea></textarea></div>
-            <div class="question-card"><p class="q-text">30. How does the standard Alpha Blending equation mathematically combine source and destination colors?</p><textarea></textarea></div>
-            <div class="question-card"><p class="q-text">31. What is the purpose of the `stride` parameter when configuring generic vertex attributes via glVertexAttribPointer?</p><textarea></textarea></div>
-            <div class="question-card"><p class="q-text">32. What is the defining capability of a Geometry Shader compared to a Vertex Shader?</p><textarea></textarea></div>
-            <div class="question-card"><p class="q-text">33. Explain how Barycentric Coordinates are used during the Rasterization stage.</p><textarea></textarea></div>
-            <div class="question-card"><p class="q-text">34. What is the functional difference between calling glDrawArrays and glDrawElements?</p><textarea></textarea></div>
-            <div class="question-card"><p class="q-text">35. What is "Gimbal Lock" in 3D rotation, and what mathematical construct is used to prevent it?</p><textarea></textarea></div>
-            <div class="question-card"><p class="q-text">36. What is a Normal Matrix, and why must we use it instead of the standard Model matrix to transform surface normals during non-uniform scaling?</p><textarea></textarea></div>
-            <div class="question-card"><p class="q-text">37. In modern C++ graphics applications, what is the specific role of libraries like GLEW or GLAD?</p><textarea></textarea></div>
-            <div class="question-card"><p class="q-text">38. What does the glViewport function do?</p><textarea></textarea></div>
-            <div class="question-card"><p class="q-text">39. Describe the visual difference between Flat shading and Smooth (Gouraud/Phong) shading.</p><textarea></textarea></div>
-            <div class="question-card"><p class="q-text">40. What is an Identity Matrix, and what is the result when you multiply a 3D vector by it?</p><textarea></textarea></div>
-            <div class="question-card"><p class="q-text">41. How does the Depth Buffer (Z-buffer) prevent the issue of rendering polygons out of order?</p><textarea></textarea></div>
-            <div class="question-card"><p class="q-text">42. Define "Post-Processing" in the context of computer graphics.</p><textarea></textarea></div>
-            <div class="question-card"><p class="q-text">43. What is Anti-Aliasing (e.g., MSAA) and why is it necessary in rasterized graphics?</p><textarea></textarea></div>
-            <div class="question-card"><p class="q-text">44. Inside a fragment shader, what does the GLSL `texture()` function do?</p><textarea></textarea></div>
-            <div class="question-card"><p class="q-text">45. What is the difference between Ambient and Diffuse lighting components?</p><textarea></textarea></div>
-            <div class="question-card"><p class="q-text">46. Why must 3D graphics programmers use 4x4 matrices instead of 3x3 matrices to transform 3D coordinates?</p><textarea></textarea></div>
-            <div class="question-card"><p class="q-text">47. What is a "Draw Call" and why is it important for performance optimization to minimize them?</p><textarea></textarea></div>
-            <div class="question-card"><p class="q-text">48. Contrast "Local Space" (Model Space) with "World Space".</p><textarea></textarea></div>
-            <div class="question-card"><p class="q-text">49. What does it mean for a graphics application to be "CPU bound" versus "GPU bound"?</p><textarea></textarea></div>
-            <div class="question-card"><p class="q-text">50. In computer graphics terminology, what defines a "Sprite"?</p><textarea></textarea></div>
-
-            <button id="submit-btn" class="btn-primary" type="button" onclick="submitExam()">Submit Assessment</button>
-        </div>
-
+        <div id="exam-container"></div>
+        <button id="submit-btn" class="btn-primary" type="button" onclick="submitExam()">Execute Pipeline (Submit Exam)</button>
         <div id="answer-key">
-            <div class="section-title">Evaluation Log & Answer Key</div>
-            
-            <div class="answer-block"><strong>13. In vs Uniform:</strong> An <em>in</em> variable receives unique, per-vertex data directly from the VBO. A <em>uniform</em> variable receives global data from the CPU that remains exactly the same for all vertices processed during that draw call.</div>
-            <div class="answer-block"><strong>14. Magnitude & Unit Vector:</strong> Formula: |v| = &radic;(vx&sup2; + vy&sup2; + vz&sup2;). To create a unit vector, divide the original vector by its magnitude.</div>
-            <div class="answer-block"><strong>15. Fragment Shader:</strong> Decides the final color of the pixel that the fragment covers, applying colors, lighting, and textures.</div>
-            <div class="answer-block"><strong>16. Shader Program:</strong> A compiled and linked group of shaders. Steps: glCreateShader, glShaderSource, glCompileShader, glCreateProgram, glAttachShader, glLinkProgram.</div>
-            <div class="answer-block"><strong>17. Depth Test:</strong> Decides whether a fragment should be drawn based on distance from the camera (Z-buffer), ensuring closer objects hide objects further away.</div>
-            <div class="answer-block"><strong>18. Dot Product (Angle):</strong> v1 &middot; v2 = |v1| &times; |v2| &times; cos(&theta;)</div>
-            <div class="answer-block"><strong>19. glBufferData:</strong> Uploads the array of vertex data from system RAM (CPU) into actual graphics memory (GPU).</div>
-            <div class="answer-block"><strong>20. Z-value of 0.0f:</strong> In a basic 2D drawing, depth is irrelevant. Because it faces the camera perfectly flat, z = 0.0.</div>
-            <div class="answer-block"><strong>21. EBO:</strong> Element Buffer Objects store indices that tell OpenGL which vertices to draw. It saves memory by allowing overlapping vertices to be defined only once and reused via their index.</div>
-            <div class="answer-block"><strong>22. Double Buffering:</strong> Rendering to a hidden "back" buffer while the screen displays the "front" buffer, swapping them when complete. It prevents visible screen tearing and flickering.</div>
-            <div class="answer-block"><strong>23. View Matrix:</strong> It shifts the entire world's coordinates to be relative to the camera's position and orientation, simulating a camera looking at the scene.</div>
-            <div class="answer-block"><strong>24. Projection matrices:</strong> Perspective causes foreshortening (distant objects appear smaller to mimic the human eye). Orthographic maintains parallel lines and exact sizes regardless of distance.</div>
-            <div class="answer-block"><strong>25. Texture Atlas:</strong> A single large image containing many smaller sprites. It drastically reduces expensive state changes (texture bindings) during rendering.</div>
-            <div class="answer-block"><strong>26. Mipmaps:</strong> Pre-calculated, lower-resolution versions of a texture. They solve aliasing (shimmering) on distant objects and improve GPU cache performance.</div>
-            <div class="answer-block"><strong>27. Filtering:</strong> GL_NEAREST selects the exact closest pixel, resulting in a blocky/pixel-art look. GL_LINEAR interpolates between neighboring pixels for a smooth, blurry look.</div>
-            <div class="answer-block"><strong>28. Backface Culling:</strong> Discarding polygons facing away from the viewer to save rendering time. It determines "facing" by the winding order (clockwise vs counter-clockwise) of the vertices.</div>
-            <div class="answer-block"><strong>29. Framebuffer Object (FBO):</strong> An off-screen rendering destination. Common uses include post-processing effects, shadow mapping, or rendering mirrors.</div>
-            <div class="answer-block"><strong>30. Alpha Blending:</strong> Result Color = (Source Color * Source Alpha) + (Destination Color * (1 - Source Alpha)).</div>
-            <div class="answer-block"><strong>31. Stride:</strong> The byte offset between consecutive generic vertex attributes in a VBO (e.g., the distance in memory from the start of vertex 1's position to vertex 2's position).</div>
-            <div class="answer-block"><strong>32. Geometry Shader:</strong> Unlike a Vertex shader which processes one vertex to one vertex, a Geometry shader can generate entirely new geometry (new vertices/primitives) on the fly.</div>
-            <div class="answer-block"><strong>33. Barycentric Coordinates:</strong> A coordinate system used to interpolate values (like color, normals, UVs) across the surface of a triangle based on the fragment's distance to the three vertices.</div>
-            <div class="answer-block"><strong>34. Draw Calls:</strong> glDrawArrays reads vertices sequentially from the VBO. glDrawElements uses an attached EBO to look up vertices by their index.</div>
-            <div class="answer-block"><strong>35. Gimbal Lock:</strong> The loss of one degree of freedom when rotating using Euler angles. It is prevented by using Quaternions, a 4D number system for representing rotations.</div>
-            <div class="answer-block"><strong>36. Normal Matrix:</strong> The inverse transpose of the upper-left 3x3 model-view matrix. It ensures surface normals remain perpendicular to the surface when non-uniform scaling is applied to the object.</div>
-            <div class="answer-block"><strong>37. GLEW/GLAD:</strong> Extension loaders. Because OpenGL function locations are not known at compile time, these libraries query the graphics driver at runtime to get the function pointers.</div>
-            <div class="answer-block"><strong>38. glViewport:</strong> Specifies the affine transformation that maps Normalized Device Coordinates (NDC) to window/screen coordinates (pixels).</div>
-            <div class="answer-block"><strong>39. Shading:</strong> Flat shading uses a single normal per polygon, making geometry look faceted. Smooth shading interpolates normals across the polygon, calculating lighting per-fragment for a curved look.</div>
-            <div class="answer-block"><strong>40. Identity Matrix:</strong> A matrix consisting of 1s on the main diagonal and 0s everywhere else. Multiplying any vector/matrix by it leaves the original vector/matrix unchanged.</div>
-            <div class="answer-block"><strong>41. Depth Buffer:</strong> It stores a depth value (Z) for every pixel on screen. Before drawing a fragment, the GPU checks if the fragment's Z is closer than the stored Z; if not, it is discarded.</div>
-            <div class="answer-block"><strong>42. Post-Processing:</strong> Rendering the entire 3D scene to an off-screen texture (FBO), and then rendering a flat 2D quad to the screen while applying a shader effect (like bloom or blur) to that texture.</div>
-            <div class="answer-block"><strong>43. Anti-Aliasing:</strong> Techniques used to smooth out the jagged, staircase-like edges of rasterized primitives caused by rendering geometric shapes onto a grid of square pixels.</div>
-            <div class="answer-block"><strong>44. texture() function:</strong> It samples a texel (color) from a bound texture in GLSL, using the provided 2D texture coordinates (UVs) and applying the configured filtering parameters.</div>
-            <div class="answer-block"><strong>45. Lighting:</strong> Ambient is a constant base light that affects all surfaces equally. Diffuse brightness depends directly on the angle between the surface normal and the incoming light ray.</div>
-            <div class="answer-block"><strong>46. 4x4 Matrices:</strong> A 3x3 matrix can only handle rotation and scaling. To apply Translation (movement) via multiplication, a 4th dimension (Homogeneous Coordinates) is required.</div>
-            <div class="answer-block"><strong>47. Draw Call:</strong> A command sent from the CPU to the GPU instructing it to render a set of primitives. High draw call counts cause CPU bottlenecks due to driver overhead.</div>
-            <div class="answer-block"><strong>48. Coordinate Spaces:</strong> Local space is relative to an object's own origin point. World space represents the position of the object relative to the absolute center (0,0,0) of the entire scene.</div>
-            <div class="answer-block"><strong>49. Bottlenecks:</strong> CPU bound means the processor cannot feed instructions (draw calls, logic) to the GPU fast enough. GPU bound means the GPU is struggling to process the heavy fragment/vertex math fast enough.</div>
-            <div class="answer-block"><strong>50. Sprite:</strong> A 2D bitmap image or animation integrated into a larger scene, historically processed via dedicated hardware but now rendered as textured 2D quads.</div>
+            <h3 style="color: var(--accent-cyan); margin-top: 0;">Evaluation Log</h3>
+            <p>Review the questions above. <span style="color: var(--accent-green)">Green</span> indicates the correct answer. <span style="color: var(--accent-red)">Red</span> indicates your incorrect selection.</p>
         </div>
     </div>
 
     <script>
+        // --- 1. DATA DRIVEN QUESTION BANK (All 50 Questions as MCQs) ---
+        const quizData = [
+            { q: "1. How many stages exist in the complete rendering pipeline, and how many are programmable?", opts: ["A) 5 stages, 2 programmable", "B) 9 stages, 4 programmable", "C) 7 stages, 3 programmable", "D) 9 stages, 5 programmable"], ans: 1 },
+            { q: "2. Which of the following best describes the difference between a VAO and a VBO?", opts: ["A) VAO holds numbers, VBO defines shader access", "B) VAO holds shader code, VBO holds matrices", "C) VAO defines attribute layouts, VBO holds raw GPU memory data", "D) VAO is generated per frame, VBO at startup"], ans: 2 },
+            { q: "3. What does the Vertex Shader do, and is it optional?", opts: ["A) Processes per-pixel color (Optional)", "B) Runs per vertex to output gl_Position (Mandatory)", "C) Generates new geometry (Mandatory)", "D) Calculates global lighting (Optional)"], ans: 1 },
+            { vis: "vectors", q: "4. When calculating lighting, which operation finds the angle between a surface and a light source?", opts: ["A) Cross Product", "B) Matrix Transposition", "C) Vector Addition", "D) Dot Product"], ans: 3 },
+            { q: "5. What is the output of a Cross Product operation?", opts: ["A) A single scalar number", "B) A 4x4 transformation matrix", "C) A new perpendicular vector", "D) A unit vector of length 1"], ans: 2 },
+            { q: "6. Which statement accurately describes a 'Uniform' variable in GLSL?", opts: ["A) Changes per vertex", "B) Used only for textures", "C) Remains identical for all vertices during a draw call", "D) Generated by the GPU automatically"], ans: 2 },
+            { q: "7. What are the bounds of Normalized Device Coordinates (NDC)?", opts: ["A) 0 to 1 on all axes", "B) 0 to 100 on X and Y", "C) -1 to 1 on all axes with (0,0) at center", "D) Depends on monitor resolution"], ans: 2 },
+            { vis: "cube", q: "8. What is the correct order of coordinate spaces an object travels through?", opts: ["A) World, Model, Clip, View, Screen", "B) Model, World, View, Clip, Screen", "C) View, World, Model, Screen, Clip", "D) Model, View, World, Screen, Clip"], ans: 1 },
+            { q: "9. What does the glDrawArrays function do?", opts: ["A) Compiles shaders", "B) Uploads data to GPU", "C) Initiates the draw call and starts the pipeline", "D) Clears the screen buffer"], ans: 2 },
+            { vis: "phong", q: "10. According to the Phong lighting model, what is 'Specular' light?", opts: ["A) Base level ambient light", "B) Brightness based on surface angle", "C) The bright, shiny highlight on glossy surfaces", "D) Cast shadows"], ans: 2 },
+            { q: "11. Which pipeline stage converts vector shapes into fragments (potential pixels)?", opts: ["A) Vertex Specification", "B) Tessellation", "C) Rasterization", "D) Per-Sample Operations"], ans: 2 },
+            { q: "12. What does glGetUniformLocation do?", opts: ["A) Finds a uniform's integer ID by its string name", "B) Uploads a matrix", "C) Locates the camera", "D) Links shader programs"], ans: 0 },
+            { q: "13. What is the difference between an 'in' variable and a 'uniform' in a vertex shader?", opts: ["A) 'in' is for colors, 'uniform' is for positions", "B) 'in' changes per vertex, 'uniform' is constant per draw call", "C) 'in' comes from textures, 'uniform' from VBOs", "D) They are synonymous in GLSL 330+"], ans: 1 },
+            { q: "14. How do you convert a standard vector into a 'Unit Vector' (Normalization)?", opts: ["A) Multiply by pi", "B) Divide the vector by its own magnitude", "C) Take the cross product with (0,1,0)", "D) Add 1.0 to all components"], ans: 1 },
+            { q: "15. What is the primary function of the Fragment Shader?", opts: ["A) To calculate vertex positions", "B) To generate shadow maps", "C) To determine the final RGB color of a specific pixel/fragment", "D) To clip geometry outside the camera view"], ans: 2 },
+            { q: "16. In OpenGL, what must be done to individual shaders before they can be used?", opts: ["A) They must be zipped", "B) They must be compiled and linked into a Shader Program", "C) They must be translated to C++", "D) They must be converted to binary buffers"], ans: 1 },
+            { q: "17. What is the purpose of the Depth Test (Z-Buffer)?", opts: ["A) To calculate fog thickness", "B) To discard fragments that are hidden behind closer objects", "C) To determine camera focal length", "D) To measure screen resolution"], ans: 1 },
+            { q: "18. Besides multiplying components, how else is the Dot Product defined?", opts: ["A) |A| * |B| * sin(θ)", "B) |A| + |B| * cos(θ)", "C) |A| * |B| * cos(θ)", "D) (|A| / |B|) * tan(θ)"], ans: 2 },
+            { q: "19. What does the glBufferData function do?", opts: ["A) Allocates and uploads array data from CPU RAM to GPU VRAM", "B) Clears the buffer to black", "C) Swaps the front and back buffers", "D) Compiles buffer data into an executable"], ans: 0 },
+            { q: "20. Why do standard 2D triangles often use a Z-value of 0.0f?", opts: ["A) Z is not allowed in GLSL", "B) 2D objects lack depth, and Z=0 rests flat on the NDC plane", "C) To prevent the GPU from crashing", "D) 0.0f is the only valid number for Z"], ans: 1 },
+            { q: "21. What is an Element Buffer Object (EBO)?", opts: ["A) A buffer for environment maps", "B) A buffer holding vertex indices to prevent duplicate data", "C) An array of error logs", "D) A buffer for lighting calculations"], ans: 1 },
+            { q: "22. What visual artifact does 'Double Buffering' prevent?", opts: ["A) Aliasing (jaggies)", "B) Z-fighting", "C) Screen tearing and flickering", "D) Color banding"], ans: 2 },
+            { q: "23. What role does the View Matrix play?", opts: ["A) It scales the object", "B) It moves the entire world relative to the camera to simulate looking around", "C) It applies perspective distortion", "D) It colors the pixels"], ans: 1 },
+            { q: "24. What is the key difference between Orthographic and Perspective projections?", opts: ["A) Ortho has no foreshortening (distant objects don't shrink)", "B) Perspective is only for 2D", "C) Ortho requires 6 matrices", "D) Perspective cannot use textures"], ans: 0 },
+            { q: "25. Why is a Texture Atlas preferred in 2D games?", opts: ["A) It holds 3D models", "B) It drastically reduces expensive texture binding state changes", "C) It compresses the game file size", "D) It prevents screen tearing"], ans: 1 },
+            { q: "26. What are Mipmaps?", opts: ["A) Level maps for collision", "B) Pre-calculated, lower-resolution versions of a texture used for distant objects", "C) Memory maps for the CPU", "D) Alternative shaders"], ans: 1 },
+            { q: "27. In texture sampling, how does GL_NEAREST differ from GL_LINEAR?", opts: ["A) Nearest is blurry, Linear is sharp", "B) Nearest selects the exact pixel (blocky), Linear interpolates (smooth)", "C) Nearest only works in 2D", "D) They are exactly the same"], ans: 1 },
+            { q: "28. How does Backface Culling determine which side of a triangle is the back?", opts: ["A) By checking the fragment color", "B) By the winding order (clockwise vs counter-clockwise) of the vertices", "C) By raytracing", "D) By checking the normal map"], ans: 1 },
+            { vis: "alpha", q: "29. What is a Framebuffer Object (FBO) typically used for?", opts: ["A) Storing keyboard inputs", "B) Off-screen rendering for effects like mirrors or post-processing", "C) Limiting frame rate", "D) Compiling shaders"], ans: 1 },
+            { q: "30. How does standard Alpha Blending mathematically combine colors?", opts: ["A) (Src + Dst) / 2", "B) Src * SrcAlpha + Dst * (1 - SrcAlpha)", "C) Src * Dst", "D) SrcAlpha * DstAlpha"], ans: 1 },
+            { q: "31. What is the 'stride' parameter in glVertexAttribPointer?", opts: ["A) The speed of the camera", "B) The byte offset between consecutive attributes in the VBO array", "C) The number of triangles to draw", "D) The length of the shader"], ans: 1 },
+            { q: "32. What can a Geometry Shader do that a Vertex Shader cannot?", opts: ["A) Apply textures", "B) Emit entirely new vertices and primitives on the fly", "C) Calculate lighting", "D) Read from uniforms"], ans: 1 },
+            { vis: "bary", q: "33. What are Barycentric Coordinates used for during Rasterization?", opts: ["A) Moving the camera", "B) Interpolating values (like colors or UVs) smoothly across a triangle's surface", "C) Calculating collisions", "D) Loading textures"], ans: 1 },
+            { q: "34. What is the difference between glDrawArrays and glDrawElements?", opts: ["A) Arrays draws points, Elements draws lines", "B) Arrays reads sequentially from a VBO, Elements uses indices from an EBO", "C) Elements is deprecated", "D) Arrays uses the CPU, Elements uses the GPU"], ans: 1 },
+            { q: "35. What is 'Gimbal Lock' in 3D math?", opts: ["A) A physics collision bug", "B) The loss of a rotational degree of freedom when using Euler angles", "C) Locking the camera to an object", "D) A buffer overflow"], ans: 1 },
+            { q: "36. Why do we use a Normal Matrix instead of the Model matrix for normals?", opts: ["A) It's faster", "B) To preserve perpendicularity when non-uniform scaling is applied to the object", "C) Because normals don't have a Z axis", "D) Normal matrices handle translation"], ans: 1 },
+            { q: "37. What is the purpose of libraries like GLEW or GLAD?", opts: ["A) To create windows", "B) To load 3D models", "C) To query the GPU driver for OpenGL function pointers at runtime", "D) To play audio"], ans: 2 },
+            { q: "38. What does glViewport do?", opts: ["A) Opens a desktop window", "B) Maps Normalized Device Coordinates (-1 to 1) to screen pixel coordinates", "C) Sets the FOV", "D) Clears the depth buffer"], ans: 1 },
+            { q: "39. What is the difference between Flat and Smooth (Phong) shading?", opts: ["A) Flat uses one normal per polygon; Smooth interpolates normals across the surface", "B) Flat is 2D, Smooth is 3D", "C) Flat requires textures", "D) Smooth disables lighting"], ans: 0 },
+            { q: "40. What happens when you multiply a vector by the Identity Matrix?", opts: ["A) It scales to zero", "B) It rotates 90 degrees", "C) It remains exactly the same", "D) It inverses its direction"], ans: 2 },
+            { q: "41. How does the Depth Buffer fix rendering order issues?", opts: ["A) By sorting objects on the CPU", "B) By storing the Z-distance of every pixel and discarding those behind closer pixels", "C) By using raytracing", "D) By making distant objects transparent"], ans: 1 },
+            { q: "42. What is Post-Processing?", opts: ["A) Compiling shaders before runtime", "B) Rendering the scene to a texture, then applying 2D shader effects (like bloom) to it", "C) Saving the game state", "D) Generating mipmaps"], ans: 1 },
+            { q: "43. Why is Anti-Aliasing (like MSAA) necessary?", opts: ["A) To fix color banding", "B) To smooth out jagged, staircase-like edges caused by square pixels", "C) To increase frame rate", "D) To load high-res textures"], ans: 1 },
+            { q: "44. What does the GLSL texture() function do?", opts: ["A) Creates a new texture", "B) Samples a color from a bound texture using UV coordinates", "C) Compresses an image", "D) Binds a texture to the VAO"], ans: 1 },
+            { q: "45. Contrast Ambient and Diffuse lighting:", opts: ["A) Ambient is shadows, Diffuse is highlights", "B) Ambient is angle-based, Diffuse is constant", "C) Ambient affects all surfaces equally, Diffuse depends on the light ray's angle", "D) They are the same"], ans: 2 },
+            { q: "46. Why use 4x4 matrices instead of 3x3 in 3D graphics?", opts: ["A) 3x3 cannot handle scaling", "B) A 4th dimension (W) is required to perform Translations (movement) via matrix multiplication", "C) GPUs only support multiples of 4", "D) To store RGBA colors"], ans: 1 },
+            { q: "47. Why should programmers minimize 'Draw Calls'?", opts: ["A) They cause the GPU to overheat", "B) High draw call counts cause CPU bottlenecks due to driver communication overhead", "C) They consume hard drive space", "D) They reduce texture quality"], ans: 1 },
+            { q: "48. What is the difference between Local Space and World Space?", opts: ["A) Local is 2D, World is 3D", "B) Local is relative to the object's origin; World is relative to the absolute center of the scene", "C) Local requires textures", "D) World space is pre-compiled"], ans: 1 },
+            { q: "49. What does it mean if an application is 'GPU Bound'?", opts: ["A) The CPU is waiting for user input", "B) The GPU is struggling to process fragment/vertex math fast enough to keep up", "C) The GPU is disconnected", "D) The hard drive is slow"], ans: 1 },
+            { q: "50. In computer graphics, what defines a 'Sprite'?", opts: ["A) A physics collider", "B) A 2D bitmap image or animation integrated into a scene, often rendered as a textured quad", "C) A 3D model", "D) A sound effect trigger"], ans: 1 }
+        ];
+
+        // --- 2. RENDER THE EXAM TO HTML ---
+        const container = document.getElementById('exam-container');
+        let htmlContent = "";
+
+        quizData.forEach((item, index) => {
+            // Check if this question triggers a visualizer
+            if (item.vis) {
+                let visId = `canvas-${item.vis}`;
+                let visLabel = "";
+                if (item.vis === 'vectors') visLabel = "// LIVE: Vector Angle & Dot Product";
+                if (item.vis === 'cube') visLabel = "// LIVE: Model-View-Projection Matrix";
+                if (item.vis === 'phong') visLabel = "// LIVE: Phong Lighting Model";
+                if (item.vis === 'alpha') visLabel = "// LIVE: Alpha Blending & FBOs";
+                if (item.vis === 'bary') visLabel = "// LIVE: Rasterization & Barycentric Interpolation";
+
+                htmlContent += `
+                <div class="visualizer-container">
+                    <div class="visualizer-label">${visLabel}</div>
+                    <canvas id="${visId}" width="800" height="180"></canvas>
+                </div>`;
+            }
+
+            // Generate Options
+            let optionsHtml = item.opts.map((opt, i) => `
+                <label class="option-label" id="lbl-q${index}-${i}">
+                    <input type="radio" name="q${index}" value="${i}"> ${opt}
+                </label>
+            `).join('');
+
+            htmlContent += `
+                <div class="question-card">
+                    <p class="q-text">${item.q}</p>
+                    <div class="options-grid">${optionsHtml}</div>
+                </div>
+            `;
+        });
+
+        container.innerHTML = htmlContent;
+
+        // --- 3. GRADING LOGIC ---
+        let submitted = false;
         function submitExam() {
-            const answerKey = {
-                q1: 1, q2: 2, q3: 1, q4: 3, 
-                q5: 2, q6: 2, q7: 2, q8: 1, 
-                q9: 2, q10: 2, q11: 2, q12: 0
-            };
+            if (submitted) return;
 
             let score = 0;
-            const total = Object.keys(answerKey).length;
+            const total = quizData.length;
+            let unanswered = 0;
 
-            const totalAnswered = document.querySelectorAll('input[type="radio"]:checked').length;
-            const textAreas = document.querySelectorAll('textarea');
-            let emptyTextAreas = Array.from(textAreas).filter(ta => ta.value.trim() === '').length;
+            // Check completion
+            quizData.forEach((_, index) => {
+                const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                if (!selected) unanswered++;
+            });
 
-            // Updated check: Will correctly warn based on all 38 textareas
-            if (totalAnswered < total || emptyTextAreas > 0) {
-                if(!confirm(`You have ${total - totalAnswered} unanswered multiple-choice questions and ${emptyTextAreas} blank short-answer questions.\n\nSubmit anyway?`)) return;
+            if (unanswered > 0) {
+                if(!confirm(`You have ${unanswered} unanswered questions.\n\nExecute pipeline anyway?`)) return;
             }
 
-            for (const [qName, correctIndex] of Object.entries(answerKey)) {
-                const options = document.getElementsByName(qName);
-                let userSelectedIndex = -1;
+            // Grade
+            quizData.forEach((item, index) => {
+                const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                const correctId = `lbl-q${index}-${item.ans}`;
+                
+                // Highlight correct
+                document.getElementById(correctId).classList.add('correct');
 
-                for (let i = 0; i < options.length; i++) {
-                    const label = options[i].parentElement;
-                    label.classList.remove('correct', 'incorrect');
-                    
-                    if (options[i].checked) userSelectedIndex = i;
-                }
-
-                for (let i = 0; i < options.length; i++) {
-                    const label = options[i].parentElement;
-                    if (i === correctIndex) {
-                        label.classList.add('correct');
-                    } else if (i === userSelectedIndex) {
-                        label.classList.add('incorrect');
+                if (selected) {
+                    const userVal = parseInt(selected.value);
+                    if (userVal === item.ans) {
+                        score++;
+                    } else {
+                        // Highlight incorrect
+                        document.getElementById(`lbl-q${index}-${userVal}`).classList.add('incorrect');
                     }
                 }
-
-                if (userSelectedIndex === correctIndex) score++;
-            }
+            });
 
             const percentage = Math.round((score / total) * 100);
-            document.getElementById('score-display').innerText = `MC Score: ${score}/${total} (${percentage}%)`;
+            document.getElementById('score-display').innerText = `Score: ${score}/${total} (${percentage}%)`;
             
-            const btn = document.getElementById('submit-btn');
-            btn.style.display = 'none';
-
+            document.getElementById('submit-btn').style.display = 'none';
+            
             const keyDiv = document.getElementById('answer-key');
             keyDiv.classList.add('visible');
-            keyDiv.scrollIntoView({ behavior: 'smooth' });
+            
+            // Add a specific class to cards to show explanations if needed
+            document.querySelectorAll('.question-card').forEach(card => card.classList.add('show-exp'));
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            submitted = true;
         }
 
-        // --- CANVAS ANIMATIONS ---
-        
-        // 1. Vector Visualizer
-        const ctxVec = document.getElementById('canvas-vectors').getContext('2d');
+
+        // --- 4. CANVAS ANIMATIONS (5 visualizers) ---
         let time = 0;
-        
-        function drawVectors() {
-            const w = ctxVec.canvas.width; const h = ctxVec.canvas.height;
-            ctxVec.clearRect(0, 0, w, h);
+
+        // Visualizer 1: Vectors (Q4)
+        function drawVectors(ctx) {
+            if(!ctx) return;
+            const w = ctx.canvas.width; const h = ctx.canvas.height;
+            ctx.clearRect(0, 0, w, h);
             
             const cx = w / 2; const cy = h / 2 + 20;
-            const nx = 0; const ny = -80;
-            const lx = Math.cos(time * 0.02) * 80;
-            const ly = Math.sin(time * 0.02) * -80;
+            const nx = 0; const ny = -70;
+            const lx = Math.cos(time * 0.02) * 70;
+            const ly = Math.sin(time * 0.02) * -70;
             
-            ctxVec.strokeStyle = '#3f3f46'; ctxVec.lineWidth = 1;
-            ctxVec.beginPath(); ctxVec.moveTo(cx-100, cy); ctxVec.lineTo(cx+100, cy); ctxVec.stroke();
-            ctxVec.beginPath(); ctxVec.moveTo(cx, cy-100); ctxVec.lineTo(cx, cy+20); ctxVec.stroke();
+            ctx.strokeStyle = '#3f3f46'; ctx.lineWidth = 1;
+            ctx.beginPath(); ctx.moveTo(cx-100, cy); ctx.lineTo(cx+100, cy); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx, cy-90); ctx.lineTo(cx, cy+20); ctx.stroke();
 
-            drawArrow(ctxVec, cx, cy, cx + nx, cy + ny, '#22d3ee');
-            ctxVec.fillStyle = '#22d3ee'; ctxVec.fillText("Normal (N)", cx - 25, cy - 90);
+            drawArrow(ctx, cx, cy, cx + nx, cy + ny, '#22d3ee');
+            ctx.fillStyle = '#22d3ee'; ctx.fillText("Normal(N)", cx - 25, cy - 80);
             
-            drawArrow(ctxVec, cx, cy, cx + lx, cy + ly, '#facc15');
-            ctxVec.fillStyle = '#facc15'; ctxVec.fillText("Light (L)", cx + lx - 10, cy + ly - 10);
+            drawArrow(ctx, cx, cy, cx + lx, cy + ly, '#facc15');
+            ctx.fillStyle = '#facc15'; ctx.fillText("Light(L)", cx + lx - 10, cy + ly - 10);
 
             const magL = Math.sqrt(lx*lx + ly*ly);
-            const dot = ((nx/80) * (lx/magL) + (ny/80) * (ly/magL)).toFixed(2);
+            const dot = ((nx/70) * (lx/magL) + (ny/70) * (ly/magL)).toFixed(2);
             
-            ctxVec.fillStyle = '#fff';
-            ctxVec.font = "13px monospace";
-            ctxVec.fillText(`N · L = ${dot}`, cx - 35, h - 15);
+            ctx.fillStyle = '#fff'; ctx.font = "14px monospace";
+            ctx.fillText(`N · L = ${dot}`, cx - 35, h - 10);
         }
 
+        // Helper for vectors
         function drawArrow(ctx, fx, fy, tx, ty, color) {
             const headlen = 10;
-            const dx = tx - fx; const dy = ty - fy;
-            const angle = Math.atan2(dy, dx);
-            ctx.beginPath();
-            ctx.strokeStyle = color; ctx.lineWidth = 2.5;
+            const angle = Math.atan2(ty - fy, tx - fx);
+            ctx.beginPath(); ctx.strokeStyle = color; ctx.lineWidth = 2.5;
             ctx.moveTo(fx, fy); ctx.lineTo(tx, ty);
-            ctx.lineTo(tx - headlen * Math.cos(angle - Math.PI / 6), ty - headlen * Math.sin(angle - Math.PI / 6));
+            ctx.lineTo(tx - headlen * Math.cos(angle - Math.PI/6), ty - headlen * Math.sin(angle - Math.PI/6));
             ctx.moveTo(tx, ty);
-            ctx.lineTo(tx - headlen * Math.cos(angle + Math.PI / 6), ty - headlen * Math.sin(angle + Math.PI / 6));
+            ctx.lineTo(tx - headlen * Math.cos(angle + Math.PI/6), ty - headlen * Math.sin(angle + Math.PI/6));
             ctx.stroke();
         }
 
-        // 2. 3D Cube Visualizer
-        const ctxCube = document.getElementById('canvas-cube').getContext('2d');
+        // Visualizer 2: 3D Cube (Q8)
         const nodes = [[-1,-1,-1],[-1,-1,1],[-1,1,-1],[-1,1,1],[1,-1,-1],[1,-1,1],[1,1,-1],[1,1,1]];
         const edges = [[0,1],[1,3],[3,2],[2,0],[4,5],[5,7],[7,6],[6,4],[0,4],[1,5],[2,6],[3,7]];
-
-        function drawCube() {
-            const w = ctxCube.canvas.width; const h = ctxCube.canvas.height;
-            ctxCube.clearRect(0, 0, w, h);
+        function drawCube(ctx) {
+            if(!ctx) return;
+            const w = ctx.canvas.width; const h = ctx.canvas.height;
+            ctx.clearRect(0, 0, w, h);
             
-            const cx = w/2; const cy = h/2;
-            const scale = 45;
-            
-            const angleX = time * 0.01;
-            const angleY = time * 0.015;
+            const scale = 40; const cx = w/2; const cy = h/2;
+            const aX = time * 0.01; const aY = time * 0.015;
 
-            const projectedNodes = nodes.map(node => {
-                let x = node[0], y = node[1], z = node[2];
-                let y1 = y * Math.cos(angleX) - z * Math.sin(angleX);
-                let z1 = y * Math.sin(angleX) + z * Math.cos(angleX);
-                let x1 = x * Math.cos(angleY) - z1 * Math.sin(angleY);
-                return [x1 * scale + cx, y1 * scale + cy];
+            const proj = nodes.map(n => {
+                let y1 = n[1]*Math.cos(aX) - n[2]*Math.sin(aX);
+                let z1 = n[1]*Math.sin(aX) + n[2]*Math.cos(aX);
+                let x1 = n[0]*Math.cos(aY) - z1*Math.sin(aY);
+                return [x1*scale + cx, y1*scale + cy];
             });
 
-            ctxCube.strokeStyle = '#22d3ee';
-            ctxCube.lineWidth = 1.5;
-            ctxCube.lineJoin = 'round';
-
-            edges.forEach(edge => {
-                ctxCube.beginPath();
-                ctxCube.moveTo(projectedNodes[edge[0]][0], projectedNodes[edge[0]][1]);
-                ctxCube.lineTo(projectedNodes[edge[1]][0], projectedNodes[edge[1]][1]);
-                ctxCube.stroke();
+            ctx.strokeStyle = '#22d3ee'; ctx.lineWidth = 1.5; ctx.lineJoin = 'round';
+            edges.forEach(e => {
+                ctx.beginPath(); ctx.moveTo(proj[e[0]][0], proj[e[0]][1]); ctx.lineTo(proj[e[1]][0], proj[e[1]][1]); ctx.stroke();
             });
-            
-            ctxCube.fillStyle = '#f4f4f5';
-            projectedNodes.forEach(pn => {
-                ctxCube.beginPath(); ctxCube.arc(pn[0], pn[1], 2.5, 0, Math.PI*2); ctxCube.fill();
-            });
+            ctx.fillStyle = '#f4f4f5';
+            proj.forEach(p => { ctx.beginPath(); ctx.arc(p[0], p[1], 2, 0, Math.PI*2); ctx.fill(); });
         }
 
-        // 3. Phong Lighting Visualizer
-        const ctxPhong = document.getElementById('canvas-phong').getContext('2d');
-        
-        function drawPhong() {
-            const w = ctxPhong.canvas.width; const h = ctxPhong.canvas.height;
-            ctxPhong.clearRect(0, 0, w, h);
+        // Visualizer 3: Phong Lighting (Q10)
+        function drawPhong(ctx) {
+            if(!ctx) return;
+            const w = ctx.canvas.width; const h = ctx.canvas.height;
+            ctx.clearRect(0, 0, w, h);
+            
+            const cx = w/2; const cy = h/2; const radius = 55;
+            const lx = cx + Math.sin(time * 0.03) * 55;
+            
+            const grad = ctx.createRadialGradient(lx, cy-20, 5, cx, cy, radius);
+            grad.addColorStop(0, '#ffffff'); // Specular
+            grad.addColorStop(0.2, '#38bdf8'); // Diffuse
+            grad.addColorStop(1, '#082f49'); // Ambient
+
+            ctx.beginPath(); ctx.arc(cx, cy, radius, 0, Math.PI*2);
+            ctx.fillStyle = grad; ctx.fill();
+            ctx.strokeStyle = '#0ea5e9'; ctx.lineWidth = 1; ctx.stroke();
+        }
+
+        // NEW Visualizer 4: Alpha Blending (Q29/30)
+        function drawAlpha(ctx) {
+            if(!ctx) return;
+            const w = ctx.canvas.width; const h = ctx.canvas.height;
+            ctx.clearRect(0, 0, w, h);
             
             const cx = w/2; const cy = h/2;
-            const radius = 55;
-            
-            const lightX = cx + Math.sin(time * 0.03) * 55;
-            const lightY = cy - 20;
+            const offset = Math.sin(time * 0.02) * 40;
 
-            const gradient = ctxPhong.createRadialGradient(lightX, lightY, 4, cx, cy, radius);
-            gradient.addColorStop(0, '#ffffff');
-            gradient.addColorStop(0.25, '#38bdf8');
-            gradient.addColorStop(1, '#082f49');
+            // Enable blending visually
+            ctx.globalCompositeOperation = 'screen'; 
 
-            ctxPhong.beginPath();
-            ctxPhong.arc(cx, cy, radius, 0, Math.PI*2);
-            ctxPhong.fillStyle = gradient;
-            ctxPhong.fill();
-            
-            ctxPhong.strokeStyle = '#0ea5e9';
-            ctxPhong.lineWidth = 1;
-            ctxPhong.stroke();
+            // Red Circle
+            ctx.beginPath(); ctx.arc(cx - 20 + offset, cy, 45, 0, Math.PI*2);
+            ctx.fillStyle = 'rgba(248, 113, 113, 0.8)'; // accent-red
+            ctx.fill();
+
+            // Cyan Circle
+            ctx.beginPath(); ctx.arc(cx + 20 - offset, cy, 45, 0, Math.PI*2);
+            ctx.fillStyle = 'rgba(34, 211, 238, 0.8)'; // accent-cyan
+            ctx.fill();
+
+            ctx.globalCompositeOperation = 'source-over'; // reset
         }
+
+        // NEW Visualizer 5: Barycentric Interpolation (Q33)
+        function drawBarycentric(ctx) {
+            if(!ctx) return;
+            const w = ctx.canvas.width; const h = ctx.canvas.height;
+            ctx.clearRect(0, 0, w, h);
+            
+            const cx = w/2; const cy = h/2;
+            
+            // Triangle Vertices rotating
+            const a = time * 0.01;
+            const r = 60;
+            const v1 = { x: cx + Math.cos(a)*r, y: cy + Math.sin(a)*r, color: '#f87171' }; // Red
+            const v2 = { x: cx + Math.cos(a + 2.094)*r, y: cy + Math.sin(a + 2.094)*r, color: '#4ade80' }; // Green
+            const v3 = { x: cx + Math.cos(a + 4.188)*r, y: cy + Math.sin(a + 4.188)*r, color: '#22d3ee' }; // Cyan
+
+            // We simulate Barycentric rasterization using a linear gradient hack on Canvas 
+            // (Canvas doesn't natively do 3-point gradients well without manual pixel buffers, 
+            // so we blend 3 overlapping radial gradients to visually represent it).
+            ctx.globalCompositeOperation = 'screen';
+            
+            [v1, v2, v3].forEach(v => {
+                const grad = ctx.createRadialGradient(v.x, v.y, 0, v.x, v.y, r * 1.5);
+                grad.addColorStop(0, v.color);
+                grad.addColorStop(1, 'rgba(0,0,0,0)');
+                ctx.beginPath();
+                ctx.moveTo(v1.x, v1.y); ctx.lineTo(v2.x, v2.y); ctx.lineTo(v3.x, v3.y);
+                ctx.fillStyle = grad;
+                ctx.fill();
+            });
+
+            ctx.globalCompositeOperation = 'source-over';
+            ctx.strokeStyle = '#fff'; ctx.lineWidth = 1;
+            ctx.beginPath(); ctx.moveTo(v1.x, v1.y); ctx.lineTo(v2.x, v2.y); ctx.lineTo(v3.x, v3.y); ctx.closePath(); ctx.stroke();
+        }
+
+        // Master Animation Loop
+        const ctxList = {
+            vectors: document.getElementById('canvas-vectors')?.getContext('2d'),
+            cube: document.getElementById('canvas-cube')?.getContext('2d'),
+            phong: document.getElementById('canvas-phong')?.getContext('2d'),
+            alpha: document.getElementById('canvas-alpha')?.getContext('2d'),
+            bary: document.getElementById('canvas-bary')?.getContext('2d')
+        };
 
         function animate() {
             time++;
-            drawVectors();
-            drawCube();
-            drawPhong();
+            if(ctxList.vectors) drawVectors(ctxList.vectors);
+            if(ctxList.cube) drawCube(ctxList.cube);
+            if(ctxList.phong) drawPhong(ctxList.phong);
+            if(ctxList.alpha) drawAlpha(ctxList.alpha);
+            if(ctxList.bary) drawBarycentric(ctxList.bary);
             requestAnimationFrame(animate);
         }
         
-        animate();
+        // Slight delay to ensure DOM is ready before pulling canvas contexts dynamically
+        setTimeout(() => {
+            ctxList.vectors = document.getElementById('canvas-vectors')?.getContext('2d');
+            ctxList.cube = document.getElementById('canvas-cube')?.getContext('2d');
+            ctxList.phong = document.getElementById('canvas-phong')?.getContext('2d');
+            ctxList.alpha = document.getElementById('canvas-alpha')?.getContext('2d');
+            ctxList.bary = document.getElementById('canvas-bary')?.getContext('2d');
+            animate();
+        }, 100);
+
     </script>
 </body>
 </html>

@@ -69,9 +69,7 @@ Open `index.html` directly in any modern web browser.
 
 > 💡 **Tip:** For the best experience, use **Google Chrome, Microsoft Edge, or Mozilla Firefox**.
 
-
-**One important thing:** your original Markdown has the GitHub URL wrapped inside `[ ]( )` *inside* a code block, so it won't work as a clickable link. The version above fixes that.
-
+---
 
 ## 🛠️ Technology Stack
 

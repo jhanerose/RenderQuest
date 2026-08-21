@@ -18,7 +18,6 @@
             --accent-cyan: #22d3ee;
             --accent-red: #f87171;
             --accent-green: #4ade80;
-            --accent-purple: #c084fc;
             --font-sans: 'Inter', -apple-system, sans-serif;
             --font-mono: 'JetBrains Mono', monospace;
         }
@@ -187,7 +186,7 @@
 
         textarea {
             width: 100%;
-            height: 100px;
+            height: 90px;
             background: rgba(0,0,0,0.2);
             border: 1px solid var(--border-subtle);
             border-radius: 8px;
@@ -280,7 +279,6 @@
         }
 
         .answer-block strong { color: #fff; }
-        .answer-block .explanation { color: var(--text-muted); display: block; margin-top: 8px; font-size: 0.9rem;}
 
         @keyframes slideUp {
             from { opacity: 0; transform: translateY(20px); }
@@ -303,9 +301,8 @@
     <div class="container">
         
         <div id="exam-form">
-            <div class="section-title">Part 1: Multiple Choice (60%)</div>
+            <div class="section-title">Part 1: Multiple Choice (Q1-Q12)</div>
 
-            <!-- Q1 -->
             <div class="question-card">
                 <p class="q-text">1. How many stages exist in the complete rendering pipeline, and how many of them are programmable?</p>
                 <div class="options-grid">
@@ -316,7 +313,6 @@
                 </div>
             </div>
 
-            <!-- Q2 -->
             <div class="question-card">
                 <p class="q-text">2. Which of the following best describes the difference between a VAO and a VBO?</p>
                 <div class="options-grid">
@@ -327,7 +323,6 @@
                 </div>
             </div>
 
-            <!-- Q3 -->
             <div class="question-card">
                 <p class="q-text">3. What does the Vertex Shader do, and is it optional?</p>
                 <div class="options-grid">
@@ -363,7 +358,6 @@
                 </div>
             </div>
 
-            <!-- Q6 & Q7 -->
             <div class="question-card">
                 <p class="q-text">6. Which statement accurately describes a "Uniform" variable in GLSL?</p>
                 <div class="options-grid">
@@ -444,47 +438,49 @@
                 </div>
             </div>
 
-            <div class="section-title">Part 2: Short Answer (40%)</div>
+            <div class="section-title">Part 2: Short Answer (Q13-Q50)</div>
 
-            <div class="question-card">
-                <p class="q-text">13. Briefly explain the difference between an 'in' variable and a 'uniform' variable in a vertex shader.</p>
-                <textarea placeholder="Write your explanation..."></textarea>
-            </div>
-            
-            <div class="question-card">
-                <p class="q-text">14. What is the formula to find the magnitude of a 3D vector [vx, vy, vz], and how do you use it to create a "Unit Vector"?</p>
-                <textarea placeholder="Write your explanation..."></textarea>
-            </div>
+            <!-- Existing Short Answers -->
+            <div class="question-card"><p class="q-text">13. Briefly explain the difference between an 'in' variable and a 'uniform' variable in a vertex shader.</p><textarea></textarea></div>
+            <div class="question-card"><p class="q-text">14. What is the formula to find the magnitude of a 3D vector [vx, vy, vz], and how do you use it to create a "Unit Vector"?</p><textarea></textarea></div>
+            <div class="question-card"><p class="q-text">15. Describe the primary function of the Fragment Shader (Stage 8).</p><textarea></textarea></div>
+            <div class="question-card"><p class="q-text">16. What is a Shader Program? Briefly describe the steps required to create one in OpenGL.</p><textarea></textarea></div>
+            <div class="question-card"><p class="q-text">17. In Per-Sample Operations, what is the purpose of the "Depth test"?</p><textarea></textarea></div>
+            <div class="question-card"><p class="q-text">18. The dot product can be calculated using components. Write out the second formula, which uses magnitudes and an angle.</p><textarea></textarea></div>
+            <div class="question-card"><p class="q-text">19. What does the glBufferData function do during the Vertex Specification stage?</p><textarea></textarea></div>
+            <div class="question-card"><p class="q-text">20. Why do the vertex coordinates for a basic flat triangle usually have a Z-value of 0.0f in NDC?</p><textarea></textarea></div>
 
-            <div class="question-card">
-                <p class="q-text">15. Describe the primary function of the Fragment Shader (Stage 8).</p>
-                <textarea placeholder="Write your explanation..."></textarea>
-            </div>
-
-            <div class="question-card">
-                <p class="q-text">16. What is a Shader Program? Briefly describe the steps required to create one in OpenGL.</p>
-                <textarea placeholder="Write your explanation..."></textarea>
-            </div>
-
-            <div class="question-card">
-                <p class="q-text">17. In Per-Sample Operations, what is the purpose of the "Depth test"?</p>
-                <textarea placeholder="Write your explanation..."></textarea>
-            </div>
-
-            <div class="question-card">
-                <p class="q-text">18. The dot product can be calculated using components. Write out the second formula, which uses magnitudes and an angle.</p>
-                <textarea placeholder="Write your explanation..."></textarea>
-            </div>
-
-            <div class="question-card">
-                <p class="q-text">19. What does the glBufferData function do during the Vertex Specification stage?</p>
-                <textarea placeholder="Write your explanation..."></textarea>
-            </div>
-
-            <div class="question-card">
-                <p class="q-text">20. Why do the vertex coordinates for a basic flat triangle usually have a Z-value of 0.0f in NDC?</p>
-                <textarea placeholder="Write your explanation..."></textarea>
-            </div>
+            <!-- New Expanded Bank (21-50) -->
+            <div class="question-card"><p class="q-text">21. What is an Element Buffer Object (EBO) and why does it save memory?</p><textarea></textarea></div>
+            <div class="question-card"><p class="q-text">22. Explain the concept of "Double Buffering" and what visual artifact it prevents.</p><textarea></textarea></div>
+            <div class="question-card"><p class="q-text">23. What specific role does the View Matrix play in the coordinate transformation pipeline?</p><textarea></textarea></div>
+            <div class="question-card"><p class="q-text">24. What is the key visual difference between Orthographic and Perspective projection matrices?</p><textarea></textarea></div>
+            <div class="question-card"><p class="q-text">25. What is a Texture Atlas, and why is it preferred over binding many individual textures in a 2D game?</p><textarea></textarea></div>
+            <div class="question-card"><p class="q-text">26. What are Mipmaps, and what two rendering problems do they solve?</p><textarea></textarea></div>
+            <div class="question-card"><p class="q-text">27. In texture sampling, what is the visual difference between GL_NEAREST and GL_LINEAR filtering?</p><textarea></textarea></div>
+            <div class="question-card"><p class="q-text">28. What does "Backface Culling" achieve, and how does OpenGL determine which face is the back?</p><textarea></textarea></div>
+            <div class="question-card"><p class="q-text">29. What is a Framebuffer Object (FBO) and name one common use-case for it.</p><textarea></textarea></div>
+            <div class="question-card"><p class="q-text">30. How does the standard Alpha Blending equation mathematically combine source and destination colors?</p><textarea></textarea></div>
+            <div class="question-card"><p class="q-text">31. What is the purpose of the `stride` parameter when configuring generic vertex attributes via glVertexAttribPointer?</p><textarea></textarea></div>
+            <div class="question-card"><p class="q-text">32. What is the defining capability of a Geometry Shader compared to a Vertex Shader?</p><textarea></textarea></div>
+            <div class="question-card"><p class="q-text">33. Explain how Barycentric Coordinates are used during the Rasterization stage.</p><textarea></textarea></div>
+            <div class="question-card"><p class="q-text">34. What is the functional difference between calling glDrawArrays and glDrawElements?</p><textarea></textarea></div>
+            <div class="question-card"><p class="q-text">35. What is "Gimbal Lock" in 3D rotation, and what mathematical construct is used to prevent it?</p><textarea></textarea></div>
+            <div class="question-card"><p class="q-text">36. What is a Normal Matrix, and why must we use it instead of the standard Model matrix to transform surface normals during non-uniform scaling?</p><textarea></textarea></div>
+            <div class="question-card"><p class="q-text">37. In modern C++ graphics applications, what is the specific role of libraries like GLEW or GLAD?</p><textarea></textarea></div>
+            <div class="question-card"><p class="q-text">38. What does the glViewport function do?</p><textarea></textarea></div>
+            <div class="question-card"><p class="q-text">39. Describe the visual difference between Flat shading and Smooth (Gouraud/Phong) shading.</p><textarea></textarea></div>
+            <div class="question-card"><p class="q-text">40. What is an Identity Matrix, and what is the result when you multiply a 3D vector by it?</p><textarea></textarea></div>
+            <div class="question-card"><p class="q-text">41. How does the Depth Buffer (Z-buffer) prevent the issue of rendering polygons out of order?</p><textarea></textarea></div>
+            <div class="question-card"><p class="q-text">42. Define "Post-Processing" in the context of computer graphics.</p><textarea></textarea></div>
+            <div class="question-card"><p class="q-text">43. What is Anti-Aliasing (e.g., MSAA) and why is it necessary in rasterized graphics?</p><textarea></textarea></div>
+            <div class="question-card"><p class="q-text">44. Inside a fragment shader, what does the GLSL `texture()` function do?</p><textarea></textarea></div>
+            <div class="question-card"><p class="q-text">45. What is the difference between Ambient and Diffuse lighting components?</p><textarea></textarea></div>
+            <div class="question-card"><p class="q-text">46. Why must 3D graphics programmers use 4x4 matrices instead of 3x3 matrices to transform 3D coordinates?</p><textarea></textarea></div>
+            <div class="question-card"><p class="q-text">47. What is a "Draw Call" and why is it important for performance optimization to minimize them?</p><textarea></textarea></div>
+            <div class="question-card"><p class="q-text">48. Contrast "Local Space" (Model Space) with "World Space".</p><textarea></textarea></div>
+            <div class="question-card"><p class="q-text">49. What does it mean for a graphics application to be "CPU bound" versus "GPU bound"?</p><textarea></textarea></div>
+            <div class="question-card"><p class="q-text">50. In computer graphics terminology, what defines a "Sprite"?</p><textarea></textarea></div>
 
             <button id="submit-btn" class="btn-primary" type="button" onclick="submitExam()">Submit Assessment</button>
         </div>
@@ -492,14 +488,44 @@
         <div id="answer-key">
             <div class="section-title">Evaluation Log & Answer Key</div>
             
-            <div class="answer-block"><strong>13. In vs Uniform:</strong> An <em>in</em> variable receives unique, per-vertex data directly from the VBO. A <em>uniform</em> variable receives global data from the CPU that remains exactly the same for all vertices processed during that specific draw call.</div>
-            <div class="answer-block"><strong>14. Magnitude & Unit Vector:</strong> The formula is: |v| = &radic;(vx&sup2; + vy&sup2; + vz&sup2;). To create a unit vector, divide the original vector by its magnitude.</div>
+            <div class="answer-block"><strong>13. In vs Uniform:</strong> An <em>in</em> variable receives unique, per-vertex data directly from the VBO. A <em>uniform</em> variable receives global data from the CPU that remains exactly the same for all vertices processed during that draw call.</div>
+            <div class="answer-block"><strong>14. Magnitude & Unit Vector:</strong> Formula: |v| = &radic;(vx&sup2; + vy&sup2; + vz&sup2;). To create a unit vector, divide the original vector by its magnitude.</div>
             <div class="answer-block"><strong>15. Fragment Shader:</strong> Decides the final color of the pixel that the fragment covers, applying colors, lighting, and textures.</div>
             <div class="answer-block"><strong>16. Shader Program:</strong> A compiled and linked group of shaders. Steps: glCreateShader, glShaderSource, glCompileShader, glCreateProgram, glAttachShader, glLinkProgram.</div>
-            <div class="answer-block"><strong>17. Depth Test:</strong> Decides whether a fragment should be drawn based on distance from the camera (Z-buffer).</div>
+            <div class="answer-block"><strong>17. Depth Test:</strong> Decides whether a fragment should be drawn based on distance from the camera (Z-buffer), ensuring closer objects hide objects further away.</div>
             <div class="answer-block"><strong>18. Dot Product (Angle):</strong> v1 &middot; v2 = |v1| &times; |v2| &times; cos(&theta;)</div>
-            <div class="answer-block"><strong>19. glBufferData:</strong> Uploads vertex data array from system RAM (CPU) into graphics memory (GPU).</div>
+            <div class="answer-block"><strong>19. glBufferData:</strong> Uploads the array of vertex data from system RAM (CPU) into actual graphics memory (GPU).</div>
             <div class="answer-block"><strong>20. Z-value of 0.0f:</strong> In a basic 2D drawing, depth is irrelevant. Because it faces the camera perfectly flat, z = 0.0.</div>
+            <div class="answer-block"><strong>21. EBO:</strong> Element Buffer Objects store indices that tell OpenGL which vertices to draw. It saves memory by allowing overlapping vertices to be defined only once and reused via their index.</div>
+            <div class="answer-block"><strong>22. Double Buffering:</strong> Rendering to a hidden "back" buffer while the screen displays the "front" buffer, swapping them when complete. It prevents visible screen tearing and flickering.</div>
+            <div class="answer-block"><strong>23. View Matrix:</strong> It shifts the entire world's coordinates to be relative to the camera's position and orientation, simulating a camera looking at the scene.</div>
+            <div class="answer-block"><strong>24. Projection matrices:</strong> Perspective causes foreshortening (distant objects appear smaller to mimic the human eye). Orthographic maintains parallel lines and exact sizes regardless of distance.</div>
+            <div class="answer-block"><strong>25. Texture Atlas:</strong> A single large image containing many smaller sprites. It drastically reduces expensive state changes (texture bindings) during rendering.</div>
+            <div class="answer-block"><strong>26. Mipmaps:</strong> Pre-calculated, lower-resolution versions of a texture. They solve aliasing (shimmering) on distant objects and improve GPU cache performance.</div>
+            <div class="answer-block"><strong>27. Filtering:</strong> GL_NEAREST selects the exact closest pixel, resulting in a blocky/pixel-art look. GL_LINEAR interpolates between neighboring pixels for a smooth, blurry look.</div>
+            <div class="answer-block"><strong>28. Backface Culling:</strong> Discarding polygons facing away from the viewer to save rendering time. It determines "facing" by the winding order (clockwise vs counter-clockwise) of the vertices.</div>
+            <div class="answer-block"><strong>29. Framebuffer Object (FBO):</strong> An off-screen rendering destination. Common uses include post-processing effects, shadow mapping, or rendering mirrors.</div>
+            <div class="answer-block"><strong>30. Alpha Blending:</strong> Result Color = (Source Color * Source Alpha) + (Destination Color * (1 - Source Alpha)).</div>
+            <div class="answer-block"><strong>31. Stride:</strong> The byte offset between consecutive generic vertex attributes in a VBO (e.g., the distance in memory from the start of vertex 1's position to vertex 2's position).</div>
+            <div class="answer-block"><strong>32. Geometry Shader:</strong> Unlike a Vertex shader which processes one vertex to one vertex, a Geometry shader can generate entirely new geometry (new vertices/primitives) on the fly.</div>
+            <div class="answer-block"><strong>33. Barycentric Coordinates:</strong> A coordinate system used to interpolate values (like color, normals, UVs) across the surface of a triangle based on the fragment's distance to the three vertices.</div>
+            <div class="answer-block"><strong>34. Draw Calls:</strong> glDrawArrays reads vertices sequentially from the VBO. glDrawElements uses an attached EBO to look up vertices by their index.</div>
+            <div class="answer-block"><strong>35. Gimbal Lock:</strong> The loss of one degree of freedom when rotating using Euler angles. It is prevented by using Quaternions, a 4D number system for representing rotations.</div>
+            <div class="answer-block"><strong>36. Normal Matrix:</strong> The inverse transpose of the upper-left 3x3 model-view matrix. It ensures surface normals remain perpendicular to the surface when non-uniform scaling is applied to the object.</div>
+            <div class="answer-block"><strong>37. GLEW/GLAD:</strong> Extension loaders. Because OpenGL function locations are not known at compile time, these libraries query the graphics driver at runtime to get the function pointers.</div>
+            <div class="answer-block"><strong>38. glViewport:</strong> Specifies the affine transformation that maps Normalized Device Coordinates (NDC) to window/screen coordinates (pixels).</div>
+            <div class="answer-block"><strong>39. Shading:</strong> Flat shading uses a single normal per polygon, making geometry look faceted. Smooth shading interpolates normals across the polygon, calculating lighting per-fragment for a curved look.</div>
+            <div class="answer-block"><strong>40. Identity Matrix:</strong> A matrix consisting of 1s on the main diagonal and 0s everywhere else. Multiplying any vector/matrix by it leaves the original vector/matrix unchanged.</div>
+            <div class="answer-block"><strong>41. Depth Buffer:</strong> It stores a depth value (Z) for every pixel on screen. Before drawing a fragment, the GPU checks if the fragment's Z is closer than the stored Z; if not, it is discarded.</div>
+            <div class="answer-block"><strong>42. Post-Processing:</strong> Rendering the entire 3D scene to an off-screen texture (FBO), and then rendering a flat 2D quad to the screen while applying a shader effect (like bloom or blur) to that texture.</div>
+            <div class="answer-block"><strong>43. Anti-Aliasing:</strong> Techniques used to smooth out the jagged, staircase-like edges of rasterized primitives caused by rendering geometric shapes onto a grid of square pixels.</div>
+            <div class="answer-block"><strong>44. texture() function:</strong> It samples a texel (color) from a bound texture in GLSL, using the provided 2D texture coordinates (UVs) and applying the configured filtering parameters.</div>
+            <div class="answer-block"><strong>45. Lighting:</strong> Ambient is a constant base light that affects all surfaces equally. Diffuse brightness depends directly on the angle between the surface normal and the incoming light ray.</div>
+            <div class="answer-block"><strong>46. 4x4 Matrices:</strong> A 3x3 matrix can only handle rotation and scaling. To apply Translation (movement) via multiplication, a 4th dimension (Homogeneous Coordinates) is required.</div>
+            <div class="answer-block"><strong>47. Draw Call:</strong> A command sent from the CPU to the GPU instructing it to render a set of primitives. High draw call counts cause CPU bottlenecks due to driver overhead.</div>
+            <div class="answer-block"><strong>48. Coordinate Spaces:</strong> Local space is relative to an object's own origin point. World space represents the position of the object relative to the absolute center (0,0,0) of the entire scene.</div>
+            <div class="answer-block"><strong>49. Bottlenecks:</strong> CPU bound means the processor cannot feed instructions (draw calls, logic) to the GPU fast enough. GPU bound means the GPU is struggling to process the heavy fragment/vertex math fast enough.</div>
+            <div class="answer-block"><strong>50. Sprite:</strong> A 2D bitmap image or animation integrated into a larger scene, historically processed via dedicated hardware but now rendered as textured 2D quads.</div>
         </div>
     </div>
 
@@ -518,6 +544,7 @@
             const textAreas = document.querySelectorAll('textarea');
             let emptyTextAreas = Array.from(textAreas).filter(ta => ta.value.trim() === '').length;
 
+            // Updated check: Will correctly warn based on all 38 textareas
             if (totalAnswered < total || emptyTextAreas > 0) {
                 if(!confirm(`You have ${total - totalAnswered} unanswered multiple-choice questions and ${emptyTextAreas} blank short-answer questions.\n\nSubmit anyway?`)) return;
             }
@@ -546,7 +573,7 @@
             }
 
             const percentage = Math.round((score / total) * 100);
-            document.getElementById('score-display').innerText = `Score: ${score}/${total} (${percentage}%)`;
+            document.getElementById('score-display').innerText = `MC Score: ${score}/${total} (${percentage}%)`;
             
             const btn = document.getElementById('submit-btn');
             btn.style.display = 'none';

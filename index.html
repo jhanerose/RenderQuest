@@ -39,6 +39,33 @@
             min-height: 100vh;
         }
 
+        /* LOADING SCREEN STYLES */
+        .loading-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-base); z-index: 9999;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: opacity 0.6s ease, visibility 0.6s;
+        }
+        .loading-screen.hidden { opacity: 0; visibility: hidden; }
+        .loader {
+            width: 45px; height: 45px;
+            border: 3px solid rgba(34, 211, 238, 0.15);
+            border-top-color: var(--accent-cyan);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        .loading-screen h2 {
+            font-family: var(--font-mono); color: var(--accent-cyan);
+            font-size: 1.1rem; letter-spacing: 1px; margin: 0;
+            animation: pulse-loader 1.5s infinite;
+        }
+        @keyframes pulse-loader {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
         header {
             background: rgba(9, 9, 11, 0.92);
             backdrop-filter: blur(12px);
@@ -111,23 +138,14 @@
             font-weight: 600;
         }
 
-        .stat-item {
-            color: var(--text-muted);
-        }
-        .stat-item span {
-            color: var(--accent-cyan);
-            font-weight: 600;
-        }
+        .stat-item { color: var(--text-muted); }
+        .stat-item span { color: var(--accent-cyan); font-weight: 600; }
 
         .timer-warning {
             color: var(--accent-red) !important;
-            animation: pulse 1s infinite;
+            animation: pulse-timer 1s infinite;
         }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
+        @keyframes pulse-timer { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
         .container {
             max-width: 960px;
@@ -144,17 +162,8 @@
             margin: 40px 0 20px 0;
         }
 
-        .section-header h2 {
-            margin: 0;
-            font-size: 1.3rem;
-            color: #fff;
-        }
-
-        .section-header p {
-            margin: 4px 0 0 0;
-            font-size: 0.9rem;
-            color: var(--text-muted);
-        }
+        .section-header h2 { margin: 0; font-size: 1.3rem; color: #fff; }
+        .section-header p { margin: 4px 0 0 0; font-size: 0.9rem; color: var(--text-muted); }
 
         .question-card {
             background: var(--bg-surface);
@@ -259,13 +268,10 @@
             margin: 30px 0; transition: transform 0.1s;
         }
 
-        .btn-primary:hover { background: #fff; transform: translateY(-1px); }
+        .btn-primary:hover:not(:disabled) { background: #fff; transform: translateY(-1px); }
+        .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
 
-        #reset-btn {
-            background: var(--accent-cyan);
-            color: #000;
-            display: none;
-        }
+        #reset-btn { background: var(--accent-cyan); color: #000; display: none; }
 
         #answer-key {
             display: none; padding: 24px;
@@ -276,18 +282,10 @@
 
         #answer-key.visible { display: block; }
 
-        .weakness-list {
-            margin: 16px 0 0 0;
-            padding-left: 20px;
-            color: var(--accent-red);
-        }
+        .weakness-list { margin: 16px 0 0 0; padding-left: 20px; color: var(--accent-red); }
+        .weakness-list li { margin-bottom: 8px; color: var(--text-main); }
 
-        .weakness-list li {
-            margin-bottom: 8px;
-            color: var(--text-main);
-        }
-
-        /* LEADERBOARD MODAL STYLES */
+        /* MODAL STYLES (Used for both Leaderboard and Name Entry) */
         .modal-overlay {
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(4px);
@@ -295,38 +293,47 @@
             z-index: 1000; opacity: 0; pointer-events: none; transition: all 0.3s ease;
         }
 
-        .modal-overlay.active {
-            opacity: 1; pointer-events: auto;
-        }
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
 
-        .leaderboard-modal {
+        .custom-modal {
             background: var(--bg-surface);
-            border: 1px solid var(--accent-cyan);
-            border-radius: 12px; width: 90%; max-width: 500px;
-            padding: 24px; box-shadow: 0 10px 25px rgba(34, 211, 238, 0.2);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px; width: 90%; max-width: 450px;
+            padding: 24px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             transform: translateY(20px); transition: transform 0.3s ease;
         }
 
-        .modal-overlay.active .leaderboard-modal { transform: translateY(0); }
+        .modal-overlay.active .custom-modal { transform: translateY(0); }
 
-        .lb-header {
+        .modal-header {
             display: flex; justify-content: space-between; align-items: center;
             margin-bottom: 20px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 10px;
         }
 
-        .lb-header h2 { margin: 0; color: #fff; font-family: var(--font-mono); }
+        .modal-header h2 { margin: 0; color: #fff; font-family: var(--font-mono); font-size: 1.2rem; }
         .close-btn { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1.5rem; }
         .close-btn:hover { color: var(--accent-red); }
 
+        /* Custom Input for Name Entry */
+        .name-input {
+            width: 100%; padding: 14px;
+            background: var(--bg-base);
+            border: 1px solid var(--border-subtle);
+            color: #fff; border-radius: 8px;
+            font-family: var(--font-sans); font-size: 1rem;
+            outline: none; box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+        .name-input:focus { border-color: var(--accent-cyan); box-shadow: 0 0 0 2px rgba(34, 211, 238, 0.2); }
+
+        /* Leaderboard Rows */
         .lb-row {
             display: flex; justify-content: space-between; align-items: center;
             padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05);
         }
-
         .lb-row:nth-child(1) { color: gold; font-weight: 700; background: rgba(255, 215, 0, 0.1); border-radius: 6px; }
         .lb-row:nth-child(2) { color: silver; font-weight: 600; }
         .lb-row:nth-child(3) { color: #cd7f32; font-weight: 600; }
-
         .lb-name { font-family: var(--font-sans); }
         .lb-score { font-family: var(--font-mono); color: var(--accent-cyan); }
 
@@ -341,7 +348,6 @@
             font-size: 0.85rem;
             font-family: var(--font-mono);
         }
-
         footer span {
             color: var(--accent-cyan);
             font-weight: 600;
@@ -350,6 +356,12 @@
     </style>
 </head>
 <body>
+
+    <!-- LOADING SCREEN -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loader"></div>
+        <h2>Initializing Pipeline...</h2>
+    </div>
 
     <header>
         <div class="header-content">
@@ -388,14 +400,29 @@
 
     <!-- LEADERBOARD MODAL -->
     <div class="modal-overlay" id="lb-modal">
-        <div class="leaderboard-modal">
-            <div class="lb-header">
-                <h2>🏆 Global Rankings</h2>
+        <div class="custom-modal" style="border-color: var(--accent-yellow);">
+            <div class="modal-header">
+                <h2 style="color: var(--accent-yellow);">🏆 Global Rankings</h2>
                 <button class="close-btn" onclick="toggleLeaderboard()">×</button>
             </div>
             <div id="lb-content">
-                <!-- Ranks will be injected here via Fetch -->
                 <div class="lb-row"><span class="lb-name">Loading Live Scores...</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CUSTOM NAME ENTRY MODAL -->
+    <div class="modal-overlay" id="name-modal">
+        <div class="custom-modal" style="border-color: var(--accent-cyan);">
+            <div class="modal-header">
+                <h2>Pipeline Execution Complete!</h2>
+                <button class="close-btn" onclick="closeNameModal()">×</button>
+            </div>
+            <div style="padding: 10px 0;">
+                <p style="margin-top:0; color: var(--text-muted);">Your verified score is <span id="final-score-display" style="color:var(--accent-cyan); font-weight:bold; font-size:1.1rem;"></span>/100.</p>
+                <label for="player-name" style="display:block; margin-bottom:8px; font-family:var(--font-mono); font-size:0.85rem; color:var(--accent-cyan);">ENTER CODENAME:</label>
+                <input type="text" id="player-name" class="name-input" placeholder="e.g. GraphicsGuru99" maxlength="20" autocomplete="off">
+                <button id="btn-submit-score" class="btn-primary" style="margin: 24px 0 0 0; padding: 14px;" onclick="submitScoreToFirebase()">Submit to Global Ranking</button>
             </div>
         </div>
     </div>
@@ -683,6 +710,10 @@
         }
 
         function generateNewSet() {
+            // Show Loading Screen
+            const loader = document.getElementById('loading-screen');
+            loader.classList.remove('hidden');
+
             document.getElementById('submit-btn').style.display = 'block';
             document.getElementById('reset-btn').style.display = 'none';
             document.getElementById('answer-key').classList.remove('visible');
@@ -725,6 +756,11 @@
             currentActiveExam = [...p1, ...p2];
             renderExam();
             startTimer();
+
+            // Hide Loading Screen after a short delay for smooth effect
+            setTimeout(() => {
+                loader.classList.add('hidden');
+            }, 800);
         }
 
         function renderExam() {
@@ -813,6 +849,8 @@
         // =========================================================================
         // 4. SUBMISSION, SCORING & WEAK POINT ANALYZER
         // =========================================================================
+        let currentFinalScore = 0;
+
         function submitExam() {
             clearInterval(timerInterval);
             let totalScore = 0;
@@ -844,6 +882,7 @@
             // Update UI Score
             document.getElementById('score-display').innerText = `${totalScore}/${maxScore}`;
             saveScore(totalScore);
+            currentFinalScore = totalScore;
 
             // Populate Weak Point Analyzer
             const summaryDiv = document.getElementById('weak-points-summary');
@@ -864,8 +903,8 @@
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
             
-            // Trigger Leaderboard save
-            saveToPublicLeaderboard(totalScore);
+            // Trigger Name Entry Modal
+            openNameModal(totalScore);
         }
 
         // =========================================================================
@@ -1016,7 +1055,7 @@
         }
 
         // =========================================================================
-        // 6. LEADERBOARD LOGIC (Firebase REST API)
+        // 6. LEADERBOARD LOGIC & MODALS (Firebase REST API)
         // =========================================================================
         let isLeaderboardOpen = false;
 
@@ -1037,7 +1076,6 @@
             lbContent.innerHTML = '<div class="lb-row"><span class="lb-name">Loading live scores...</span></div>';
             
             try {
-                // Connecting to your specific Firebase Database via REST API
                 const response = await fetch('https://renderquest-9a48c-default-rtdb.firebaseio.com/leaderboard.json');
                 const data = await response.json();
                 
@@ -1071,45 +1109,59 @@
             }
         }
 
-        function saveToPublicLeaderboard(finalScore) {
-            // Do not prompt or save if the user is just practicing
-            if (studyMode === 'practice') return;
-
-            setTimeout(async () => {
-                let playerName = prompt(`Pipeline Execution Complete! Score: ${finalScore}/100.\n\nEnter your name for the Global Leaderboard:`);
-                
-                if (playerName && playerName.trim() !== "") {
-                    try {
-                        // Push new score to Firebase Database
-                        await fetch('https://renderquest-9a48c-default-rtdb.firebaseio.com/leaderboard.json', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({
-                                name: playerName.trim().substring(0, 20), // Prevent super long names
-                                score: finalScore,
-                                timestamp: new Date().getTime()
-                            })
-                        });
-                        
-                        alert("Score synchronized globally! Check the leaderboard.");
-                        
-                        // Force open the leaderboard
-                        isLeaderboardOpen = false;
-                        toggleLeaderboard();
-                        
-                    } catch (error) {
-                        console.error("Error saving score:", error);
-                        alert("Failed to save score globally. Check your internet connection.");
-                    }
-                }
-            }, 800); 
+        function openNameModal(score) {
+            if (studyMode === 'practice') return; // Don't save practice runs
+            document.getElementById('final-score-display').innerText = score;
+            document.getElementById('name-modal').classList.add('active');
+            document.getElementById('player-name').focus();
         }
 
+        function closeNameModal() {
+            document.getElementById('name-modal').classList.remove('active');
+        }
+
+        async function submitScoreToFirebase() {
+            const nameInput = document.getElementById('player-name').value.trim();
+            if (!nameInput) {
+                alert("Please enter a codename!");
+                return;
+            }
+
+            const btn = document.getElementById('btn-submit-score');
+            btn.innerText = "Syncing...";
+            btn.disabled = true;
+
+            try {
+                await fetch('https://renderquest-9a48c-default-rtdb.firebaseio.com/leaderboard.json', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name: nameInput.substring(0, 20),
+                        score: currentFinalScore,
+                        timestamp: new Date().getTime()
+                    })
+                });
+                
+                closeNameModal();
+                document.getElementById('player-name').value = '';
+                
+                // Show leaderboard
+                isLeaderboardOpen = false;
+                toggleLeaderboard();
+                
+            } catch (error) {
+                console.error("Error saving score:", error);
+                alert("Failed to save score globally. Check your internet connection.");
+            } finally {
+                btn.innerText = "Submit to Global Ranking";
+                btn.disabled = false;
+            }
+        }
+
+        // Initialize App
         window.onload = () => {
             loadStats();
-            generateNewSet();
+            generateNewSet(); // generateNewSet() handles the loading screen timing
             animate();
         };
     </script>

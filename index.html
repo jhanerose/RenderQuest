@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RenderQuest | Computer Graphics Programming</title>
-    
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%2309090b'/><path d='M16 4 L28 24 L4 24 Z' fill='none' stroke='%2322d3ee' stroke-width='2.5'/><circle cx='16' cy='4' r='2.5' fill='%23f4f4f5'/><circle cx='28' cy='24' r='2.5' fill='%23f4f4f5'/><circle cx='4' cy='24' r='2.5' fill='%23f4f4f5'/><circle cx='16' cy='17' r='2' fill='%23facc15'/></svg>">
+
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2309090b'/%3E%3Cpath d='M16 4 L28 24 L4 24 Z' fill='none' stroke='%2322d3ee' stroke-width='2.5'/%3E%3Ccircle cx='16' cy='4' r='2.5' fill='%23f4f4f5'/%3E%3Ccircle cx='28' cy='24' r='2.5' fill='%23f4f4f5'/%3E%3Ccircle cx='4' cy='24' r='2.5' fill='%23f4f4f5'/%3E%3Ccircle cx='16' cy='17' r='2' fill='%23facc15'/%3E%3C/svg%3E"><rect width='32' height='32' rx='6' fill='%2309090b'/><path d='M16 4 L28 24 L4 24 Z' fill='none' stroke='%2322d3ee' stroke-width='2.5'/><circle cx='16' cy='4' r='2.5' fill='%23f4f4f5'/><circle cx='28' cy='24' r='2.5' fill='%23f4f4f5'/><circle cx='4' cy='24' r='2.5' fill='%23f4f4f5'/><circle cx='16' cy='17' r='2' fill='%23facc15'/></svg>](<data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%2309090b'/><path d='M16 4 L28 24 L4 24 Z' fill='none' stroke='%2322d3ee' stroke-width='2.5'/><circle cx='16' cy='4' r='2.5' fill='%23f4f4f5'/><circle cx='28' cy='24' r='2.5' fill='%23f4f4f5'/><circle cx='4' cy='24' r='2.5' fill='%23f4f4f5'/><circle cx='16' cy='17' r='2' fill='%23facc15'/></svg>>)">
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
@@ -25,7 +25,7 @@
             --accent-orange: #f97316;
             --font-sans: 'Inter', -apple-system, sans-serif;
             --font-mono: 'JetBrains Mono', monospace;
-            
+
             --glass-bg: rgba(24, 24, 27, 0.45);
             --glass-border: rgba(255, 255, 255, 0.08);
             --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
@@ -53,7 +53,7 @@
             will-change: opacity;
         }
         .loading-screen.hidden { opacity: 0; pointer-events: none; }
-        
+
         .gl-loader-container { perspective: 1000px; margin-bottom: 50px; }
         .gl-polyhedron { width: 80px; height: 80px; position: relative; transform-style: preserve-3d; animation: rotate-poly 1.2s infinite linear; will-change: transform; }
         .gl-face { position: absolute; width: 80px; height: 80px; display: flex; justify-content: center; align-items: center; font-family: var(--font-mono); font-size: 14px; font-weight: bold; color: rgba(255,255,255,0.7); border: 2px solid; box-sizing: border-box; background: rgba(34, 211, 238, 0.15); }
@@ -72,15 +72,14 @@
 
         /* HEADER */
         header {
-            background: rgba(9, 9, 11, 0.85); 
-            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); transform: translateZ(0);
+            background: rgba(9, 9, 11, 0.94);
             border-bottom: 1px solid var(--glass-border); padding: 14px 0;
             position: sticky; top: 0; z-index: 100;
         }
         .header-content { max-width: 1000px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
         .brand { display: flex; align-items: center; gap: 10px; }
         .brand-badge { background: rgba(34, 211, 238, 0.15); color: var(--accent-cyan); border: 1px solid rgba(34, 211, 238, 0.3); font-family: var(--font-mono); font-size: 0.75rem; padding: 3px 8px; border-radius: 4px; }
-        
+
         .header-controls { display: flex; align-items: center; gap: 16px; font-family: var(--font-mono); font-size: 0.85rem; }
         .mode-toggle { background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 6px; padding: 4px; display: flex; gap: 4px; }
         .mode-btn { background: transparent; border: none; color: var(--text-muted); padding: 4px 10px; border-radius: 4px; cursor: pointer; font-family: var(--font-mono); font-size: 0.75rem; transition: background 0.1s, color 0.1s; }
@@ -93,10 +92,9 @@
 
         /* MAIN CONTAINER & GLASS PANELS */
         .container { max-width: 1000px; margin: 24px auto; padding: 0 20px; flex: 1; width: 100%; box-sizing: border-box; }
-        
+
         .glass-panel {
-            background: var(--glass-bg); 
-            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); transform: translateZ(0);
+            background: rgba(24, 24, 27, 0.82);
             border: 1px solid var(--glass-border); border-radius: 12px; box-shadow: var(--glass-shadow);
         }
 
@@ -161,20 +159,20 @@
         .btn-primary { display: block; width: 100%; padding: 16px; background: var(--text-main); color: var(--bg-base); font-size: 1.05rem; font-weight: 600; border: none; border-radius: 8px; cursor: pointer; margin: 0 0 30px 0; transition: transform 0.05s; }
         .btn-primary:hover:not(:disabled) { background: #fff; transform: translateY(-1px); }
         .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
-        
+
         #reset-btn { background: var(--accent-cyan); color: #000; display: none; }
-        
+
         /* Compact Scrollable Evaluation Log */
         #answer-key { display: none; padding: 20px; margin-bottom: 30px; max-height: 160px; overflow-y: auto; }
         #answer-key::-webkit-scrollbar { width: 6px; }
         #answer-key::-webkit-scrollbar-thumb { background: var(--border-subtle); border-radius: 4px; }
         #answer-key.visible { display: block; animation: fadeIn 0.15s ease; }
-        
+
         .weakness-list { margin: 12px 0 0 0; padding-left: 20px; color: var(--accent-red); }
         .weakness-list li { margin-bottom: 8px; color: var(--text-main); line-height: 1.4; }
 
         /* MODALS (Snappy transitions) */
-        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); transform: translateZ(0); display: flex; justify-content: center; align-items: center; z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.15s ease; will-change: opacity; }
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.78); display: flex; justify-content: center; align-items: center; z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.15s ease; will-change: opacity; }
         .modal-overlay.active { opacity: 1; pointer-events: auto; }
         .custom-modal { width: 90%; max-width: 450px; padding: 24px; transform: translateY(10px); transition: transform 0.15s ease-out; will-change: transform; }
         .modal-overlay.active .custom-modal { transform: translateY(0); }
@@ -190,7 +188,7 @@
         .formula-card { background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); border-radius: 8px; padding: 16px; }
         .formula-card h3 { color: var(--accent-green); margin: 0 0 12px 0; font-family: var(--font-mono); font-size: 0.95rem; border-bottom: 1px solid rgba(74, 222, 128, 0.2); padding-bottom: 6px; }
         .formula-card p { margin: 0 0 8px 0; font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.5; color: var(--text-main); }
-        
+
         .lb-row { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,0.03); background: rgba(0,0,0,0.15); margin-bottom: 6px; border-radius: 6px; transition: transform 0.1s; }
         .lb-row:hover { transform: translateX(2px); background: rgba(255,255,255,0.05); }
         .lb-row:nth-child(1) { border-left: 4px solid gold; box-shadow: inset 20px 0 30px -20px rgba(255, 215, 0, 0.2); }
@@ -267,7 +265,7 @@
                 </div>
                 <button id="flag-btn" class="btn-flag" onclick="toggleFlag()">⚐ Flag for Review</button>
             </div>
-            
+
             <div id="canvas-storage" style="display: none;">
                 <canvas id="canvas-cube" width="800" height="180"></canvas>
                 <canvas id="canvas-phong" width="800" height="180"></canvas>
@@ -278,18 +276,18 @@
 
             <div id="q-vis-container" class="visualizer-container" style="display:none;">
                 <div class="visualizer-label" id="q-vis-label"></div>
-                <div id="q-vis-mount"></div> 
+                <div id="q-vis-mount"></div>
             </div>
-            
+
             <p id="q-text" class="q-text"></p>
             <div id="q-code" class="code-snippet" style="display:none;"></div>
-            
+
             <div id="q-options" class="options-grid"></div>
-            
+
             <div id="q-textarea-container" style="display:none;">
                 <textarea id="q-textarea" class="math-textarea" placeholder="Write your full solution here..." oninput="handleTextareaInput(this)"></textarea>
             </div>
-            
+
             <div id="q-exp" class="exp-box"></div>
 
             <div class="q-actions">
@@ -443,212 +441,376 @@
             return list;
         }
 
-        let appState = { exam: [], answers: {}, flags: new Set(), currentIndex: 0, filter: 'all', isSubmitted: false };
+        let appState = {
+            exam: [],
+            answers: {},
+            flags: new Set(),
+            currentIndex: 0,
+            filter: 'all',
+            isSubmitted: false,
+            answeredCount: 0,
+            flaggedCount: 0,
+            correctCount: 0,
+            incorrectCount: 0
+        };
+
         let studyMode = 'exam';
         let timerSeconds = 3600;
         let timerInterval = null;
+        let filteredIndices = [];
 
         function setStudyMode(mode) {
             studyMode = mode;
             document.getElementById('btn-exam-mode').classList.toggle('active', mode === 'exam');
             document.getElementById('btn-practice-mode').classList.toggle('active', mode === 'practice');
-            document.getElementById('timer-box').style.display = (mode === 'exam') ? 'block' : 'none';
+            document.getElementById('timer-box').style.display = mode === 'exam' ? 'block' : 'none';
             generateNewSet(false);
         }
 
         function startTimer() {
-            clearInterval(timerInterval); timerSeconds = 3600; updateTimerDisplay();
-            if (studyMode === 'exam') {
-                timerInterval = setInterval(() => {
-                    timerSeconds--; updateTimerDisplay();
-                    if (timerSeconds <= 0) { clearInterval(timerInterval); alert("Time's up! Submitting exam automatically."); submitExam(); }
-                }, 1000);
-            }
+            clearInterval(timerInterval);
+            timerSeconds = 3600;
+            updateTimerDisplay();
+
+            if (studyMode !== 'exam') return;
+
+            timerInterval = setInterval(() => {
+                timerSeconds--;
+                updateTimerDisplay();
+
+                if (timerSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    alert("Time's up! Submitting exam automatically.");
+                    submitExam();
+                }
+            }, 1000);
         }
 
         function updateTimerDisplay() {
             const display = document.getElementById('timer-display');
-            display.innerText = `${Math.floor(timerSeconds / 60)}:${(timerSeconds % 60).toString().padStart(2, '0')}`;
+            display.innerText = `${Math.floor(timerSeconds / 60)}:${String(timerSeconds % 60).padStart(2, '0')}`;
             display.classList.toggle('timer-warning', timerSeconds < 300);
         }
 
         function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [array[i], array[j]] = [array[j], array[i]]; }
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
             return array;
         }
 
         function loadStats() {
             const scores = JSON.parse(localStorage.getItem('renderquest_scores') || '[]');
-            if (scores.length > 0) document.getElementById('high-score-display').innerText = `${Math.max(...scores)}%`;
+            if (scores.length > 0) {
+                document.getElementById('high-score-display').innerText = `${Math.max(...scores)}%`;
+            }
         }
 
         function generateNewSet(isInitialLoad = false) {
-            appState = { exam: [], answers: {}, flags: new Set(), currentIndex: 0, filter: 'all', isSubmitted: false };
+            clearInterval(timerInterval);
+            stopVisualizer();
+
+            appState = {
+                exam: [],
+                answers: {},
+                flags: new Set(),
+                currentIndex: 0,
+                filter: 'all',
+                isSubmitted: false,
+                answeredCount: 0,
+                flaggedCount: 0,
+                correctCount: 0,
+                incorrectCount: 0
+            };
+
+            filteredIndices = [];
+
             document.getElementById('submit-btn').style.display = 'block';
             document.getElementById('reset-btn').style.display = 'none';
             document.getElementById('answer-key').classList.remove('visible');
-            document.getElementById('score-display').innerText = `--/100`;
+            document.getElementById('score-display').innerText = '--/100';
+            document.getElementById('filter-correct').style.display = 'none';
+            document.getElementById('filter-incorrect').style.display = 'none';
 
             const setIDs = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
             document.getElementById('set-indicator').innerText = `Active Exam: Set ${setIDs[Math.floor(Math.random() * setIDs.length)]}`;
 
-            let p1 = rawPart1.map((item) => {
-                let optsWithMeta = item.opts.map((text, i) => ({ text, isCorrect: i === item.ans }));
+            const p1 = rawPart1.map((item) => {
+                const optsWithMeta = item.opts.map((text, i) => ({ text, isCorrect: i === item.ans }));
                 shuffleArray(optsWithMeta);
-                return { type: 'mcq', q: item.q, code: item.code, vis: item.vis, exp: item.exp, points: 1, opts: optsWithMeta.map(o => o.text), ans: optsWithMeta.findIndex(o => o.isCorrect) };
+                return {
+                    type: 'mcq',
+                    q: item.q,
+                    code: item.code,
+                    vis: item.vis,
+                    exp: item.exp,
+                    points: 1,
+                    opts: optsWithMeta.map(o => o.text),
+                    ans: optsWithMeta.findIndex(o => o.isCorrect)
+                };
             });
-            let p2 = generatePart2(); shuffleArray(p1); shuffleArray(p2);
+
+            const p2 = generatePart2();
+            shuffleArray(p1);
+            shuffleArray(p2);
             appState.exam = [...p1, ...p2];
-            
+
             buildNavGrid();
             updateKPIStats();
+            rebuildFilteredIndices();
             renderQuestion(0);
             startTimer();
         }
 
         function buildNavGrid() {
             const grid = document.getElementById('q-nav-grid');
-            grid.innerHTML = appState.exam.map((_, i) => `<button class="q-nav-btn" id="nav-btn-${i}" onclick="jumpToQuestion(${i})">${i + 1}</button>`).join('');
+            grid.innerHTML = appState.exam.map((_, i) =>
+                `<button class="q-nav-btn" id="nav-btn-${i}" onclick="jumpToQuestion(${i})">${i + 1}</button>`
+            ).join('');
         }
 
         function updateKPIStats() {
             const total = appState.exam.length;
-            const answeredCount = Object.keys(appState.answers).filter(k => appState.answers[k] !== undefined && appState.answers[k] !== "").length;
             document.getElementById('kpi-total').innerText = total;
-            document.getElementById('kpi-answered').innerText = answeredCount;
-            document.getElementById('kpi-unanswered').innerText = total - answeredCount;
-            document.getElementById('kpi-flagged').innerText = appState.flags.size;
+            document.getElementById('kpi-answered').innerText = appState.answeredCount;
+            document.getElementById('kpi-unanswered').innerText = total - appState.answeredCount;
+            document.getElementById('kpi-flagged').innerText = appState.flaggedCount;
         }
 
         function updateSingleNavButton(index) {
             const btn = document.getElementById(`nav-btn-${index}`);
-            if(!btn) return;
-            const hasAnswer = (appState.answers[index] !== undefined && appState.answers[index] !== "");
+            if (!btn) return;
+
+            const answer = appState.answers[index];
+            const hasAnswer = answer !== undefined && answer !== '';
+
             btn.classList.toggle('answered', hasAnswer && !appState.isSubmitted);
             btn.classList.toggle('flagged', appState.flags.has(index));
-            
-            if(appState.isSubmitted) {
+
+            if (appState.isSubmitted) {
                 const item = appState.exam[index];
-                const isCorrect = (item.type === 'mcq' && appState.answers[index] === item.ans) || (item.type === 'computational' && hasAnswer);
+                const isCorrect =
+                    (item.type === 'mcq' && answer === item.ans) ||
+                    (item.type === 'computational' && hasAnswer);
+
                 btn.classList.toggle('correct', isCorrect);
                 btn.classList.toggle('incorrect', !isCorrect);
             }
         }
 
-        function setFilter(filterType) {
-            document.querySelectorAll('.kpi-box').forEach(b => b.classList.remove('active-filter'));
-            document.getElementById(`filter-${filterType}`).classList.add('active-filter');
-            appState.filter = filterType;
-            
-            appState.exam.forEach((_, i) => {
-                const btn = document.getElementById(`nav-btn-${i}`);
-                if (!btn) return;
-                const hasAnswer = (appState.answers[i] !== undefined && appState.answers[i] !== "");
-                let show = true;
-                if(filterType === 'answered') show = hasAnswer;
-                if(filterType === 'unanswered') show = !hasAnswer;
-                if(filterType === 'flagged') show = appState.flags.has(i);
-                if(appState.isSubmitted) {
-                    const isCorrect = (appState.exam[i].type === 'mcq' && appState.answers[i] === appState.exam[i].ans) || (appState.exam[i].type === 'computational' && hasAnswer);
-                    if(filterType === 'correct') show = isCorrect;
-                    if(filterType === 'incorrect') show = !isCorrect;
-                }
-                btn.classList.toggle('hidden', !show);
-            });
+        function rebuildFilteredIndices() {
+            const filter = appState.filter;
+            filteredIndices = [];
 
-            const filteredIndices = getFilteredIndices();
-            if (filteredIndices.length > 0 && !filteredIndices.includes(appState.currentIndex)) renderQuestion(filteredIndices[0]);
+            for (let i = 0; i < appState.exam.length; i++) {
+                const item = appState.exam[i];
+                const answer = appState.answers[i];
+                const hasAnswer = answer !== undefined && answer !== '';
+                let show = true;
+
+                switch (filter) {
+                    case 'answered':
+                        show = hasAnswer;
+                        break;
+                    case 'unanswered':
+                        show = !hasAnswer;
+                        break;
+                    case 'flagged':
+                        show = appState.flags.has(i);
+                        break;
+                    case 'correct':
+                        show = appState.isSubmitted && (
+                            item.type === 'mcq' ? answer === item.ans : hasAnswer
+                        );
+                        break;
+                    case 'incorrect':
+                        show = appState.isSubmitted && (
+                            item.type === 'mcq' ? answer !== item.ans : !hasAnswer
+                        );
+                        break;
+                    default:
+                        show = true;
+                }
+
+                const btn = document.getElementById(`nav-btn-${i}`);
+                if (btn) btn.classList.toggle('hidden', !show);
+                if (show) filteredIndices.push(i);
+            }
+        }
+
+        function setFilter(filterType) {
+            appState.filter = filterType;
+
+            document.querySelectorAll('.kpi-box').forEach(b => b.classList.remove('active-filter'));
+            const activeBox = document.getElementById(`filter-${filterType}`);
+            if (activeBox) activeBox.classList.add('active-filter');
+
+            rebuildFilteredIndices();
+
+            if (filteredIndices.length > 0 && !filteredIndices.includes(appState.currentIndex)) {
+                renderQuestion(filteredIndices[0]);
+            } else {
+                updateNavigationButtons();
+            }
         }
 
         function getFilteredIndices() {
-            let indices = [];
-            appState.exam.forEach((_, i) => { if (!document.getElementById(`nav-btn-${i}`).classList.contains('hidden')) indices.push(i); });
-            return indices;
+            return filteredIndices;
         }
 
-        function jumpToQuestion(index) { renderQuestion(index); }
+        function updateNavigationButtons() {
+            const pos = filteredIndices.indexOf(appState.currentIndex);
+            document.getElementById('prev-btn').disabled = pos <= 0;
+            document.getElementById('next-btn').disabled = pos === -1 || pos === filteredIndices.length - 1;
+        }
+
+        function jumpToQuestion(index) {
+            if (appState.filter !== 'all' && !filteredIndices.includes(index)) return;
+            renderQuestion(index);
+        }
+
         function navigateQuestion(direction) {
-            const indices = getFilteredIndices();
-            if (indices.length === 0) return;
-            const currentPos = indices.indexOf(appState.currentIndex);
-            if (currentPos !== -1) {
-                const nextPos = currentPos + direction;
-                if (nextPos >= 0 && nextPos < indices.length) renderQuestion(indices[nextPos]);
-            } else { renderQuestion(indices[0]); }
+            if (filteredIndices.length === 0) return;
+
+            const currentPos = filteredIndices.indexOf(appState.currentIndex);
+            if (currentPos === -1) {
+                renderQuestion(filteredIndices[0]);
+                return;
+            }
+
+            const nextPos = currentPos + direction;
+            if (nextPos >= 0 && nextPos < filteredIndices.length) {
+                renderQuestion(filteredIndices[nextPos]);
+            }
         }
 
         function toggleFlag() {
             const i = appState.currentIndex;
-            if(appState.flags.has(i)) appState.flags.delete(i);
-            else appState.flags.add(i);
+            const flagged = appState.flags.has(i);
+
+            if (flagged) {
+                appState.flags.delete(i);
+                appState.flaggedCount--;
+            } else {
+                appState.flags.add(i);
+                appState.flaggedCount++;
+            }
+
             updateKPIStats();
             updateSingleNavButton(i);
-            
+
+            if (appState.filter === 'flagged') rebuildFilteredIndices();
+
             const flagBtn = document.getElementById('flag-btn');
-            flagBtn.classList.toggle('active', appState.flags.has(i));
-            flagBtn.innerText = appState.flags.has(i) ? "⚐ Flagged" : "⚐ Flag for Review";
+            const isNowFlagged = appState.flags.has(i);
+            flagBtn.classList.toggle('active', isNowFlagged);
+            flagBtn.innerText = isNowFlagged ? '⚐ Flagged' : '⚐ Flag for Review';
+
+            if (appState.filter === 'flagged' && !isNowFlagged && filteredIndices.length > 0) {
+                renderQuestion(filteredIndices[0]);
+            } else {
+                updateNavigationButtons();
+            }
         }
 
         function handleOptionSelect(qIdx, optIdx) {
             if (appState.isSubmitted) return;
+
+            const wasAnswered = appState.answers[qIdx] !== undefined && appState.answers[qIdx] !== '';
             appState.answers[qIdx] = optIdx;
+
+            if (!wasAnswered) appState.answeredCount++;
+
             updateKPIStats();
             updateSingleNavButton(qIdx);
-            if (studyMode === 'practice') renderQuestion(qIdx); 
+
+            if (appState.filter === 'answered' || appState.filter === 'unanswered') {
+                rebuildFilteredIndices();
+            }
+
+            if (studyMode === 'practice') renderQuestion(qIdx);
         }
 
         function handleTextareaInput(textarea) {
             if (appState.isSubmitted) return;
-            const wasEmpty = !appState.answers[appState.currentIndex];
-            const isEmpty = textarea.value.trim() === "";
-            appState.answers[appState.currentIndex] = textarea.value;
-            
-            if (wasEmpty !== isEmpty) {
-                updateKPIStats();
-                updateSingleNavButton(appState.currentIndex);
+
+            const index = appState.currentIndex;
+            const wasEmpty = !appState.answers[index] || appState.answers[index].trim() === '';
+            const value = textarea.value;
+            const isEmpty = value.trim() === '';
+
+            appState.answers[index] = value;
+
+            if (wasEmpty && !isEmpty) appState.answeredCount++;
+            else if (!wasEmpty && isEmpty) appState.answeredCount--;
+
+            updateKPIStats();
+            updateSingleNavButton(index);
+
+            if (appState.filter === 'answered' || appState.filter === 'unanswered') {
+                rebuildFilteredIndices();
             }
         }
 
-        let currentActiveCanvas = null; 
+        let currentActiveCanvas = null;
 
         function renderQuestion(index) {
+            if (!appState.exam[index]) return;
+
             const oldBtn = document.getElementById(`nav-btn-${appState.currentIndex}`);
             if (oldBtn) oldBtn.classList.remove('current');
+
             const newBtn = document.getElementById(`nav-btn-${index}`);
             if (newBtn) newBtn.classList.add('current');
 
             appState.currentIndex = index;
             const item = appState.exam[index];
-            const hasAnswer = (appState.answers[index] !== undefined && appState.answers[index] !== "");
-            
-            document.getElementById('q-meta-title').innerText = index < 50 ? "PART I — MULTIPLE CHOICE" : "PART II — PRACTICAL / COMPUTATIONAL";
-            document.getElementById('q-meta-subtitle').innerText = `Question ${index + 1} of 60 (${item.points} pts)`;
-            document.getElementById('q-text').innerHTML = `<span style="color:var(--accent-cyan); font-family:var(--font-mono);">${index + 1}.</span> ${item.q}`;
-            
+            const hasAnswer = appState.answers[index] !== undefined && appState.answers[index] !== '';
+
+            document.getElementById('q-meta-title').innerText =
+                index < 50 ? 'PART I — MULTIPLE CHOICE' : 'PART II — PRACTICAL / COMPUTATIONAL';
+            document.getElementById('q-meta-subtitle').innerText =
+                `Question ${index + 1} of ${appState.exam.length} (${item.points} pts)`;
+            document.getElementById('q-text').innerHTML =
+                `<span style="color:var(--accent-cyan);font-family:var(--font-mono);">${index + 1}.</span> ${item.q}`;
+
             const flagBtn = document.getElementById('flag-btn');
-            flagBtn.classList.toggle('active', appState.flags.has(index));
-            flagBtn.innerText = appState.flags.has(index) ? "⚐ Flagged" : "⚐ Flag for Review";
+            const flagged = appState.flags.has(index);
+            flagBtn.classList.toggle('active', flagged);
+            flagBtn.innerText = flagged ? '⚐ Flagged' : '⚐ Flag for Review';
 
             const codeEl = document.getElementById('q-code');
-            if (item.code) { codeEl.style.display = 'block'; codeEl.innerText = item.code; } else { codeEl.style.display = 'none'; }
+            if (item.code) {
+                codeEl.style.display = 'block';
+                codeEl.innerText = item.code;
+            } else {
+                codeEl.style.display = 'none';
+                codeEl.innerText = '';
+            }
 
-            currentActiveCanvas = item.vis || null; 
             const visContainer = document.getElementById('q-vis-container');
             const visMount = document.getElementById('q-vis-mount');
-            
-            document.getElementById('canvas-storage').append(...visMount.childNodes);
+            const storage = document.getElementById('canvas-storage');
+
+            while (visMount.firstChild) storage.appendChild(visMount.firstChild);
+
             if (item.vis) {
                 visContainer.style.display = 'flex';
                 document.getElementById('q-vis-label').innerText = `// LIVE VIEW: ${item.vis.toUpperCase()}`;
-                visMount.appendChild(document.getElementById(`canvas-${item.vis}`));
+                const canvas = document.getElementById(`canvas-${item.vis}`);
+                if (canvas) visMount.appendChild(canvas);
+                currentActiveCanvas = item.vis;
+                startVisualizer();
             } else {
                 visContainer.style.display = 'none';
+                stopVisualizer();
             }
 
             const optsContainer = document.getElementById('q-options');
             const txtContainer = document.getElementById('q-textarea-container');
             const expBox = document.getElementById('q-exp');
-            
+
             txtContainer.style.display = 'none';
             expBox.classList.remove('visible');
 
@@ -656,32 +818,42 @@
 
             if (item.type === 'mcq') {
                 optsContainer.style.display = 'flex';
-                
+
                 let optionsHtml = '';
                 item.opts.forEach((opt, i) => {
-                    let classes = "option-label";
-                    let checked = appState.answers[index] === i ? 'checked' : '';
-                    let disabled = appState.isSubmitted ? 'disabled' : '';
-                    
+                    let classes = 'option-label';
+                    const checked = appState.answers[index] === i ? 'checked' : '';
+                    const disabled = appState.isSubmitted ? 'disabled' : '';
+
                     if (showAnswerLogic) {
-                        if (i === item.ans) classes += " correct";
-                        else if (appState.answers[index] === i) classes += " incorrect";
+                        if (i === item.ans) classes += ' correct';
+                        else if (appState.answers[index] === i) classes += ' incorrect';
                     }
 
                     optionsHtml += `
                         <label class="${classes}" id="lbl-${index}-${i}">
-                            <input type="radio" name="q-rad" value="${i}" onchange="handleOptionSelect(${index}, ${i})" ${checked} ${disabled}> ${opt}
+                            <input type="radio" name="q-rad" value="${i}"
+                                onchange="handleOptionSelect(${index}, ${i})"
+                                ${checked} ${disabled}>
+                            ${opt}
                         </label>`;
                 });
-                optsContainer.innerHTML = optionsHtml; 
+
+                optsContainer.innerHTML = optionsHtml;
             } else {
                 optsContainer.style.display = 'none';
                 optsContainer.innerHTML = '';
                 txtContainer.style.display = 'block';
+
                 const ta = document.getElementById('q-textarea');
-                ta.value = appState.answers[index] || "";
+                ta.value = appState.answers[index] || '';
                 ta.disabled = appState.isSubmitted;
-                if (appState.isSubmitted) ta.style.borderColor = hasAnswer ? 'var(--accent-green)' : 'var(--accent-red)';
+
+                if (appState.isSubmitted) {
+                    ta.style.borderColor = hasAnswer ? 'var(--accent-green)' : 'var(--accent-red)';
+                } else {
+                    ta.style.borderColor = '';
+                }
             }
 
             if (showAnswerLogic) {
@@ -689,10 +861,7 @@
                 expBox.classList.add('visible');
             }
 
-            const indices = getFilteredIndices();
-            const pos = indices.indexOf(index);
-            document.getElementById('prev-btn').disabled = pos <= 0;
-            document.getElementById('next-btn').disabled = pos === -1 || pos === indices.length - 1;
+            updateNavigationButtons();
         }
 
         let currentFinalScore = 0;
@@ -726,13 +895,13 @@
             document.getElementById('submit-btn').style.display = 'none';
             document.getElementById('reset-btn').style.display = 'block';
             document.getElementById('answer-key').classList.add('visible');
-            
+
             document.getElementById('filter-correct').style.display = 'block';
             document.getElementById('filter-incorrect').style.display = 'block';
             document.getElementById('kpi-correct').innerText = appState.exam.length - missedQuestions.length;
             document.getElementById('kpi-incorrect').innerText = missedQuestions.length;
 
-            renderQuestion(appState.currentIndex); 
+            renderQuestion(appState.currentIndex);
             window.scrollTo({ top: 0, behavior: 'smooth' });
             if (studyMode !== 'practice') openNameModal(totalScore);
         }
@@ -742,92 +911,216 @@
             localStorage.setItem('renderquest_scores', JSON.stringify(scores)); loadStats();
         }
 
-        // 5. LIVE CANVAS VISUALIZERS (Faster minimal animation speeds)
-        let time = 0; let ctxList = {};
+        // 5. LIVE CANVAS VISUALIZERS — PERFORMANCE OPTIMIZED
+        let time = 0;
+        let ctxList = {};
+        let animationFrameId = null;
+        let lastFrameTime = 0;
+        const TARGET_FRAME_MS = 33; // ~30 FPS is enough for educational visualizers.
 
         function bindCanvasContexts() {
-            ctxList = { cube: document.getElementById('canvas-cube')?.getContext('2d'), phong: document.getElementById('canvas-phong')?.getContext('2d'), bary: document.getElementById('canvas-bary')?.getContext('2d'), vectors: document.getElementById('canvas-vectors')?.getContext('2d'), alpha: document.getElementById('canvas-alpha')?.getContext('2d') };
+            ctxList = {
+                cube: document.getElementById('canvas-cube')?.getContext('2d'),
+                phong: document.getElementById('canvas-phong')?.getContext('2d'),
+                bary: document.getElementById('canvas-bary')?.getContext('2d'),
+                vectors: document.getElementById('canvas-vectors')?.getContext('2d'),
+                alpha: document.getElementById('canvas-alpha')?.getContext('2d')
+            };
         }
 
         function drawVectors(ctx) {
-            const w = ctx.canvas.width, h = ctx.canvas.height; ctx.clearRect(0, 0, w, h); const cx = w / 2, cy = h / 2 + 20;
-            const nx = 0, ny = -70; const lx = Math.cos(time * 0.04) * 70; const ly = Math.sin(time * 0.04) * -70;
-            ctx.strokeStyle = '#3f3f46'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(cx-100, cy); ctx.lineTo(cx+100, cy); ctx.stroke();
-            ctx.beginPath(); ctx.moveTo(cx, cy-90); ctx.lineTo(cx, cy+20); ctx.stroke(); drawArrow(ctx, cx, cy, cx + nx, cy + ny, '#22d3ee');
-            ctx.fillStyle = '#22d3ee'; ctx.fillText("Normal (N)", cx - 30, cy - 80); drawArrow(ctx, cx, cy, cx + lx, cy + ly, '#facc15');
-            ctx.fillStyle = '#facc15'; ctx.fillText("Light (L)", cx + lx - 10, cy + ly - 10);
-            const dot = ((nx/70) * (lx/Math.sqrt(lx*lx + ly*ly)) + (ny/70) * (ly/Math.sqrt(lx*lx + ly*ly))).toFixed(2);
-            ctx.fillStyle = '#fff'; ctx.font = "14px monospace"; ctx.fillText(`N · L = ${dot}`, cx - 35, h - 10);
+            const w = ctx.canvas.width, h = ctx.canvas.height;
+            ctx.clearRect(0, 0, w, h);
+            const cx = w / 2, cy = h / 2 + 20;
+            const nx = 0, ny = -70;
+            const lx = Math.cos(time * 0.04) * 70;
+            const ly = Math.sin(time * 0.04) * -70;
+            ctx.strokeStyle = '#3f3f46'; ctx.lineWidth = 1;
+            ctx.beginPath(); ctx.moveTo(cx - 100, cy); ctx.lineTo(cx + 100, cy); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx, cy - 90); ctx.lineTo(cx, cy + 20); ctx.stroke();
+            drawArrow(ctx, cx, cy, cx + nx, cy + ny, '#22d3ee');
+            ctx.fillStyle = '#22d3ee'; ctx.font = '14px monospace'; ctx.fillText('Normal (N)', cx - 30, cy - 80);
+            drawArrow(ctx, cx, cy, cx + lx, cy + ly, '#facc15');
+            ctx.fillStyle = '#facc15'; ctx.fillText('Light (L)', cx + lx - 10, cy + ly - 10);
+            const len = Math.sqrt(lx * lx + ly * ly);
+            const dot = ((nx / 70) * (lx / len) + (ny / 70) * (ly / len)).toFixed(2);
+            ctx.fillStyle = '#fff'; ctx.fillText(`N · L = ${dot}`, cx - 35, h - 10);
         }
 
         function drawArrow(ctx, fx, fy, tx, ty, color) {
             const headlen = 10, angle = Math.atan2(ty - fy, tx - fx);
-            ctx.beginPath(); ctx.strokeStyle = color; ctx.lineWidth = 2.5; ctx.moveTo(fx, fy); ctx.lineTo(tx, ty);
-            ctx.lineTo(tx - headlen * Math.cos(angle - Math.PI/6), ty - headlen * Math.sin(angle - Math.PI/6));
-            ctx.moveTo(tx, ty); ctx.lineTo(tx - headlen * Math.cos(angle + Math.PI/6), ty - headlen * Math.sin(angle + Math.PI/6)); ctx.stroke();
+            ctx.beginPath(); ctx.strokeStyle = color; ctx.lineWidth = 2.5;
+            ctx.moveTo(fx, fy); ctx.lineTo(tx, ty);
+            ctx.lineTo(tx - headlen * Math.cos(angle - Math.PI / 6), ty - headlen * Math.sin(angle - Math.PI / 6));
+            ctx.moveTo(tx, ty);
+            ctx.lineTo(tx - headlen * Math.cos(angle + Math.PI / 6), ty - headlen * Math.sin(angle + Math.PI / 6));
+            ctx.stroke();
         }
 
         const nodes = [[-1,-1,-1],[-1,-1,1],[-1,1,-1],[-1,1,1],[1,-1,-1],[1,-1,1],[1,1,-1],[1,1,1]];
         const edges = [[0,1],[1,3],[3,2],[2,0],[4,5],[5,7],[7,6],[6,4],[0,4],[1,5],[2,6],[3,7]];
+
         function drawCube(ctx) {
-            const w = ctx.canvas.width, h = ctx.canvas.height; ctx.clearRect(0, 0, w, h); const scale = 40, cx = w/2, cy = h/2;
+            const w = ctx.canvas.width, h = ctx.canvas.height;
+            ctx.clearRect(0, 0, w, h);
+            const scale = 40, cx = w / 2, cy = h / 2;
             const aX = time * 0.02, aY = time * 0.03;
-            const proj = nodes.map(n => { let y1 = n[1]*Math.cos(aX) - n[2]*Math.sin(aX), z1 = n[1]*Math.sin(aX) + n[2]*Math.cos(aX); return [(n[0]*Math.cos(aY) - z1*Math.sin(aY))*scale + cx, y1*scale + cy]; });
+            const cosX = Math.cos(aX), sinX = Math.sin(aX);
+            const cosY = Math.cos(aY), sinY = Math.sin(aY);
+            const proj = nodes.map(n => {
+                const y1 = n[1] * cosX - n[2] * sinX;
+                const z1 = n[1] * sinX + n[2] * cosX;
+                return [(n[0] * cosY - z1 * sinY) * scale + cx, y1 * scale + cy];
+            });
             ctx.strokeStyle = '#22d3ee'; ctx.lineWidth = 1.5; ctx.lineJoin = 'round';
-            edges.forEach(e => { ctx.beginPath(); ctx.moveTo(proj[e[0]][0], proj[e[0]][1]); ctx.lineTo(proj[e[1]][0], proj[e[1]][1]); ctx.stroke(); });
-            ctx.fillStyle = '#f4f4f5'; proj.forEach(p => { ctx.beginPath(); ctx.arc(p[0], p[1], 2, 0, Math.PI*2); ctx.fill(); });
+            edges.forEach(e => {
+                ctx.beginPath(); ctx.moveTo(proj[e[0]][0], proj[e[0]][1]); ctx.lineTo(proj[e[1]][0], proj[e[1]][1]); ctx.stroke();
+            });
+            ctx.fillStyle = '#f4f4f5';
+            proj.forEach(p => { ctx.beginPath(); ctx.arc(p[0], p[1], 2, 0, Math.PI * 2); ctx.fill(); });
         }
 
         function drawPhong(ctx) {
-            const w = ctx.canvas.width, h = ctx.canvas.height; ctx.clearRect(0, 0, w, h); const cx = w/2, cy = h/2, radius = 55, lx = cx + Math.sin(time * 0.05) * 55;
-            const grad = ctx.createRadialGradient(lx, cy-20, 5, cx, cy, radius);
+            const w = ctx.canvas.width, h = ctx.canvas.height;
+            ctx.clearRect(0, 0, w, h);
+            const cx = w / 2, cy = h / 2, radius = 55;
+            const lx = cx + Math.sin(time * 0.05) * 55;
+            const grad = ctx.createRadialGradient(lx, cy - 20, 5, cx, cy, radius);
             grad.addColorStop(0, '#ffffff'); grad.addColorStop(0.25, '#38bdf8'); grad.addColorStop(1, '#082f49');
-            ctx.beginPath(); ctx.arc(cx, cy, radius, 0, Math.PI*2); ctx.fillStyle = grad; ctx.fill(); ctx.strokeStyle = '#0ea5e9'; ctx.lineWidth = 1; ctx.stroke();
+            ctx.beginPath(); ctx.arc(cx, cy, radius, 0, Math.PI * 2); ctx.fillStyle = grad; ctx.fill();
+            ctx.strokeStyle = '#0ea5e9'; ctx.lineWidth = 1; ctx.stroke();
         }
 
         function drawAlpha(ctx) {
-            const w = ctx.canvas.width, h = ctx.canvas.height; ctx.clearRect(0, 0, w, h); const cx = w/2, cy = h/2, offset = Math.sin(time * 0.04) * 40;
-            ctx.globalCompositeOperation = 'screen'; 
-            ctx.beginPath(); ctx.arc(cx - 20 + offset, cy, 45, 0, Math.PI*2); ctx.fillStyle = 'rgba(248, 113, 113, 0.8)'; ctx.fill();
-            ctx.beginPath(); ctx.arc(cx + 20 - offset, cy, 45, 0, Math.PI*2); ctx.fillStyle = 'rgba(34, 211, 238, 0.8)'; ctx.fill();
+            const w = ctx.canvas.width, h = ctx.canvas.height;
+            ctx.clearRect(0, 0, w, h);
+            const cx = w / 2, cy = h / 2, offset = Math.sin(time * 0.04) * 40;
+            ctx.globalCompositeOperation = 'screen';
+            ctx.beginPath(); ctx.arc(cx - 20 + offset, cy, 45, 0, Math.PI * 2); ctx.fillStyle = 'rgba(248, 113, 113, 0.8)'; ctx.fill();
+            ctx.beginPath(); ctx.arc(cx + 20 - offset, cy, 45, 0, Math.PI * 2); ctx.fillStyle = 'rgba(34, 211, 238, 0.8)'; ctx.fill();
             ctx.globalCompositeOperation = 'source-over';
         }
 
         function drawBarycentric(ctx) {
-            const w = ctx.canvas.width, h = ctx.canvas.height; ctx.clearRect(0, 0, w, h); const cx = w/2, cy = h/2, a = time * 0.02, r = 60;
-            const v1 = { x: cx + Math.cos(a)*r, y: cy + Math.sin(a)*r, color: '#f87171' }, v2 = { x: cx + Math.cos(a + 2.094)*r, y: cy + Math.sin(a + 2.094)*r, color: '#4ade80' }, v3 = { x: cx + Math.cos(a + 4.188)*r, y: cy + Math.sin(a + 4.188)*r, color: '#22d3ee' };
+            const w = ctx.canvas.width, h = ctx.canvas.height;
+            ctx.clearRect(0, 0, w, h);
+            const cx = w / 2, cy = h / 2, a = time * 0.02, r = 60;
+            const v1x = cx + Math.cos(a) * r, v1y = cy + Math.sin(a) * r;
+            const v2x = cx + Math.cos(a + 2.094) * r, v2y = cy + Math.sin(a + 2.094) * r;
+            const v3x = cx + Math.cos(a + 4.188) * r, v3y = cy + Math.sin(a + 4.188) * r;
+
             ctx.globalCompositeOperation = 'screen';
-            [v1, v2, v3].forEach(v => { const grad = ctx.createRadialGradient(v.x, v.y, 0, v.x, v.y, r * 1.5); grad.addColorStop(0, v.color); grad.addColorStop(1, 'rgba(0,0,0,0)'); ctx.beginPath(); ctx.moveTo(v1.x, v1.y); ctx.lineTo(v2.x, v2.y); ctx.lineTo(v3.x, v3.y); ctx.fillStyle = grad; ctx.fill(); });
-            ctx.globalCompositeOperation = 'source-over'; ctx.strokeStyle = '#fff'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(v1.x, v1.y); ctx.lineTo(v2.x, v2.y); ctx.lineTo(v3.x, v3.y); ctx.closePath(); ctx.stroke();
+            const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, r * 1.5);
+            grad.addColorStop(0, 'rgba(34, 211, 238, 0.65)');
+            grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            ctx.beginPath(); ctx.moveTo(v1x, v1y); ctx.lineTo(v2x, v2y); ctx.lineTo(v3x, v3y); ctx.closePath();
+            ctx.fillStyle = grad; ctx.fill();
+            ctx.globalCompositeOperation = 'source-over';
+            ctx.strokeStyle = '#fff'; ctx.lineWidth = 1;
+            ctx.beginPath(); ctx.moveTo(v1x, v1y); ctx.lineTo(v2x, v2y); ctx.lineTo(v3x, v3y); ctx.closePath(); ctx.stroke();
         }
 
-        function animate() {
-            if (currentActiveCanvas) {
-                time++;
-                if (currentActiveCanvas === 'vectors' && ctxList.vectors) drawVectors(ctxList.vectors);
-                else if (currentActiveCanvas === 'cube' && ctxList.cube) drawCube(ctxList.cube);
-                else if (currentActiveCanvas === 'phong' && ctxList.phong) drawPhong(ctxList.phong);
-                else if (currentActiveCanvas === 'alpha' && ctxList.alpha) drawAlpha(ctxList.alpha);
-                else if (currentActiveCanvas === 'bary' && ctxList.bary) drawBarycentric(ctxList.bary);
+        function drawActiveVisualizer() {
+            if (!currentActiveCanvas) return;
+            const ctx = ctxList[currentActiveCanvas];
+            if (!ctx) return;
+
+            switch (currentActiveCanvas) {
+                case 'vectors': drawVectors(ctx); break;
+                case 'cube': drawCube(ctx); break;
+                case 'phong': drawPhong(ctx); break;
+                case 'alpha': drawAlpha(ctx); break;
+                case 'bary': drawBarycentric(ctx); break;
             }
-            requestAnimationFrame(animate);
         }
 
-        // 6. MODALS
-        let isLeaderboardOpen = false; let isFormulaOpen = false;
-        function toggleFormulaSheet() { isFormulaOpen = !isFormulaOpen; document.getElementById('formula-modal').classList.toggle('active', isFormulaOpen); }
-        function toggleLeaderboard() { isLeaderboardOpen = !isLeaderboardOpen; const modal = document.getElementById('lb-modal'); modal.classList.toggle('active', isLeaderboardOpen); if (isLeaderboardOpen) fetchLeaderboard(); }
+        function startVisualizer() {
+            if (!currentActiveCanvas || animationFrameId !== null) return;
+            lastFrameTime = performance.now();
+
+            function frame(now) {
+                if (!currentActiveCanvas) {
+                    animationFrameId = null;
+                    return;
+                }
+
+                if (now - lastFrameTime >= TARGET_FRAME_MS) {
+                    lastFrameTime = now;
+                    time++;
+                    drawActiveVisualizer();
+                }
+
+                animationFrameId = requestAnimationFrame(frame);
+            }
+
+            animationFrameId = requestAnimationFrame(frame);
+        }
+
+        function stopVisualizer() {
+            if (animationFrameId !== null) {
+                cancelAnimationFrame(animationFrameId);
+                animationFrameId = null;
+            }
+            currentActiveCanvas = null;
+        }
+
+        // 6. MODALS        // 6. MODALS
+        let isLeaderboardOpen = false;
+        let isFormulaOpen = false;
+        let leaderboardLoaded = false;
+        let leaderboardLoading = false;
+
+        function toggleFormulaSheet() {
+            isFormulaOpen = !isFormulaOpen;
+            document.getElementById('formula-modal').classList.toggle('active', isFormulaOpen);
+        }
+
+        function toggleLeaderboard() {
+            isLeaderboardOpen = !isLeaderboardOpen;
+            const modal = document.getElementById('lb-modal');
+            modal.classList.toggle('active', isLeaderboardOpen);
+
+            if (isLeaderboardOpen && !leaderboardLoaded && !leaderboardLoading) {
+                fetchLeaderboard();
+            }
+        }
 
         async function fetchLeaderboard() {
-            const lbContent = document.getElementById('lb-content'); lbContent.innerHTML = '<div class="lb-row"><span class="lb-name">Loading live scores...</span></div>';
+            if (leaderboardLoading) return;
+            leaderboardLoading = true;
+
+            const lbContent = document.getElementById('lb-content');
+            lbContent.innerHTML = `<div class="lb-row"><span class="lb-name">Loading live scores...</span></div>`;
+
             try {
-                const response = await fetch('https://renderquest-9a48c-default-rtdb.firebaseio.com/leaderboard.json'); const data = await response.json();
-                let globalScores = data ? Object.values(data) : [];
-                if (globalScores.length === 0) { lbContent.innerHTML = '<div class="lb-row"><span class="lb-name">No scores yet. Be the first!</span></div>'; return; }
-                globalScores.sort((a, b) => b.score - a.score); let html = "";
-                globalScores.slice(0, 10).forEach((entry, index) => { html += `<div class="lb-row"><span class="lb-name">#${index + 1} ${entry.name}</span><span class="lb-score">${entry.score}/100</span></div>`; });
-                lbContent.innerHTML = html;
-            } catch (error) { lbContent.innerHTML = '<div class="lb-row"><span class="lb-name" style="color:var(--accent-red)">Error loading scores. Check your DB rules.</span></div>'; }
+                const response = await fetch('https://renderquest-9a48c-default-rtdb.firebaseio.com/leaderboard.json');
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+                const data = await response.json();
+                const globalScores = data ? Object.values(data) : [];
+
+                if (globalScores.length === 0) {
+                    lbContent.innerHTML = `<div class="lb-row"><span class="lb-name">No scores yet. Be the first!</span></div>`;
+                    leaderboardLoaded = true;
+                    return;
+                }
+
+                globalScores.sort((a, b) => Number(b.score) - Number(a.score));
+
+                lbContent.innerHTML = globalScores.slice(0, 10).map((entry, index) => `
+                    <div class="lb-row">
+                        <span class="lb-name">#${index + 1} ${entry.name}</span>
+                        <span class="lb-score">${entry.score}/100</span>
+                    </div>
+                `).join('');
+
+                leaderboardLoaded = true;
+            } catch (error) {
+                console.error('Leaderboard error:', error);
+                lbContent.innerHTML = `<div class="lb-row"><span class="lb-name" style="color:var(--accent-red)">Error loading scores. Check your DB rules.</span></div>`;
+            } finally {
+                leaderboardLoading = false;
+            }
         }
 
         function openNameModal(score) { document.getElementById('final-score-display').innerText = score; document.getElementById('name-modal').classList.add('active'); document.getElementById('player-name').focus(); }
@@ -838,15 +1131,26 @@
             const btn = document.getElementById('btn-submit-score'); btn.innerText = "Syncing..."; btn.disabled = true;
             try {
                 await fetch('https://renderquest-9a48c-default-rtdb.firebaseio.com/leaderboard.json', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: nameInput.substring(0, 20), score: currentFinalScore, timestamp: new Date().getTime() }) });
-                closeNameModal(); document.getElementById('player-name').value = ''; toggleLeaderboard(); 
+                closeNameModal(); document.getElementById('player-name').value = ''; toggleLeaderboard();
             } catch (error) { alert("Failed to save score globally. Check your internet connection."); } finally { btn.innerText = "Submit to Global Ranking"; btn.disabled = false; }
         }
 
-        // INITIALIZATION
-        window.onload = () => {
-            loadStats(); bindCanvasContexts(); generateNewSet(true); animate();
-            setTimeout(() => { const loader = document.getElementById('loading-screen'); loader.classList.add('hidden'); setTimeout(() => { loader.style.display = 'none'; }, 150); }, 600);
-        };
+// INITIALIZATION
+        window.addEventListener('load', () => {
+            loadStats();
+            bindCanvasContexts();
+            generateNewSet(true);
+
+            // Loader is shown only once, on initial page load.
+            const loader = document.getElementById('loading-screen');
+            setTimeout(() => {
+                loader.classList.add('hidden');
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                }, 150);
+            }, 350);
+        });
     </script>
 </body>
 </html>
+

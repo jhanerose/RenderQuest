@@ -39,7 +39,7 @@
             min-height: 100vh;
         }
 
-        /* LOADING SCREEN STYLES */
+        /* 3D OPENGL POLYGON LOADING SCREEN STYLES */
         .loading-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--bg-base); z-index: 9999;
@@ -47,19 +47,46 @@
             transition: opacity 0.6s ease, visibility 0.6s;
         }
         .loading-screen.hidden { opacity: 0; visibility: hidden; }
-        .loader {
-            width: 45px; height: 45px;
-            border: 3px solid rgba(34, 211, 238, 0.15);
-            border-top-color: var(--accent-cyan);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 20px;
+        
+        .gl-loader-container {
+            perspective: 1000px;
+            margin-bottom: 50px;
         }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
+        .gl-polyhedron {
+            width: 80px; height: 80px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotate-poly 3s infinite linear;
+        }
+        .gl-face {
+            position: absolute;
+            width: 80px; height: 80px;
+            display: flex; justify-content: center; align-items: center;
+            font-family: var(--font-mono); font-size: 14px; font-weight: bold; color: rgba(255,255,255,0.7);
+            border: 2px solid; box-sizing: border-box; backdrop-filter: blur(2px);
+        }
+        /* Colored 3D Faces mapping */
+        .gl-face:nth-child(1) { transform: translateZ(40px); border-color: var(--accent-cyan); background: rgba(34, 211, 238, 0.15); box-shadow: inset 0 0 15px var(--accent-cyan); }
+        .gl-face:nth-child(2) { transform: rotateY(180deg) translateZ(40px); border-color: var(--accent-red); background: rgba(248, 113, 113, 0.15); box-shadow: inset 0 0 15px var(--accent-red); }
+        .gl-face:nth-child(3) { transform: rotateY(90deg) translateZ(40px); border-color: var(--accent-green); background: rgba(74, 222, 128, 0.15); box-shadow: inset 0 0 15px var(--accent-green); }
+        .gl-face:nth-child(4) { transform: rotateY(-90deg) translateZ(40px); border-color: var(--accent-yellow); background: rgba(250, 204, 21, 0.15); box-shadow: inset 0 0 15px var(--accent-yellow); }
+        .gl-face:nth-child(5) { transform: rotateX(90deg) translateZ(40px); border-color: #a855f7; background: rgba(168, 85, 247, 0.15); box-shadow: inset 0 0 15px #a855f7; }
+        .gl-face:nth-child(6) { transform: rotateX(-90deg) translateZ(40px); border-color: #f97316; background: rgba(249, 115, 22, 0.15); box-shadow: inset 0 0 15px #f97316; }
+
+        @keyframes rotate-poly {
+            0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+            100% { transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg); }
+        }
+
         .loading-screen h2 {
             font-family: var(--font-mono); color: var(--accent-cyan);
-            font-size: 1.1rem; letter-spacing: 1px; margin: 0;
+            font-size: 1.2rem; letter-spacing: 2px; margin: 0;
+            text-transform: uppercase;
             animation: pulse-loader 1.5s infinite;
+        }
+        .loading-screen p {
+            color: var(--text-muted); font-family: var(--font-mono); 
+            font-size: 0.85rem; margin-top: 12px;
         }
         @keyframes pulse-loader {
             0%, 100% { opacity: 1; }
@@ -357,10 +384,20 @@
 </head>
 <body>
 
-    <!-- LOADING SCREEN -->
+    <!-- LOADING SCREEN: 3D OPENGL POLYGON -->
     <div id="loading-screen" class="loading-screen">
-        <div class="loader"></div>
+        <div class="gl-loader-container">
+            <div class="gl-polyhedron">
+                <div class="gl-face">v0</div>
+                <div class="gl-face">v1</div>
+                <div class="gl-face">v2</div>
+                <div class="gl-face">v3</div>
+                <div class="gl-face">v4</div>
+                <div class="gl-face">v5</div>
+            </div>
+        </div>
         <h2>Initializing Pipeline...</h2>
+        <p>Compiling Shaders & Generating Geometry</p>
     </div>
 
     <header>
@@ -645,6 +682,7 @@
         let studyMode = 'exam'; // 'exam' or 'practice'
         let timerSeconds = 3600;
         let timerInterval = null;
+        let loaderTimeout = null;
 
         function setStudyMode(mode) {
             studyMode = mode;
@@ -757,10 +795,11 @@
             renderExam();
             startTimer();
 
-            // Hide Loading Screen after a short delay for smooth effect
-            setTimeout(() => {
+            // Hide Loading Screen after delay to showcase the 3D polygon animation
+            clearTimeout(loaderTimeout);
+            loaderTimeout = setTimeout(() => {
                 loader.classList.add('hidden');
-            }, 800);
+            }, 2000);
         }
 
         function renderExam() {

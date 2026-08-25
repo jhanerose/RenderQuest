@@ -587,7 +587,7 @@
             
             const flagBtn = document.getElementById('flag-btn');
             flagBtn.classList.toggle('active', appState.flags.has(i));
-            flagBtn.innerText = appState.flags.has(i) ? "🚩 Flagged" : "🚩 Flag for Review";
+            flagBtn.innerText = appState.flags.has(i) ? "⚐ Flagged" : "⚐ Flag for Review";
         }
 
         function handleOptionSelect(qIdx, optIdx) {
@@ -629,7 +629,7 @@
             
             const flagBtn = document.getElementById('flag-btn');
             flagBtn.classList.toggle('active', appState.flags.has(index));
-            flagBtn.innerText = appState.flags.has(index) ? "🚩 Flagged" : "🚩 Flag for Review";
+            flagBtn.innerText = appState.flags.has(index) ? "⚐ Flagged" : "⚐ Flag for Review";
 
             const codeEl = document.getElementById('q-code');
             if (item.code) { codeEl.style.display = 'block'; codeEl.innerText = item.code; } else { codeEl.style.display = 'none'; }

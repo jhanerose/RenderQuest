@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RenderQuest | Computer Graphics Programming</title>
     
-    <!-- EMBEDDED SHADER/GEOMETRY FAVICON -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%2309090b'/><path d='M16 4 L28 24 L4 24 Z' fill='none' stroke='%2322d3ee' stroke-width='2.5'/><circle cx='16' cy='4' r='2.5' fill='%23f4f4f5'/><circle cx='28' cy='24' r='2.5' fill='%23f4f4f5'/><circle cx='4' cy='24' r='2.5' fill='%23f4f4f5'/><circle cx='16' cy='17' r='2' fill='%23facc15'/></svg>">
 
     <style>
@@ -27,7 +26,6 @@
             --font-sans: 'Inter', -apple-system, sans-serif;
             --font-mono: 'JetBrains Mono', monospace;
             
-            /* Glassmorphism Variables */
             --glass-bg: rgba(24, 24, 27, 0.45);
             --glass-border: rgba(255, 255, 255, 0.08);
             --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
@@ -46,30 +44,19 @@
             overflow-x: hidden;
         }
 
-        /* 3D OPENGL POLYGON LOADING SCREEN */
+        /* LOADING SCREEN */
         .loading-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--bg-base); z-index: 9999;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            transition: opacity 0.4s ease, visibility 0.4s;
-            will-change: opacity; /* Hardware acceleration */
+            transition: opacity 0.3s ease;
+            will-change: opacity;
         }
-        .loading-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        .loading-screen.hidden { opacity: 0; pointer-events: none; }
         
         .gl-loader-container { perspective: 1000px; margin-bottom: 50px; }
-        .gl-polyhedron {
-            width: 80px; height: 80px; position: relative;
-            transform-style: preserve-3d; animation: rotate-poly 3s infinite linear;
-            will-change: transform;
-        }
-        .gl-face {
-            position: absolute; width: 80px; height: 80px;
-            display: flex; justify-content: center; align-items: center;
-            font-family: var(--font-mono); font-size: 14px; font-weight: bold; color: rgba(255,255,255,0.7);
-            border: 2px solid; box-sizing: border-box; 
-            /* Blur removed here to stop startup lag, solid background is fine for loader */
-            background: rgba(34, 211, 238, 0.15); 
-        }
+        .gl-polyhedron { width: 80px; height: 80px; position: relative; transform-style: preserve-3d; animation: rotate-poly 3s infinite linear; will-change: transform; }
+        .gl-face { position: absolute; width: 80px; height: 80px; display: flex; justify-content: center; align-items: center; font-family: var(--font-mono); font-size: 14px; font-weight: bold; color: rgba(255,255,255,0.7); border: 2px solid; box-sizing: border-box; background: rgba(34, 211, 238, 0.15); }
         .gl-face:nth-child(1) { transform: translateZ(40px); border-color: var(--accent-cyan); box-shadow: inset 0 0 15px var(--accent-cyan); }
         .gl-face:nth-child(2) { transform: rotateY(180deg) translateZ(40px); border-color: var(--accent-red); box-shadow: inset 0 0 15px var(--accent-red); background: rgba(248, 113, 113, 0.15); }
         .gl-face:nth-child(3) { transform: rotateY(90deg) translateZ(40px); border-color: var(--accent-green); box-shadow: inset 0 0 15px var(--accent-green); background: rgba(74, 222, 128, 0.15); }
@@ -77,10 +64,7 @@
         .gl-face:nth-child(5) { transform: rotateX(90deg) translateZ(40px); border-color: #a855f7; box-shadow: inset 0 0 15px #a855f7; background: rgba(168, 85, 247, 0.15); }
         .gl-face:nth-child(6) { transform: rotateX(-90deg) translateZ(40px); border-color: var(--accent-orange); box-shadow: inset 0 0 15px var(--accent-orange); background: rgba(249, 115, 22, 0.15); }
 
-        @keyframes rotate-poly {
-            0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
-            100% { transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg); }
-        }
+        @keyframes rotate-poly { 0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); } 100% { transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg); } }
 
         .loading-screen h2 { font-family: var(--font-mono); color: var(--accent-cyan); font-size: 1.2rem; letter-spacing: 2px; margin: 0; text-transform: uppercase; animation: pulse-loader 1.5s infinite; }
         .loading-screen p { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.85rem; margin-top: 12px; }
@@ -89,15 +73,11 @@
         /* HEADER */
         header {
             background: rgba(9, 9, 11, 0.85); 
-            /* GPU Accelerated blur */
-            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); transform: translateZ(0);
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); transform: translateZ(0);
             border-bottom: 1px solid var(--glass-border); padding: 14px 0;
             position: sticky; top: 0; z-index: 100;
         }
-        .header-content {
-            max-width: 1000px; margin: 0 auto; padding: 0 20px;
-            display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
-        }
+        .header-content { max-width: 1000px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
         .brand { display: flex; align-items: center; gap: 10px; }
         .brand-badge { background: rgba(34, 211, 238, 0.15); color: var(--accent-cyan); border: 1px solid rgba(34, 211, 238, 0.3); font-family: var(--font-mono); font-size: 0.75rem; padding: 3px 8px; border-radius: 4px; }
         
@@ -116,30 +96,24 @@
         
         .glass-panel {
             background: var(--glass-bg); 
-            /* GPU Accelerated blur */
-            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); transform: translateZ(0);
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); transform: translateZ(0);
             border: 1px solid var(--glass-border); border-radius: 12px; box-shadow: var(--glass-shadow);
         }
 
-        /* KPI & NAVIGATION DASHBOARD */
+        /* KPI DASHBOARD */
         .kpi-dashboard { padding: 16px; margin-bottom: 24px; display: flex; flex-direction: column; gap: 16px; }
         .kpi-stats { display: flex; gap: 10px; flex-wrap: wrap; }
         .kpi-box { flex: 1; min-width: 120px; padding: 12px; background: rgba(0,0,0,0.2); border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); text-align: center; }
         .kpi-box .label { font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono); text-transform: uppercase; margin-bottom: 4px; }
         .kpi-box .value { font-size: 1.25rem; font-weight: 700; color: var(--text-main); }
         .kpi-box.active-filter { border-color: var(--accent-cyan); background: rgba(34, 211, 238, 0.05); cursor: pointer; transition: all 0.2s; }
-        .kpi-box.active-filter:hover { border-color: var(--accent-cyan); background: rgba(34, 211, 238, 0.1); }
-        .kpi-box.clickable { cursor: pointer; transition: all 0.2s; }
-        .kpi-box.clickable:hover { border-color: var(--text-muted); }
+        .kpi-box.clickable { cursor: pointer; transition: border-color 0.15s; }
+        .kpi-box.clickable:hover:not(.active-filter) { border-color: var(--text-muted); }
 
         .q-nav-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(32px, 1fr)); gap: 8px; max-height: 120px; overflow-y: auto; padding-right: 4px; }
         .q-nav-grid::-webkit-scrollbar { width: 6px; }
         .q-nav-grid::-webkit-scrollbar-thumb { background: var(--border-subtle); border-radius: 4px; }
-        .q-nav-btn {
-            height: 32px; display: flex; align-items: center; justify-content: center;
-            background: rgba(255,255,255,0.05); border: 1px solid var(--border-subtle); border-radius: 6px;
-            color: var(--text-muted); font-family: var(--font-mono); font-size: 0.8rem; cursor: pointer; transition: background 0.15s;
-        }
+        .q-nav-btn { height: 32px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); border: 1px solid var(--border-subtle); border-radius: 6px; color: var(--text-muted); font-family: var(--font-mono); font-size: 0.8rem; cursor: pointer; transition: background 0.1s, border-color 0.1s; }
         .q-nav-btn:hover { background: rgba(255,255,255,0.1); }
         .q-nav-btn.answered { background: rgba(255,255,255,0.15); color: #fff; border-color: #fff; }
         .q-nav-btn.flagged { background: rgba(250, 204, 21, 0.2); color: var(--accent-yellow); border-color: var(--accent-yellow); }
@@ -161,11 +135,7 @@
         .code-snippet { background: rgba(0,0,0,0.4); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 16px; font-family: var(--font-mono); font-size: 0.9rem; color: var(--accent-cyan); margin-bottom: 20px; white-space: pre-wrap; }
 
         .options-grid { display: flex; flex-direction: column; gap: 12px; }
-        .option-label {
-            display: flex; align-items: center; padding: 16px;
-            background: rgba(255, 255, 255, 0.03); border: 1px solid var(--glass-border);
-            border-radius: 8px; cursor: pointer; transition: background 0.1s, border-color 0.1s; font-size: 1rem;
-        }
+        .option-label { display: flex; align-items: center; padding: 16px; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--glass-border); border-radius: 8px; cursor: pointer; transition: background 0.1s, border-color 0.1s; font-size: 1rem; }
         .option-label:hover { background: rgba(255,255,255,0.08); border-color: var(--border-subtle); }
         .option-label input[type="radio"] { appearance: none; width: 20px; height: 20px; border: 2px solid var(--text-muted); border-radius: 50%; margin-right: 14px; cursor: pointer; position: relative; flex-shrink: 0; transition: border-color 0.1s; }
         .option-label input[type="radio"]:checked { border-color: var(--accent-cyan); }
@@ -173,12 +143,7 @@
         .option-label.correct { border-color: var(--accent-green) !important; background: rgba(74, 222, 128, 0.1) !important; color: var(--accent-green) !important; }
         .option-label.incorrect { border-color: var(--accent-red) !important; background: rgba(248, 113, 113, 0.1) !important; color: var(--accent-red) !important; }
 
-        /* EXACT SOLUTION */
-        .math-textarea {
-            width: 100%; padding: 16px; background: rgba(0, 0, 0, 0.3); border: 1px solid var(--glass-border);
-            color: var(--accent-cyan); border-radius: 8px; font-family: var(--font-mono); font-size: 0.95rem;
-            outline: none; box-sizing: border-box; transition: border-color 0.15s; resize: vertical; min-height: 140px;
-        }
+        .math-textarea { width: 100%; padding: 16px; background: rgba(0, 0, 0, 0.3); border: 1px solid var(--glass-border); color: var(--accent-cyan); border-radius: 8px; font-family: var(--font-mono); font-size: 0.95rem; outline: none; box-sizing: border-box; transition: border-color 0.15s; resize: vertical; min-height: 140px; }
         .math-textarea:focus { border-color: var(--accent-cyan); box-shadow: 0 0 0 2px rgba(34, 211, 238, 0.2); }
 
         .exp-box { display: none; margin-top: 20px; padding: 16px; background: rgba(34, 211, 238, 0.05); border-left: 4px solid var(--accent-cyan); border-radius: 0 8px 8px 0; font-size: 0.95rem; color: var(--text-main); font-family: var(--font-mono); }
@@ -188,7 +153,6 @@
         .visualizer-container { margin-bottom: 24px; background: #000; border-radius: 8px; border: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: center; height: 180px; position: relative; overflow: hidden; }
         .visualizer-label { position: absolute; top: 8px; left: 12px; font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent-cyan); opacity: 0.85; z-index: 10; background: rgba(0,0,0,0.5); padding: 2px 6px; border-radius: 4px;}
 
-        /* NAVIGATION BUTTONS */
         .q-actions { display: flex; justify-content: space-between; margin-top: 30px; border-top: 1px solid var(--border-subtle); padding-top: 20px; }
         .btn-secondary { background: var(--bg-surface); border: 1px solid var(--border-subtle); color: var(--text-main); padding: 10px 24px; border-radius: 8px; cursor: pointer; font-weight: 500; transition: background 0.15s; }
         .btn-secondary:hover:not(:disabled) { background: rgba(255,255,255,0.1); }
@@ -199,33 +163,21 @@
         .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
         
         #reset-btn { background: var(--accent-cyan); color: #000; display: none; }
-
         #answer-key { display: none; padding: 24px; margin-bottom: 30px; }
         #answer-key.visible { display: block; animation: fadeIn 0.3s ease; }
         .weakness-list { margin: 16px 0 0 0; padding-left: 20px; color: var(--accent-red); }
         .weakness-list li { margin-bottom: 12px; color: var(--text-main); line-height: 1.5; }
 
-        /* GLASSMORPHISM MODALS */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.6); 
-            /* GPU Accelerated blur */
-            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); transform: translateZ(0);
-            display: flex; justify-content: center; align-items: center;
-            z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.25s ease;
-            will-change: opacity;
-        }
+        /* MODALS */
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); transform: translateZ(0); display: flex; justify-content: center; align-items: center; z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; will-change: opacity; }
         .modal-overlay.active { opacity: 1; pointer-events: auto; }
-        
         .custom-modal { width: 90%; max-width: 450px; padding: 24px; transform: translateY(20px); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); will-change: transform; }
         .modal-overlay.active .custom-modal { transform: translateY(0); }
-        
         .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--glass-border); padding-bottom: 12px; }
         .modal-header h2 { margin: 0; color: #fff; font-family: var(--font-mono); font-size: 1.2rem; }
         .close-btn { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1.5rem; transition: color 0.2s; }
         .close-btn:hover { color: var(--accent-red); }
 
-        /* FORMULA SHEET SPECIFIC */
         #formula-modal .custom-modal { max-width: 750px; max-height: 85vh; overflow-y: auto; }
         #formula-modal .custom-modal::-webkit-scrollbar { width: 6px; }
         #formula-modal .custom-modal::-webkit-scrollbar-thumb { background: var(--border-subtle); border-radius: 4px; }
@@ -233,9 +185,7 @@
         .formula-card { background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); border-radius: 8px; padding: 16px; }
         .formula-card h3 { color: var(--accent-green); margin: 0 0 12px 0; font-family: var(--font-mono); font-size: 0.95rem; border-bottom: 1px solid rgba(74, 222, 128, 0.2); padding-bottom: 6px; }
         .formula-card p { margin: 0 0 8px 0; font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.5; color: var(--text-main); }
-        .formula-card strong { color: var(--text-muted); }
-
-        /* LEADERBOARD SPECIFIC */
+        
         .lb-row { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,0.03); background: rgba(0,0,0,0.15); margin-bottom: 6px; border-radius: 6px; transition: transform 0.2s; }
         .lb-row:hover { transform: translateX(4px); background: rgba(255,255,255,0.05); }
         .lb-row:nth-child(1) { border-left: 4px solid gold; box-shadow: inset 20px 0 30px -20px rgba(255, 215, 0, 0.2); }
@@ -243,35 +193,26 @@
         .lb-row:nth-child(3) { border-left: 4px solid #cd7f32; box-shadow: inset 20px 0 30px -20px rgba(205, 127, 50, 0.2); }
         .lb-name { font-family: var(--font-sans); font-weight: 500; color: #fff; }
         .lb-score { font-family: var(--font-mono); color: var(--accent-yellow); font-weight: 600; }
-
         .name-input { width: 100%; padding: 14px; background: rgba(0,0,0,0.4); border: 1px solid var(--border-subtle); color: #fff; border-radius: 8px; font-family: var(--font-sans); font-size: 1rem; outline: none; box-sizing: border-box; transition: border-color 0.2s; }
         .name-input:focus { border-color: var(--accent-cyan); box-shadow: 0 0 0 2px rgba(34, 211, 238, 0.2); }
-
         footer { text-align: center; padding: 24px 20px; margin-top: auto; border-top: 1px solid var(--border-subtle); background: var(--bg-surface); color: var(--text-muted); font-size: 0.85rem; font-family: var(--font-mono); }
         footer span { color: var(--accent-cyan); font-weight: 600; letter-spacing: 0.5px; }
-
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-    <!-- LOADING SCREEN: SHOWN ONLY ONCE ON INITIAL LOAD -->
     <div id="loading-screen" class="loading-screen">
         <div class="gl-loader-container">
             <div class="gl-polyhedron">
-                <div class="gl-face">v0</div>
-                <div class="gl-face">v1</div>
-                <div class="gl-face">v2</div>
-                <div class="gl-face">v3</div>
-                <div class="gl-face">v4</div>
-                <div class="gl-face">v5</div>
+                <div class="gl-face">v0</div><div class="gl-face">v1</div><div class="gl-face">v2</div>
+                <div class="gl-face">v3</div><div class="gl-face">v4</div><div class="gl-face">v5</div>
             </div>
         </div>
         <h2>Initializing Pipeline...</h2>
         <p>Compiling Shaders & Randomizing Geometries</p>
     </div>
 
-    <!-- HEADER -->
     <header>
         <div class="header-content">
             <div class="brand">
@@ -293,8 +234,6 @@
     </header>
 
     <div class="container">
-        
-        <!-- EVALUATION LOG (Hidden until submit) -->
         <div id="answer-key" class="glass-panel">
             <h3 style="color: var(--accent-cyan); margin: 0 0 8px 0;">Pipeline Evaluation Log</h3>
             <p style="margin: 0 0 16px 0; font-size: 0.95rem; color: var(--text-muted);">
@@ -303,51 +242,27 @@
             <div id="weak-points-summary"></div>
         </div>
 
-        <!-- KPI & NAVIGATION DASHBOARD -->
         <div class="kpi-dashboard glass-panel">
             <div class="kpi-stats">
-                <div class="kpi-box clickable active-filter" id="filter-all" onclick="setFilter('all')">
-                    <div class="label">Total</div>
-                    <div class="value" id="kpi-total">60</div>
-                </div>
-                <div class="kpi-box clickable" id="filter-answered" onclick="setFilter('answered')">
-                    <div class="label">Answered</div>
-                    <div class="value" id="kpi-answered" style="color: #fff;">0</div>
-                </div>
-                <div class="kpi-box clickable" id="filter-unanswered" onclick="setFilter('unanswered')">
-                    <div class="label">Unanswered</div>
-                    <div class="value" id="kpi-unanswered">60</div>
-                </div>
-                <div class="kpi-box clickable" id="filter-flagged" onclick="setFilter('flagged')">
-                    <div class="label" style="color: var(--accent-yellow)">Flagged</div>
-                    <div class="value" id="kpi-flagged" style="color: var(--accent-yellow)">0</div>
-                </div>
-                <div class="kpi-box clickable" id="filter-correct" onclick="setFilter('correct')" style="display:none;">
-                    <div class="label" style="color: var(--accent-green)">Correct</div>
-                    <div class="value" id="kpi-correct" style="color: var(--accent-green)">0</div>
-                </div>
-                <div class="kpi-box clickable" id="filter-incorrect" onclick="setFilter('incorrect')" style="display:none;">
-                    <div class="label" style="color: var(--accent-red)">Incorrect</div>
-                    <div class="value" id="kpi-incorrect" style="color: var(--accent-red)">0</div>
-                </div>
+                <div class="kpi-box clickable active-filter" id="filter-all" onclick="setFilter('all')"><div class="label">Total</div><div class="value" id="kpi-total">60</div></div>
+                <div class="kpi-box clickable" id="filter-answered" onclick="setFilter('answered')"><div class="label">Answered</div><div class="value" id="kpi-answered" style="color: #fff;">0</div></div>
+                <div class="kpi-box clickable" id="filter-unanswered" onclick="setFilter('unanswered')"><div class="label">Unanswered</div><div class="value" id="kpi-unanswered">60</div></div>
+                <div class="kpi-box clickable" id="filter-flagged" onclick="setFilter('flagged')"><div class="label" style="color: var(--accent-yellow)">Flagged</div><div class="value" id="kpi-flagged" style="color: var(--accent-yellow)">0</div></div>
+                <div class="kpi-box clickable" id="filter-correct" onclick="setFilter('correct')" style="display:none;"><div class="label" style="color: var(--accent-green)">Correct</div><div class="value" id="kpi-correct" style="color: var(--accent-green)">0</div></div>
+                <div class="kpi-box clickable" id="filter-incorrect" onclick="setFilter('incorrect')" style="display:none;"><div class="label" style="color: var(--accent-red)">Incorrect</div><div class="value" id="kpi-incorrect" style="color: var(--accent-red)">0</div></div>
             </div>
-            
-            <div class="q-nav-grid" id="q-nav-grid">
-                <!-- Generated dynamically -->
-            </div>
+            <div class="q-nav-grid" id="q-nav-grid"></div>
         </div>
 
-        <!-- SINGLE QUESTION LAYOUT -->
         <div id="single-question-container" class="question-card glass-panel">
             <div class="q-header">
                 <div>
                     <h2 class="q-meta-title" id="q-meta-title">PART I — MULTIPLE CHOICE</h2>
                     <div class="q-meta-subtitle" id="q-meta-subtitle">Question 1 of 60</div>
                 </div>
-                <button id="flag-btn" class="btn-flag" onclick="toggleFlag()">⚑ Flag for Review</button>
+                <button id="flag-btn" class="btn-flag" onclick="toggleFlag()">⚐ Flag for Review</button>
             </div>
             
-            <!-- Hidden container to securely hold canvases without destroying context -->
             <div id="canvas-storage" style="display: none;">
                 <canvas id="canvas-cube" width="800" height="180"></canvas>
                 <canvas id="canvas-phong" width="800" height="180"></canvas>
@@ -358,7 +273,7 @@
 
             <div id="q-vis-container" class="visualizer-container" style="display:none;">
                 <div class="visualizer-label" id="q-vis-label"></div>
-                <div id="q-vis-mount"></div> <!-- Canvas moves here -->
+                <div id="q-vis-mount"></div> 
             </div>
             
             <p id="q-text" class="q-text"></p>
@@ -382,7 +297,7 @@
         <button id="reset-btn" class="btn-primary" type="button" onclick="generateNewSet()">Generate Next Random Set</button>
     </div>
 
-    <!-- FORMULA SHEET MODAL -->
+    <!-- MODALS -->
     <div class="modal-overlay" id="formula-modal">
         <div class="custom-modal glass-panel" style="border-color: var(--accent-green);">
             <div class="modal-header">
@@ -397,13 +312,9 @@
                 </div>
                 <div class="formula-card">
                     <h3>Vector Products</h3>
-                    <p><strong>Dot Product (Scalar):</strong><br>A · B = (A.x*B.x) + (A.y*B.y) + (A.z*B.z)</p>
+                    <p><strong>Dot Product:</strong><br>A · B = (A.x*B.x) + (A.y*B.y) + (A.z*B.z)</p>
                     <p><strong>Angle (Cosine):</strong><br>cos(θ) = (A · B) / (|A| * |B|)</p>
-                    <p><strong>Cross Product (Vector):</strong><br>
-                        X: (A.y*B.z - A.z*B.y)<br>
-                        Y: (A.z*B.x - A.x*B.z)<br>
-                        Z: (A.x*B.y - A.y*B.x)
-                    </p>
+                    <p><strong>Cross Product:</strong><br>X: (A.y*B.z - A.z*B.y)<br>Y: (A.z*B.x - A.x*B.z)<br>Z: (A.x*B.y - A.y*B.x)</p>
                 </div>
                 <div class="formula-card" style="grid-column: 1 / -1;">
                     <h3>Pipeline & Transformation</h3>
@@ -413,20 +324,16 @@
         </div>
     </div>
 
-    <!-- LEADERBOARD MODAL -->
     <div class="modal-overlay" id="lb-modal">
         <div class="custom-modal glass-panel" style="border-color: var(--accent-yellow);">
             <div class="modal-header">
                 <h2 style="color: var(--accent-yellow);">⮺ The Hall of Code (Global Rankings)</h2>
                 <button class="close-btn" onclick="toggleLeaderboard()">×</button>
             </div>
-            <div id="lb-content" style="max-height: 400px; overflow-y: auto; padding-right:4px;">
-                <div class="lb-row"><span class="lb-name">Loading Live Scores...</span></div>
-            </div>
+            <div id="lb-content" style="max-height: 400px; overflow-y: auto; padding-right:4px;"></div>
         </div>
     </div>
 
-    <!-- CUSTOM NAME ENTRY MODAL -->
     <div class="modal-overlay" id="name-modal">
         <div class="custom-modal glass-panel" style="border-color: var(--accent-cyan);">
             <div class="modal-header">
@@ -442,15 +349,10 @@
         </div>
     </div>
 
-    <!-- FOOTER -->
-    <footer>
-        Coded by <span>Jhane Rose Sadicon</span>
-    </footer>
+    <footer>Coded by <span>Jhane Rose Sadicon</span></footer>
 
     <script>
-        // =========================================================================
-        // 1. QUESTION BANK: PART I (ITEMS 1–50) WITH EXPLANATIONS
-        // =========================================================================
+        // 1. DATA (Truncated standard question sets from before)
         const rawPart1 = [
             { q: "A junior artist at your studio delivers the team logo as a raster image. When the logo is enlarged for a loading screen, it becomes blocky and blurred. What is the most appropriate explanation you can give?", opts: ["Raster images are defined by mathematical shapes, which cannot be resized", "Raster images are made of a fixed grid of pixels, so scaling beyond that resolution loses quality", "The GPU refuses to enlarge raster images beyond their original size", "Raster images store no color data, so enlargement exposes empty pixels"], ans: 1, exp: "Raster graphics consist of a discrete grid of pixels; stretching them forces pixel interpolation (stretching existing data), whereas vector images scale cleanly via math formulas." },
             { q: "A team is building a 2D user interface with icons and sprites, and a separate module where a product can be rotated and viewed from any angle under lighting. Which pairing of graphics types is most appropriate?", opts: ["2D (x, y) for the interface; 3D (x, y, z) for the rotatable, lit product", "3D for the interface; 2D for the rotatable product", "2D for both, since rotation can be faked with color changes", "3D for both, since 2D graphics cannot display icons"], ans: 0, exp: "Flat UI elements only require 2D Cartesian coordinates (X, Y), whereas dynamic rotation and Phong lighting calculations require a 3D space (X, Y, Z)." },
@@ -504,9 +406,6 @@
             { vis: "alpha", code: "gl_Position = model * vec4(pos, 1.0);", q: "Executed for every vertex of a moving object, which statement best analyzes what happens in the line above?", opts: ["The matrix is recomputed by the GPU for each vertex, so vertices drift apart", "Each vertex's position is multiplied by the same model matrix sent in through a uniform, moving the whole object consistently", "pos is a uniform, so all vertices collapse to one point", "The multiplication happens on the CPU before the shader runs"], ans: 1, exp: "The uniform `model` matrix applies an identical spatial transform (translation/rotation/scale) to all vertices, preserving object rigidity." }
         ];
 
-        // =========================================================================
-        // 2. PROCEDURAL GENERATOR: PART II (ITEMS 51–60)
-        // =========================================================================
         function generatePart2() {
             const rInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
             let list = [];
@@ -540,18 +439,8 @@
             return list;
         }
 
-        // =========================================================================
-        // 3. APPLICATION STATE & EXAM CONTROLLER (SINGLE QUESTION LAYOUT)
-        // =========================================================================
-        let appState = {
-            exam: [],
-            answers: {},      // qIdx -> selected option idx (MCQ) or text string (Computational)
-            flags: new Set(), // Set of flagged qIdx
-            currentIndex: 0,
-            filter: 'all',    // 'all', 'answered', 'unanswered', 'flagged', 'correct', 'incorrect'
-            isSubmitted: false
-        };
-
+        // 2. STATE 
+        let appState = { exam: [], answers: {}, flags: new Set(), currentIndex: 0, filter: 'all', isSubmitted: false };
         let studyMode = 'exam';
         let timerSeconds = 3600;
         let timerInterval = null;
@@ -565,43 +454,29 @@
         }
 
         function startTimer() {
-            clearInterval(timerInterval);
-            timerSeconds = 3600;
-            updateTimerDisplay();
+            clearInterval(timerInterval); timerSeconds = 3600; updateTimerDisplay();
             if (studyMode === 'exam') {
                 timerInterval = setInterval(() => {
-                    timerSeconds--;
-                    updateTimerDisplay();
-                    if (timerSeconds <= 0) {
-                        clearInterval(timerInterval);
-                        alert("Time's up! Submitting exam automatically.");
-                        submitExam();
-                    }
+                    timerSeconds--; updateTimerDisplay();
+                    if (timerSeconds <= 0) { clearInterval(timerInterval); alert("Time's up! Submitting exam automatically."); submitExam(); }
                 }, 1000);
             }
         }
 
         function updateTimerDisplay() {
-            const m = Math.floor(timerSeconds / 60);
-            const s = timerSeconds % 60;
             const display = document.getElementById('timer-display');
-            display.innerText = `${m}:${s < 10 ? '0' : ''}${s}`;
+            display.innerText = `${Math.floor(timerSeconds / 60)}:${(timerSeconds % 60).toString().padStart(2, '0')}`;
             display.classList.toggle('timer-warning', timerSeconds < 300);
         }
 
         function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
+            for (let i = array.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [array[i], array[j]] = [array[j], array[i]]; }
             return array;
         }
 
         function loadStats() {
             const scores = JSON.parse(localStorage.getItem('renderquest_scores') || '[]');
-            if (scores.length > 0) {
-                document.getElementById('high-score-display').innerText = `${Math.max(...scores)}%`;
-            }
+            if (scores.length > 0) document.getElementById('high-score-display').innerText = `${Math.max(...scores)}%`;
         }
 
         function generateNewSet(isInitialLoad = false) {
@@ -614,108 +489,85 @@
             const setIDs = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
             document.getElementById('set-indicator').innerText = `Active Exam: Set ${setIDs[Math.floor(Math.random() * setIDs.length)]}`;
 
-            let p1 = rawPart1.map((item, idx) => {
+            let p1 = rawPart1.map((item) => {
                 let optsWithMeta = item.opts.map((text, i) => ({ text, isCorrect: i === item.ans }));
                 shuffleArray(optsWithMeta);
-                return {
-                    type: 'mcq', q: item.q, code: item.code, vis: item.vis, exp: item.exp, points: 1,
-                    opts: optsWithMeta.map(o => o.text), ans: optsWithMeta.findIndex(o => o.isCorrect)
-                };
+                return { type: 'mcq', q: item.q, code: item.code, vis: item.vis, exp: item.exp, points: 1, opts: optsWithMeta.map(o => o.text), ans: optsWithMeta.findIndex(o => o.isCorrect) };
             });
-            let p2 = generatePart2();
-            
-            shuffleArray(p1);
-            shuffleArray(p2);
+            let p2 = generatePart2(); shuffleArray(p1); shuffleArray(p2);
             appState.exam = [...p1, ...p2];
             
             buildNavGrid();
-            updateKPIs();
+            updateKPIStats();
             renderQuestion(0);
             startTimer();
         }
 
-        // =========================================================================
-        // 4. UI RENDERING & NAVIGATION LOGIC
-        // =========================================================================
+        // 3. OPTIMIZED UI RENDERING 
+        // FIX 1: We only update exactly what is needed, instead of looping 60 elements repeatedly.
         function buildNavGrid() {
             const grid = document.getElementById('q-nav-grid');
+            // Build the string ONCE and apply it ONCE
             grid.innerHTML = appState.exam.map((_, i) => `<button class="q-nav-btn" id="nav-btn-${i}" onclick="jumpToQuestion(${i})">${i + 1}</button>`).join('');
         }
 
-        function updateKPIs() {
+        function updateKPIStats() {
             const total = appState.exam.length;
             const answeredCount = Object.keys(appState.answers).filter(k => appState.answers[k] !== undefined && appState.answers[k] !== "").length;
-            const flaggedCount = appState.flags.size;
-
             document.getElementById('kpi-total').innerText = total;
             document.getElementById('kpi-answered').innerText = answeredCount;
             document.getElementById('kpi-unanswered').innerText = total - answeredCount;
-            document.getElementById('kpi-flagged').innerText = flaggedCount;
+            document.getElementById('kpi-flagged').innerText = appState.flags.size;
+        }
 
-            appState.exam.forEach((_, i) => {
-                const btn = document.getElementById(`nav-btn-${i}`);
-                if(!btn) return;
-                
-                const hasAnswer = (appState.answers[i] !== undefined && appState.answers[i] !== "");
-                btn.classList.toggle('answered', hasAnswer && !appState.isSubmitted);
-                btn.classList.toggle('flagged', appState.flags.has(i));
-                btn.classList.toggle('current', i === appState.currentIndex);
-
-                if(appState.isSubmitted) {
-                    const item = appState.exam[i];
-                    const isCorrect = (item.type === 'mcq' && appState.answers[i] === item.ans) || (item.type === 'computational' && hasAnswer);
-                    btn.classList.toggle('correct', isCorrect);
-                    btn.classList.toggle('incorrect', !isCorrect);
-                }
-            });
-
-            applyFilter(appState.filter);
+        function updateSingleNavButton(index) {
+            const btn = document.getElementById(`nav-btn-${index}`);
+            if(!btn) return;
+            const hasAnswer = (appState.answers[index] !== undefined && appState.answers[index] !== "");
+            btn.classList.toggle('answered', hasAnswer && !appState.isSubmitted);
+            btn.classList.toggle('flagged', appState.flags.has(index));
+            
+            if(appState.isSubmitted) {
+                const item = appState.exam[index];
+                const isCorrect = (item.type === 'mcq' && appState.answers[index] === item.ans) || (item.type === 'computational' && hasAnswer);
+                btn.classList.toggle('correct', isCorrect);
+                btn.classList.toggle('incorrect', !isCorrect);
+            }
         }
 
         function setFilter(filterType) {
             document.querySelectorAll('.kpi-box').forEach(b => b.classList.remove('active-filter'));
             document.getElementById(`filter-${filterType}`).classList.add('active-filter');
             appState.filter = filterType;
-            applyFilter(filterType);
             
-            const filteredIndices = getFilteredIndices();
-            if (filteredIndices.length > 0 && !filteredIndices.includes(appState.currentIndex)) {
-                renderQuestion(filteredIndices[0]);
-            }
-        }
-
-        function applyFilter(filter) {
+            // Apply filter hides/shows the grid buttons (this is the only time we loop 60 times now)
             appState.exam.forEach((_, i) => {
                 const btn = document.getElementById(`nav-btn-${i}`);
                 if (!btn) return;
-                
                 const hasAnswer = (appState.answers[i] !== undefined && appState.answers[i] !== "");
                 let show = true;
-
-                if(filter === 'answered') show = hasAnswer;
-                if(filter === 'unanswered') show = !hasAnswer;
-                if(filter === 'flagged') show = appState.flags.has(i);
+                if(filterType === 'answered') show = hasAnswer;
+                if(filterType === 'unanswered') show = !hasAnswer;
+                if(filterType === 'flagged') show = appState.flags.has(i);
                 if(appState.isSubmitted) {
                     const isCorrect = (appState.exam[i].type === 'mcq' && appState.answers[i] === appState.exam[i].ans) || (appState.exam[i].type === 'computational' && hasAnswer);
-                    if(filter === 'correct') show = isCorrect;
-                    if(filter === 'incorrect') show = !isCorrect;
+                    if(filterType === 'correct') show = isCorrect;
+                    if(filterType === 'incorrect') show = !isCorrect;
                 }
                 btn.classList.toggle('hidden', !show);
             });
+
+            const filteredIndices = getFilteredIndices();
+            if (filteredIndices.length > 0 && !filteredIndices.includes(appState.currentIndex)) renderQuestion(filteredIndices[0]);
         }
 
         function getFilteredIndices() {
             let indices = [];
-            appState.exam.forEach((_, i) => {
-                if (!document.getElementById(`nav-btn-${i}`).classList.contains('hidden')) indices.push(i);
-            });
+            appState.exam.forEach((_, i) => { if (!document.getElementById(`nav-btn-${i}`).classList.contains('hidden')) indices.push(i); });
             return indices;
         }
 
-        function jumpToQuestion(index) {
-            renderQuestion(index);
-        }
-
+        function jumpToQuestion(index) { renderQuestion(index); }
         function navigateQuestion(direction) {
             const indices = getFilteredIndices();
             if (indices.length === 0) return;
@@ -723,42 +575,50 @@
             if (currentPos !== -1) {
                 const nextPos = currentPos + direction;
                 if (nextPos >= 0 && nextPos < indices.length) renderQuestion(indices[nextPos]);
-            } else {
-                renderQuestion(indices[0]);
-            }
+            } else { renderQuestion(indices[0]); }
         }
 
         function toggleFlag() {
             const i = appState.currentIndex;
             if(appState.flags.has(i)) appState.flags.delete(i);
             else appState.flags.add(i);
-            updateKPIs();
-            renderQuestion(i); 
+            updateKPIStats();
+            updateSingleNavButton(i);
+            
+            const flagBtn = document.getElementById('flag-btn');
+            flagBtn.classList.toggle('active', appState.flags.has(i));
+            flagBtn.innerText = appState.flags.has(i) ? "🚩 Flagged" : "🚩 Flag for Review";
         }
 
         function handleOptionSelect(qIdx, optIdx) {
             if (appState.isSubmitted) return;
             appState.answers[qIdx] = optIdx;
-            updateKPIs();
+            updateKPIStats();
+            updateSingleNavButton(qIdx);
             if (studyMode === 'practice') renderQuestion(qIdx); 
         }
 
-        // PERFORMANCE FIX: Debounce/optimize textarea to stop layout thrashing on every keystroke
         function handleTextareaInput(textarea) {
             if (appState.isSubmitted) return;
             const wasEmpty = !appState.answers[appState.currentIndex];
             const isEmpty = textarea.value.trim() === "";
             appState.answers[appState.currentIndex] = textarea.value;
             
-            // Only force heavy DOM recalculations if state changes between empty/answered
             if (wasEmpty !== isEmpty) {
-                updateKPIs();
+                updateKPIStats();
+                updateSingleNavButton(appState.currentIndex);
             }
         }
 
-        let currentActiveCanvas = null; // PERFORMANCE FIX: Track which canvas is active
+        let currentActiveCanvas = null; 
 
         function renderQuestion(index) {
+            // FIX 2: Fast swap of the 'current' indicator instead of looping all buttons
+            const oldBtn = document.getElementById(`nav-btn-${appState.currentIndex}`);
+            if (oldBtn) oldBtn.classList.remove('current');
+            const newBtn = document.getElementById(`nav-btn-${index}`);
+            if (newBtn) newBtn.classList.add('current');
+
             appState.currentIndex = index;
             const item = appState.exam[index];
             const hasAnswer = (appState.answers[index] !== undefined && appState.answers[index] !== "");
@@ -772,11 +632,9 @@
             flagBtn.innerText = appState.flags.has(index) ? "🚩 Flagged" : "🚩 Flag for Review";
 
             const codeEl = document.getElementById('q-code');
-            if (item.code) { codeEl.style.display = 'block'; codeEl.innerText = item.code; } 
-            else { codeEl.style.display = 'none'; }
+            if (item.code) { codeEl.style.display = 'block'; codeEl.innerText = item.code; } else { codeEl.style.display = 'none'; }
 
-            // Visualizer Canvas Relocation & Tracking
-            currentActiveCanvas = item.vis || null; // Tells animation loop what to draw
+            currentActiveCanvas = item.vis || null; 
             const visContainer = document.getElementById('q-vis-container');
             const visMount = document.getElementById('q-vis-mount');
             
@@ -793,7 +651,6 @@
             const txtContainer = document.getElementById('q-textarea-container');
             const expBox = document.getElementById('q-exp');
             
-            optsContainer.innerHTML = '';
             txtContainer.style.display = 'none';
             expBox.classList.remove('visible');
 
@@ -801,6 +658,9 @@
 
             if (item.type === 'mcq') {
                 optsContainer.style.display = 'flex';
+                
+                // FIX 3: Rebuild string FIRST, then apply to innerHTML ONCE (stops massive lag)
+                let optionsHtml = '';
                 item.opts.forEach((opt, i) => {
                     let classes = "option-label";
                     let checked = appState.answers[index] === i ? 'checked' : '';
@@ -811,12 +671,15 @@
                         else if (appState.answers[index] === i) classes += " incorrect";
                     }
 
-                    optsContainer.innerHTML += `
+                    optionsHtml += `
                         <label class="${classes}" id="lbl-${index}-${i}">
                             <input type="radio" name="q-rad" value="${i}" onchange="handleOptionSelect(${index}, ${i})" ${checked} ${disabled}> ${opt}
                         </label>`;
                 });
+                optsContainer.innerHTML = optionsHtml; 
             } else {
+                optsContainer.style.display = 'none';
+                optsContainer.innerHTML = '';
                 txtContainer.style.display = 'block';
                 const ta = document.getElementById('q-textarea');
                 ta.value = appState.answers[index] || "";
@@ -833,37 +696,27 @@
             const pos = indices.indexOf(index);
             document.getElementById('prev-btn').disabled = pos <= 0;
             document.getElementById('next-btn').disabled = pos === -1 || pos === indices.length - 1;
-
-            updateKPIs(); 
         }
 
-        // =========================================================================
-        // 5. SUBMISSION & SCORING
-        // =========================================================================
+        // 4. SUBMISSION 
         let currentFinalScore = 0;
 
         function submitExam() {
-            clearInterval(timerInterval);
-            appState.isSubmitted = true;
-            let totalScore = 0;
-            let missedQuestions = [];
+            clearInterval(timerInterval); appState.isSubmitted = true;
+            let totalScore = 0; let missedQuestions = [];
 
             appState.exam.forEach((item, index) => {
-                const ans = appState.answers[index];
-                const hasAnswer = (ans !== undefined && ans !== "");
-                
+                const ans = appState.answers[index]; const hasAnswer = (ans !== undefined && ans !== "");
                 if (item.type === 'mcq') {
-                    if (ans === item.ans) totalScore += item.points;
-                    else missedQuestions.push({ num: index + 1, q: item.q, exp: item.exp });
+                    if (ans === item.ans) totalScore += item.points; else missedQuestions.push({ num: index + 1, q: item.q, exp: item.exp });
                 } else if (item.type === 'computational') {
-                    if (hasAnswer) totalScore += item.points;
-                    else missedQuestions.push({ num: index + 1, q: item.q, exp: "No computation provided. Self-verify against exact solution." });
+                    if (hasAnswer) totalScore += item.points; else missedQuestions.push({ num: index + 1, q: item.q, exp: "No computation provided. Self-verify against exact solution." });
                 }
+                updateSingleNavButton(index); // Update correct/incorrect styling on grid
             });
 
             currentFinalScore = totalScore;
-            document.getElementById('score-display').innerText = `${totalScore}/100`;
-            saveScore(totalScore);
+            document.getElementById('score-display').innerText = `${totalScore}/100`; saveScore(totalScore);
 
             const summaryDiv = document.getElementById('weak-points-summary');
             if (missedQuestions.length === 0) {
@@ -871,8 +724,7 @@
             } else {
                 let listHTML = `<ul class="weakness-list">`;
                 missedQuestions.forEach(m => listHTML += `<li><strong>Item ${m.num}:</strong> ${m.q}<br><span style="color:var(--text-muted); font-size:0.85rem;">Key Takeaway: ${m.exp}</span></li>`);
-                listHTML += `</ul>`;
-                summaryDiv.innerHTML = listHTML;
+                summaryDiv.innerHTML = listHTML + `</ul>`;
             }
 
             document.getElementById('submit-btn').style.display = 'none';
@@ -884,46 +736,29 @@
             document.getElementById('kpi-correct').innerText = appState.exam.length - missedQuestions.length;
             document.getElementById('kpi-incorrect').innerText = missedQuestions.length;
 
-            updateKPIs();
             renderQuestion(appState.currentIndex); 
-            
             window.scrollTo({ top: 0, behavior: 'smooth' });
             if (studyMode !== 'practice') openNameModal(totalScore);
         }
 
         function saveScore(scorePercent) {
-            const scores = JSON.parse(localStorage.getItem('renderquest_scores') || '[]');
-            scores.push(scorePercent);
-            localStorage.setItem('renderquest_scores', JSON.stringify(scores));
-            loadStats();
+            const scores = JSON.parse(localStorage.getItem('renderquest_scores') || '[]'); scores.push(scorePercent);
+            localStorage.setItem('renderquest_scores', JSON.stringify(scores)); loadStats();
         }
 
-        // =========================================================================
-        // 6. LIVE CANVAS VISUALIZERS (OPTIMIZED EXECUTION)
-        // =========================================================================
-        let time = 0;
-        let ctxList = {};
+        // 5. LIVE CANVAS VISUALIZERS
+        let time = 0; let ctxList = {};
 
         function bindCanvasContexts() {
-            ctxList = {
-                cube: document.getElementById('canvas-cube')?.getContext('2d'),
-                phong: document.getElementById('canvas-phong')?.getContext('2d'),
-                bary: document.getElementById('canvas-bary')?.getContext('2d'),
-                vectors: document.getElementById('canvas-vectors')?.getContext('2d'),
-                alpha: document.getElementById('canvas-alpha')?.getContext('2d')
-            };
+            ctxList = { cube: document.getElementById('canvas-cube')?.getContext('2d'), phong: document.getElementById('canvas-phong')?.getContext('2d'), bary: document.getElementById('canvas-bary')?.getContext('2d'), vectors: document.getElementById('canvas-vectors')?.getContext('2d'), alpha: document.getElementById('canvas-alpha')?.getContext('2d') };
         }
 
         function drawVectors(ctx) {
-            const w = ctx.canvas.width, h = ctx.canvas.height;
-            ctx.clearRect(0, 0, w, h); const cx = w / 2, cy = h / 2 + 20;
+            const w = ctx.canvas.width, h = ctx.canvas.height; ctx.clearRect(0, 0, w, h); const cx = w / 2, cy = h / 2 + 20;
             const nx = 0, ny = -70; const lx = Math.cos(time * 0.02) * 70; const ly = Math.sin(time * 0.02) * -70;
-            ctx.strokeStyle = '#3f3f46'; ctx.lineWidth = 1;
-            ctx.beginPath(); ctx.moveTo(cx-100, cy); ctx.lineTo(cx+100, cy); ctx.stroke();
-            ctx.beginPath(); ctx.moveTo(cx, cy-90); ctx.lineTo(cx, cy+20); ctx.stroke();
-            drawArrow(ctx, cx, cy, cx + nx, cy + ny, '#22d3ee');
-            ctx.fillStyle = '#22d3ee'; ctx.fillText("Normal (N)", cx - 30, cy - 80);
-            drawArrow(ctx, cx, cy, cx + lx, cy + ly, '#facc15');
+            ctx.strokeStyle = '#3f3f46'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(cx-100, cy); ctx.lineTo(cx+100, cy); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx, cy-90); ctx.lineTo(cx, cy+20); ctx.stroke(); drawArrow(ctx, cx, cy, cx + nx, cy + ny, '#22d3ee');
+            ctx.fillStyle = '#22d3ee'; ctx.fillText("Normal (N)", cx - 30, cy - 80); drawArrow(ctx, cx, cy, cx + lx, cy + ly, '#facc15');
             ctx.fillStyle = '#facc15'; ctx.fillText("Light (L)", cx + lx - 10, cy + ly - 10);
             const dot = ((nx/70) * (lx/Math.sqrt(lx*lx + ly*ly)) + (ny/70) * (ly/Math.sqrt(lx*lx + ly*ly))).toFixed(2);
             ctx.fillStyle = '#fff'; ctx.font = "14px monospace"; ctx.fillText(`N · L = ${dot}`, cx - 35, h - 10);
@@ -931,40 +766,31 @@
 
         function drawArrow(ctx, fx, fy, tx, ty, color) {
             const headlen = 10, angle = Math.atan2(ty - fy, tx - fx);
-            ctx.beginPath(); ctx.strokeStyle = color; ctx.lineWidth = 2.5;
-            ctx.moveTo(fx, fy); ctx.lineTo(tx, ty);
+            ctx.beginPath(); ctx.strokeStyle = color; ctx.lineWidth = 2.5; ctx.moveTo(fx, fy); ctx.lineTo(tx, ty);
             ctx.lineTo(tx - headlen * Math.cos(angle - Math.PI/6), ty - headlen * Math.sin(angle - Math.PI/6));
-            ctx.moveTo(tx, ty); ctx.lineTo(tx - headlen * Math.cos(angle + Math.PI/6), ty - headlen * Math.sin(angle + Math.PI/6));
-            ctx.stroke();
+            ctx.moveTo(tx, ty); ctx.lineTo(tx - headlen * Math.cos(angle + Math.PI/6), ty - headlen * Math.sin(angle + Math.PI/6)); ctx.stroke();
         }
 
         const nodes = [[-1,-1,-1],[-1,-1,1],[-1,1,-1],[-1,1,1],[1,-1,-1],[1,-1,1],[1,1,-1],[1,1,1]];
         const edges = [[0,1],[1,3],[3,2],[2,0],[4,5],[5,7],[7,6],[6,4],[0,4],[1,5],[2,6],[3,7]];
         function drawCube(ctx) {
-            const w = ctx.canvas.width, h = ctx.canvas.height;
-            ctx.clearRect(0, 0, w, h); const scale = 40, cx = w/2, cy = h/2;
+            const w = ctx.canvas.width, h = ctx.canvas.height; ctx.clearRect(0, 0, w, h); const scale = 40, cx = w/2, cy = h/2;
             const aX = time * 0.01, aY = time * 0.015;
-            const proj = nodes.map(n => {
-                let y1 = n[1]*Math.cos(aX) - n[2]*Math.sin(aX), z1 = n[1]*Math.sin(aX) + n[2]*Math.cos(aX);
-                return [(n[0]*Math.cos(aY) - z1*Math.sin(aY))*scale + cx, y1*scale + cy];
-            });
+            const proj = nodes.map(n => { let y1 = n[1]*Math.cos(aX) - n[2]*Math.sin(aX), z1 = n[1]*Math.sin(aX) + n[2]*Math.cos(aX); return [(n[0]*Math.cos(aY) - z1*Math.sin(aY))*scale + cx, y1*scale + cy]; });
             ctx.strokeStyle = '#22d3ee'; ctx.lineWidth = 1.5; ctx.lineJoin = 'round';
             edges.forEach(e => { ctx.beginPath(); ctx.moveTo(proj[e[0]][0], proj[e[0]][1]); ctx.lineTo(proj[e[1]][0], proj[e[1]][1]); ctx.stroke(); });
             ctx.fillStyle = '#f4f4f5'; proj.forEach(p => { ctx.beginPath(); ctx.arc(p[0], p[1], 2, 0, Math.PI*2); ctx.fill(); });
         }
 
         function drawPhong(ctx) {
-            const w = ctx.canvas.width, h = ctx.canvas.height;
-            ctx.clearRect(0, 0, w, h); const cx = w/2, cy = h/2, radius = 55, lx = cx + Math.sin(time * 0.03) * 55;
+            const w = ctx.canvas.width, h = ctx.canvas.height; ctx.clearRect(0, 0, w, h); const cx = w/2, cy = h/2, radius = 55, lx = cx + Math.sin(time * 0.03) * 55;
             const grad = ctx.createRadialGradient(lx, cy-20, 5, cx, cy, radius);
             grad.addColorStop(0, '#ffffff'); grad.addColorStop(0.25, '#38bdf8'); grad.addColorStop(1, '#082f49');
-            ctx.beginPath(); ctx.arc(cx, cy, radius, 0, Math.PI*2);
-            ctx.fillStyle = grad; ctx.fill(); ctx.strokeStyle = '#0ea5e9'; ctx.lineWidth = 1; ctx.stroke();
+            ctx.beginPath(); ctx.arc(cx, cy, radius, 0, Math.PI*2); ctx.fillStyle = grad; ctx.fill(); ctx.strokeStyle = '#0ea5e9'; ctx.lineWidth = 1; ctx.stroke();
         }
 
         function drawAlpha(ctx) {
-            const w = ctx.canvas.width, h = ctx.canvas.height;
-            ctx.clearRect(0, 0, w, h); const cx = w/2, cy = h/2, offset = Math.sin(time * 0.02) * 40;
+            const w = ctx.canvas.width, h = ctx.canvas.height; ctx.clearRect(0, 0, w, h); const cx = w/2, cy = h/2, offset = Math.sin(time * 0.02) * 40;
             ctx.globalCompositeOperation = 'screen'; 
             ctx.beginPath(); ctx.arc(cx - 20 + offset, cy, 45, 0, Math.PI*2); ctx.fillStyle = 'rgba(248, 113, 113, 0.8)'; ctx.fill();
             ctx.beginPath(); ctx.arc(cx + 20 - offset, cy, 45, 0, Math.PI*2); ctx.fillStyle = 'rgba(34, 211, 238, 0.8)'; ctx.fill();
@@ -972,23 +798,14 @@
         }
 
         function drawBarycentric(ctx) {
-            const w = ctx.canvas.width, h = ctx.canvas.height;
-            ctx.clearRect(0, 0, w, h); const cx = w/2, cy = h/2, a = time * 0.01, r = 60;
-            const v1 = { x: cx + Math.cos(a)*r, y: cy + Math.sin(a)*r, color: '#f87171' };
-            const v2 = { x: cx + Math.cos(a + 2.094)*r, y: cy + Math.sin(a + 2.094)*r, color: '#4ade80' };
-            const v3 = { x: cx + Math.cos(a + 4.188)*r, y: cy + Math.sin(a + 4.188)*r, color: '#22d3ee' };
+            const w = ctx.canvas.width, h = ctx.canvas.height; ctx.clearRect(0, 0, w, h); const cx = w/2, cy = h/2, a = time * 0.01, r = 60;
+            const v1 = { x: cx + Math.cos(a)*r, y: cy + Math.sin(a)*r, color: '#f87171' }, v2 = { x: cx + Math.cos(a + 2.094)*r, y: cy + Math.sin(a + 2.094)*r, color: '#4ade80' }, v3 = { x: cx + Math.cos(a + 4.188)*r, y: cy + Math.sin(a + 4.188)*r, color: '#22d3ee' };
             ctx.globalCompositeOperation = 'screen';
-            [v1, v2, v3].forEach(v => {
-                const grad = ctx.createRadialGradient(v.x, v.y, 0, v.x, v.y, r * 1.5);
-                grad.addColorStop(0, v.color); grad.addColorStop(1, 'rgba(0,0,0,0)');
-                ctx.beginPath(); ctx.moveTo(v1.x, v1.y); ctx.lineTo(v2.x, v2.y); ctx.lineTo(v3.x, v3.y); ctx.fillStyle = grad; ctx.fill();
-            });
-            ctx.globalCompositeOperation = 'source-over'; ctx.strokeStyle = '#fff'; ctx.lineWidth = 1;
-            ctx.beginPath(); ctx.moveTo(v1.x, v1.y); ctx.lineTo(v2.x, v2.y); ctx.lineTo(v3.x, v3.y); ctx.closePath(); ctx.stroke();
+            [v1, v2, v3].forEach(v => { const grad = ctx.createRadialGradient(v.x, v.y, 0, v.x, v.y, r * 1.5); grad.addColorStop(0, v.color); grad.addColorStop(1, 'rgba(0,0,0,0)'); ctx.beginPath(); ctx.moveTo(v1.x, v1.y); ctx.lineTo(v2.x, v2.y); ctx.lineTo(v3.x, v3.y); ctx.fillStyle = grad; ctx.fill(); });
+            ctx.globalCompositeOperation = 'source-over'; ctx.strokeStyle = '#fff'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(v1.x, v1.y); ctx.lineTo(v2.x, v2.y); ctx.lineTo(v3.x, v3.y); ctx.closePath(); ctx.stroke();
         }
 
         function animate() {
-            // PERFORMANCE FIX: Only advance time and draw if a canvas is currently active!
             if (currentActiveCanvas) {
                 time++;
                 if (currentActiveCanvas === 'vectors' && ctxList.vectors) drawVectors(ctxList.vectors);
@@ -1000,99 +817,39 @@
             requestAnimationFrame(animate);
         }
 
-        // =========================================================================
-        // 7. MODALS: LEADERBOARD, FORMULA SHEET & NAME ENTRY
-        // =========================================================================
-        let isLeaderboardOpen = false;
-        let isFormulaOpen = false;
-
-        function toggleFormulaSheet() {
-            isFormulaOpen = !isFormulaOpen;
-            document.getElementById('formula-modal').classList.toggle('active', isFormulaOpen);
-        }
-
-        function toggleLeaderboard() {
-            isLeaderboardOpen = !isLeaderboardOpen;
-            const modal = document.getElementById('lb-modal');
-            modal.classList.toggle('active', isLeaderboardOpen);
-            if (isLeaderboardOpen) fetchLeaderboard();
-        }
+        // 6. MODALS
+        let isLeaderboardOpen = false; let isFormulaOpen = false;
+        function toggleFormulaSheet() { isFormulaOpen = !isFormulaOpen; document.getElementById('formula-modal').classList.toggle('active', isFormulaOpen); }
+        function toggleLeaderboard() { isLeaderboardOpen = !isLeaderboardOpen; const modal = document.getElementById('lb-modal'); modal.classList.toggle('active', isLeaderboardOpen); if (isLeaderboardOpen) fetchLeaderboard(); }
 
         async function fetchLeaderboard() {
-            const lbContent = document.getElementById('lb-content');
-            lbContent.innerHTML = '<div class="lb-row"><span class="lb-name">Loading live scores...</span></div>';
-            
+            const lbContent = document.getElementById('lb-content'); lbContent.innerHTML = '<div class="lb-row"><span class="lb-name">Loading live scores...</span></div>';
             try {
-                const response = await fetch('https://renderquest-9a48c-default-rtdb.firebaseio.com/leaderboard.json');
-                const data = await response.json();
+                const response = await fetch('https://renderquest-9a48c-default-rtdb.firebaseio.com/leaderboard.json'); const data = await response.json();
                 let globalScores = data ? Object.values(data) : [];
-                
-                if (globalScores.length === 0) {
-                    lbContent.innerHTML = '<div class="lb-row"><span class="lb-name">No scores yet. Be the first!</span></div>';
-                    return;
-                }
-
-                globalScores.sort((a, b) => b.score - a.score);
-                let html = "";
-                globalScores.slice(0, 10).forEach((entry, index) => {
-                    html += `<div class="lb-row"><span class="lb-name">#${index + 1} ${entry.name}</span><span class="lb-score">${entry.score}/100</span></div>`;
-                });
+                if (globalScores.length === 0) { lbContent.innerHTML = '<div class="lb-row"><span class="lb-name">No scores yet. Be the first!</span></div>'; return; }
+                globalScores.sort((a, b) => b.score - a.score); let html = "";
+                globalScores.slice(0, 10).forEach((entry, index) => { html += `<div class="lb-row"><span class="lb-name">#${index + 1} ${entry.name}</span><span class="lb-score">${entry.score}/100</span></div>`; });
                 lbContent.innerHTML = html;
-            } catch (error) {
-                lbContent.innerHTML = '<div class="lb-row"><span class="lb-name" style="color:var(--accent-red)">Error loading scores. Check your DB rules.</span></div>';
-            }
+            } catch (error) { lbContent.innerHTML = '<div class="lb-row"><span class="lb-name" style="color:var(--accent-red)">Error loading scores. Check your DB rules.</span></div>'; }
         }
 
-        function openNameModal(score) {
-            document.getElementById('final-score-display').innerText = score;
-            document.getElementById('name-modal').classList.add('active');
-            document.getElementById('player-name').focus();
-        }
-
-        function closeNameModal() {
-            document.getElementById('name-modal').classList.remove('active');
-        }
+        function openNameModal(score) { document.getElementById('final-score-display').innerText = score; document.getElementById('name-modal').classList.add('active'); document.getElementById('player-name').focus(); }
+        function closeNameModal() { document.getElementById('name-modal').classList.remove('active'); }
 
         async function submitScoreToFirebase() {
-            const nameInput = document.getElementById('player-name').value.trim();
-            if (!nameInput) { alert("Please enter a codename!"); return; }
-
-            const btn = document.getElementById('btn-submit-score');
-            btn.innerText = "Syncing..."; btn.disabled = true;
-
+            const nameInput = document.getElementById('player-name').value.trim(); if (!nameInput) { alert("Please enter a codename!"); return; }
+            const btn = document.getElementById('btn-submit-score'); btn.innerText = "Syncing..."; btn.disabled = true;
             try {
-                await fetch('https://renderquest-9a48c-default-rtdb.firebaseio.com/leaderboard.json', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name: nameInput.substring(0, 20), score: currentFinalScore, timestamp: new Date().getTime() })
-                });
-                closeNameModal();
-                document.getElementById('player-name').value = '';
-                toggleLeaderboard(); 
-            } catch (error) {
-                alert("Failed to save score globally. Check your internet connection.");
-            } finally {
-                btn.innerText = "Submit to Global Ranking"; btn.disabled = false;
-            }
+                await fetch('https://renderquest-9a48c-default-rtdb.firebaseio.com/leaderboard.json', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: nameInput.substring(0, 20), score: currentFinalScore, timestamp: new Date().getTime() }) });
+                closeNameModal(); document.getElementById('player-name').value = ''; toggleLeaderboard(); 
+            } catch (error) { alert("Failed to save score globally. Check your internet connection."); } finally { btn.innerText = "Submit to Global Ranking"; btn.disabled = false; }
         }
 
-        // =========================================================================
         // INITIALIZATION
-        // =========================================================================
         window.onload = () => {
-            loadStats();
-            bindCanvasContexts();
-            generateNewSet(true); 
-            animate();
-
-            // PERFORMANCE FIX: Strictly hide AND destroy the loading screen rendering
-            setTimeout(() => {
-                const loader = document.getElementById('loading-screen');
-                loader.classList.add('hidden');
-                setTimeout(() => {
-                    loader.style.display = 'none'; // Completely removes from render tree
-                }, 400); 
-            }, 1000);
+            loadStats(); bindCanvasContexts(); generateNewSet(true); animate();
+            setTimeout(() => { const loader = document.getElementById('loading-screen'); loader.classList.add('hidden'); setTimeout(() => { loader.style.display = 'none'; }, 300); }, 1000);
         };
     </script>
 </body>

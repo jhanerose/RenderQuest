@@ -43,6 +43,7 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
         /* 3D OPENGL POLYGON LOADING SCREEN */
@@ -51,6 +52,7 @@
             background: var(--bg-base); z-index: 9999;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             transition: opacity 0.4s ease, visibility 0.4s;
+            will-change: opacity; /* Hardware acceleration */
         }
         .loading-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
         
@@ -58,19 +60,22 @@
         .gl-polyhedron {
             width: 80px; height: 80px; position: relative;
             transform-style: preserve-3d; animation: rotate-poly 3s infinite linear;
+            will-change: transform;
         }
         .gl-face {
             position: absolute; width: 80px; height: 80px;
             display: flex; justify-content: center; align-items: center;
             font-family: var(--font-mono); font-size: 14px; font-weight: bold; color: rgba(255,255,255,0.7);
-            border: 2px solid; box-sizing: border-box; backdrop-filter: blur(2px);
+            border: 2px solid; box-sizing: border-box; 
+            /* Blur removed here to stop startup lag, solid background is fine for loader */
+            background: rgba(34, 211, 238, 0.15); 
         }
-        .gl-face:nth-child(1) { transform: translateZ(40px); border-color: var(--accent-cyan); background: rgba(34, 211, 238, 0.15); box-shadow: inset 0 0 15px var(--accent-cyan); }
-        .gl-face:nth-child(2) { transform: rotateY(180deg) translateZ(40px); border-color: var(--accent-red); background: rgba(248, 113, 113, 0.15); box-shadow: inset 0 0 15px var(--accent-red); }
-        .gl-face:nth-child(3) { transform: rotateY(90deg) translateZ(40px); border-color: var(--accent-green); background: rgba(74, 222, 128, 0.15); box-shadow: inset 0 0 15px var(--accent-green); }
-        .gl-face:nth-child(4) { transform: rotateY(-90deg) translateZ(40px); border-color: var(--accent-yellow); background: rgba(250, 204, 21, 0.15); box-shadow: inset 0 0 15px var(--accent-yellow); }
-        .gl-face:nth-child(5) { transform: rotateX(90deg) translateZ(40px); border-color: #a855f7; background: rgba(168, 85, 247, 0.15); box-shadow: inset 0 0 15px #a855f7; }
-        .gl-face:nth-child(6) { transform: rotateX(-90deg) translateZ(40px); border-color: var(--accent-orange); background: rgba(249, 115, 22, 0.15); box-shadow: inset 0 0 15px var(--accent-orange); }
+        .gl-face:nth-child(1) { transform: translateZ(40px); border-color: var(--accent-cyan); box-shadow: inset 0 0 15px var(--accent-cyan); }
+        .gl-face:nth-child(2) { transform: rotateY(180deg) translateZ(40px); border-color: var(--accent-red); box-shadow: inset 0 0 15px var(--accent-red); background: rgba(248, 113, 113, 0.15); }
+        .gl-face:nth-child(3) { transform: rotateY(90deg) translateZ(40px); border-color: var(--accent-green); box-shadow: inset 0 0 15px var(--accent-green); background: rgba(74, 222, 128, 0.15); }
+        .gl-face:nth-child(4) { transform: rotateY(-90deg) translateZ(40px); border-color: var(--accent-yellow); box-shadow: inset 0 0 15px var(--accent-yellow); background: rgba(250, 204, 21, 0.15); }
+        .gl-face:nth-child(5) { transform: rotateX(90deg) translateZ(40px); border-color: #a855f7; box-shadow: inset 0 0 15px #a855f7; background: rgba(168, 85, 247, 0.15); }
+        .gl-face:nth-child(6) { transform: rotateX(-90deg) translateZ(40px); border-color: var(--accent-orange); box-shadow: inset 0 0 15px var(--accent-orange); background: rgba(249, 115, 22, 0.15); }
 
         @keyframes rotate-poly {
             0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
@@ -83,7 +88,9 @@
 
         /* HEADER */
         header {
-            background: rgba(9, 9, 11, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            background: rgba(9, 9, 11, 0.85); 
+            /* GPU Accelerated blur */
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); transform: translateZ(0);
             border-bottom: 1px solid var(--glass-border); padding: 14px 0;
             position: sticky; top: 0; z-index: 100;
         }
@@ -96,7 +103,7 @@
         
         .header-controls { display: flex; align-items: center; gap: 16px; font-family: var(--font-mono); font-size: 0.85rem; }
         .mode-toggle { background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 6px; padding: 4px; display: flex; gap: 4px; }
-        .mode-btn { background: transparent; border: none; color: var(--text-muted); padding: 4px 10px; border-radius: 4px; cursor: pointer; font-family: var(--font-mono); font-size: 0.75rem; transition: all 0.2s; }
+        .mode-btn { background: transparent; border: none; color: var(--text-muted); padding: 4px 10px; border-radius: 4px; cursor: pointer; font-family: var(--font-mono); font-size: 0.75rem; transition: background 0.1s, color 0.1s; }
         .mode-btn.active { background: var(--border-subtle); color: var(--accent-cyan); font-weight: 600; }
         .mode-btn:hover:not(.active) { color: var(--text-main); }
         .stat-item { color: var(--text-muted); }
@@ -108,7 +115,9 @@
         .container { max-width: 1000px; margin: 24px auto; padding: 0 20px; flex: 1; width: 100%; box-sizing: border-box; }
         
         .glass-panel {
-            background: var(--glass-bg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            background: var(--glass-bg); 
+            /* GPU Accelerated blur */
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); transform: translateZ(0);
             border: 1px solid var(--glass-border); border-radius: 12px; box-shadow: var(--glass-shadow);
         }
 
@@ -129,7 +138,7 @@
         .q-nav-btn {
             height: 32px; display: flex; align-items: center; justify-content: center;
             background: rgba(255,255,255,0.05); border: 1px solid var(--border-subtle); border-radius: 6px;
-            color: var(--text-muted); font-family: var(--font-mono); font-size: 0.8rem; cursor: pointer; transition: all 0.1s;
+            color: var(--text-muted); font-family: var(--font-mono); font-size: 0.8rem; cursor: pointer; transition: background 0.15s;
         }
         .q-nav-btn:hover { background: rgba(255,255,255,0.1); }
         .q-nav-btn.answered { background: rgba(255,255,255,0.15); color: #fff; border-color: #fff; }
@@ -144,7 +153,7 @@
         .q-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 16px; }
         .q-meta-title { font-family: var(--font-mono); color: var(--accent-cyan); font-size: 1.1rem; margin: 0; }
         .q-meta-subtitle { font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; }
-        .btn-flag { background: transparent; border: 1px solid var(--border-subtle); color: var(--text-muted); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; display: flex; align-items: center; gap: 6px; transition: all 0.2s; }
+        .btn-flag { background: transparent; border: 1px solid var(--border-subtle); color: var(--text-muted); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; display: flex; align-items: center; gap: 6px; transition: border-color 0.1s, color 0.1s; }
         .btn-flag:hover { border-color: var(--accent-yellow); color: var(--accent-yellow); }
         .btn-flag.active { background: rgba(250, 204, 21, 0.15); border-color: var(--accent-yellow); color: var(--accent-yellow); }
 
@@ -155,10 +164,10 @@
         .option-label {
             display: flex; align-items: center; padding: 16px;
             background: rgba(255, 255, 255, 0.03); border: 1px solid var(--glass-border);
-            border-radius: 8px; cursor: pointer; transition: all 0.2s; font-size: 1rem;
+            border-radius: 8px; cursor: pointer; transition: background 0.1s, border-color 0.1s; font-size: 1rem;
         }
         .option-label:hover { background: rgba(255,255,255,0.08); border-color: var(--border-subtle); }
-        .option-label input[type="radio"] { appearance: none; width: 20px; height: 20px; border: 2px solid var(--text-muted); border-radius: 50%; margin-right: 14px; cursor: pointer; position: relative; flex-shrink: 0; transition: all 0.2s; }
+        .option-label input[type="radio"] { appearance: none; width: 20px; height: 20px; border: 2px solid var(--text-muted); border-radius: 50%; margin-right: 14px; cursor: pointer; position: relative; flex-shrink: 0; transition: border-color 0.1s; }
         .option-label input[type="radio"]:checked { border-color: var(--accent-cyan); }
         .option-label input[type="radio"]:checked::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 10px; height: 10px; background: var(--accent-cyan); border-radius: 50%; }
         .option-label.correct { border-color: var(--accent-green) !important; background: rgba(74, 222, 128, 0.1) !important; color: var(--accent-green) !important; }
@@ -168,7 +177,7 @@
         .math-textarea {
             width: 100%; padding: 16px; background: rgba(0, 0, 0, 0.3); border: 1px solid var(--glass-border);
             color: var(--accent-cyan); border-radius: 8px; font-family: var(--font-mono); font-size: 0.95rem;
-            outline: none; box-sizing: border-box; transition: border-color 0.2s; resize: vertical; min-height: 140px;
+            outline: none; box-sizing: border-box; transition: border-color 0.15s; resize: vertical; min-height: 140px;
         }
         .math-textarea:focus { border-color: var(--accent-cyan); box-shadow: 0 0 0 2px rgba(34, 211, 238, 0.2); }
 
@@ -181,7 +190,7 @@
 
         /* NAVIGATION BUTTONS */
         .q-actions { display: flex; justify-content: space-between; margin-top: 30px; border-top: 1px solid var(--border-subtle); padding-top: 20px; }
-        .btn-secondary { background: var(--bg-surface); border: 1px solid var(--border-subtle); color: var(--text-main); padding: 10px 24px; border-radius: 8px; cursor: pointer; font-weight: 500; transition: all 0.2s; }
+        .btn-secondary { background: var(--bg-surface); border: 1px solid var(--border-subtle); color: var(--text-main); padding: 10px 24px; border-radius: 8px; cursor: pointer; font-weight: 500; transition: background 0.15s; }
         .btn-secondary:hover:not(:disabled) { background: rgba(255,255,255,0.1); }
         .btn-secondary:disabled { opacity: 0.3; cursor: not-allowed; }
 
@@ -199,13 +208,16 @@
         /* GLASSMORPHISM MODALS */
         .modal-overlay {
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            background: rgba(0, 0, 0, 0.6); 
+            /* GPU Accelerated blur */
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); transform: translateZ(0);
             display: flex; justify-content: center; align-items: center;
-            z-index: 1000; opacity: 0; pointer-events: none; transition: all 0.25s ease;
+            z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.25s ease;
+            will-change: opacity;
         }
         .modal-overlay.active { opacity: 1; pointer-events: auto; }
         
-        .custom-modal { width: 90%; max-width: 450px; padding: 24px; transform: translateY(20px); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .custom-modal { width: 90%; max-width: 450px; padding: 24px; transform: translateY(20px); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); will-change: transform; }
         .modal-overlay.active .custom-modal { transform: translateY(0); }
         
         .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--glass-border); padding-bottom: 12px; }
@@ -499,40 +511,30 @@
             const rInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
             let list = [];
 
-            // 51. Vector Operations
             let a = [rInt(4, 9), rInt(2, 6), rInt(4, 8)], b = [rInt(1, 3), rInt(1, 3), rInt(1, 3)];
             let inter = [a[0]-b[0], a[1]-b[1], a[2]-b[2]], res51 = [inter[0]*2, inter[1]*2, inter[2]*2];
             list.push({ type: 'computational', q: `Vector operations (5 pts). A game character's intended step is a = [${a}]. An obstacle pushes it back by b = [${b}] (subtract b). The result is doubled for a sprint boost. Compute intermediate and final displacement.`, exp: `<strong>Step 1 (Subtract):</strong><br>[${a}] - [${b}] = [${inter}]<br><br><strong>Step 2 (Double/Multiply):</strong><br>[${inter}] * 2 = [${res51}]<br><br><strong>Final Answer:</strong><br>Intermediate: [${inter}], Final: [${res51}]` });
 
-            // 52. Magnitude
             const pythTriples = [[2,3,6, 7], [1,2,2, 3], [2,10,11, 15], [1,4,8, 9], [4,4,7, 9]];
             let trip = pythTriples[rInt(0, pythTriples.length - 1)];
             list.push({ type: 'computational', q: `Magnitude (5 pts). Vector from camera to target is v = [${trip[0]}, ${trip[1]}, ${trip[2]}]. Compute |v| showing formula and solution.`, exp: `<strong>Formula:</strong><br>|v| = √(x² + y² + z²)<br><br><strong>Calculation:</strong><br>|v| = √(${trip[0]}² + ${trip[1]}² + ${trip[2]}²)<br>|v| = √(${trip[0]*trip[0]} + ${trip[1]*trip[1]} + ${trip[2]*trip[2]})<br>|v| = √(${trip[3]*trip[3]})<br><br><strong>Final Answer:</strong><br>${trip[3]}` });
 
-            // 53. Unit Vector
             list.push({ type: 'computational', q: `Unit vector (5 pts). Spotlight points along d = [3, 4, 0], needing a direction of length 1. (a) Normalize d. (b) Verify with self-check.`, exp: `<strong>(a) Normalization:</strong><br>Length |d| = √(3² + 4² + 0) = 5.<br>d_norm = [3/5, 4/5, 0] = [0.6, 0.8, 0.0]<br><br><strong>(b) Verification:</strong><br>√(0.6² + 0.8² + 0²) = √(0.36 + 0.64) = √(1.0) = 1.0` });
 
-            // 54. Dot Product
             let dpA = [rInt(1, 4), rInt(1, 4), rInt(1, 4)], dpB = [rInt(1, 4), rInt(1, 4), rInt(1, 4)];
             let dotVal = (dpA[0]*dpB[0]) + (dpA[1]*dpB[1]) + (dpA[2]*dpB[2]);
             list.push({ type: 'computational', q: `Dot product (5 pts). Compute [${dpA}] · [${dpB}]. State whether result is scalar/vector and why.`, exp: `<strong>Calculation:</strong><br>(${dpA[0]} * ${dpB[0]}) + (${dpA[1]} * ${dpB[1]}) + (${dpA[2]} * ${dpB[2]})<br>= ${dpA[0]*dpB[0]} + ${dpA[1]*dpB[1]} + ${dpA[2]*dpB[2]}<br>= ${dotVal}<br><br><strong>Final Answer:</strong><br>${dotVal}. It is a <strong>scalar</strong> because the operation yields a single numerical value.` });
 
-            // 55. Angle
             list.push({ type: 'computational', q: `Angle between vectors (5 pts). Two direction vectors have v1·v2 = 6, with |v1| = 3 and |v2| = 4. (a) Compute cos(θ). (b) Find θ. (c) State where in graphics this matters.`, exp: `<strong>(a) Compute cos(θ):</strong><br>cos(θ) = (A · B) / (|A| * |B|)<br>cos(θ) = 6 / (3 * 4) = 0.5<br><br><strong>(b) Find θ:</strong><br>θ = arccos(0.5) = 60°<br><br><strong>(c) Graphics Application:</strong><br>Used heavily in Lambertian (diffuse) and Specular lighting.` });
 
-            // 56. Cross Product
             list.push({ type: 'computational', q: `Cross product (5 pts). A triangle has edge vectors A = [1, 0, 0] and B = [0, 1, 0]. (a) Compute A × B. (b) Interpret what this vector is called and used for.`, exp: `<strong>(a) Compute A × B:</strong><br>X: (0*0 - 0*1) = 0<br>Y: (0*0 - 1*0) = 0<br>Z: (1*1 - 0*0) = 1<br>Result = [0, 0, 1]<br><br><strong>(b) Interpretation:</strong><br>This is the <strong>Surface Normal</strong>. Used for lighting and backface culling.` });
 
-            // 57. Shader Writing
             list.push({ type: 'computational', q: `Shader writing (5 pts). Complete vertex shader setup (GLSL 460) taking attribute location 0 (vec3 pos), uniform mat4 model, outputting gl_Position. Why extend vec3 to vec4?`, exp: `<strong>Shader Code:</strong>\n#version 460\nlayout (location = 0) in vec3 pos;\nuniform mat4 model;\nvoid main() {\n   gl_Position = model * vec4(pos, 1.0);\n}\n\n<strong>Explanation:</strong><br>A 4x4 matrix needs a 4-component vector (w=1.0) for valid affine transformations like translation.` });
 
-            // 58. Debugging
             list.push({ type: 'computational', q: `Debugging (5 pts). Shaders compile/link cleanly, glGetUniformLocation returns valid location for 'xMove', glUniform1f is called every frame, but the triangle never moves. (a) Diagnose cause. (b) State fix.`, exp: `<strong>(a) Diagnosis:</strong><br>glUniform writes directly to the currently bound shader program. The program is likely not bound.<br><br><strong>(b) Fix:</strong><br>Call <code>glUseProgram(shaderProgram);</code> immediately <em>before</em> calling glUniform1f.` });
 
-            // 59. Pipeline Tracing
             list.push({ type: 'computational', q: `Pipeline tracing (5 pts). A draw call sends 9 vertices as triangles. (a) Triangles from primitive assembly? (b) 1 faces away — what happens and where? (c) Remaining cover 5000 pixels — fragment runs? (d) Deciding test?`, exp: `<strong>(a)</strong> 3 triangles.<br><strong>(b)</strong> Discarded by Face Culling in Primitive Assembly.<br><strong>(c)</strong> Fragment Shader runs 5,000 times.<br><strong>(d)</strong> The Depth Test (Z-Buffer).` });
 
-            // 60. Design Decision
             list.push({ type: 'computational', q: `Design decision (5 pts). A visualization needs only window, input, and OpenGL 3.3 context. Teammate insists on SDL 'because big games use it.' What is the evaluation and the 3 GLFW render loop calls?`, exp: `<strong>Evaluation:</strong><br>GLFW is lightweight and focused on exactly those three things. SDL adds unnecessary overhead.<br><br><strong>GLFW Calls:</strong><br>1. <code>glClear(GL_COLOR_BUFFER_BIT);</code><br>2. <code>glfwSwapBuffers(window);</code><br>3. <code>glfwPollEvents();</code>` });
 
             return list;
@@ -603,7 +605,6 @@
         }
 
         function generateNewSet(isInitialLoad = false) {
-            // Re-init State
             appState = { exam: [], answers: {}, flags: new Set(), currentIndex: 0, filter: 'all', isSubmitted: false };
             document.getElementById('submit-btn').style.display = 'block';
             document.getElementById('reset-btn').style.display = 'none';
@@ -651,7 +652,6 @@
             document.getElementById('kpi-unanswered').innerText = total - answeredCount;
             document.getElementById('kpi-flagged').innerText = flaggedCount;
 
-            // Sync grid classes
             appState.exam.forEach((_, i) => {
                 const btn = document.getElementById(`nav-btn-${i}`);
                 if(!btn) return;
@@ -678,7 +678,6 @@
             appState.filter = filterType;
             applyFilter(filterType);
             
-            // Auto jump to first question in filter if current isn't in it
             const filteredIndices = getFilteredIndices();
             if (filteredIndices.length > 0 && !filteredIndices.includes(appState.currentIndex)) {
                 renderQuestion(filteredIndices[0]);
@@ -723,9 +722,7 @@
             const currentPos = indices.indexOf(appState.currentIndex);
             if (currentPos !== -1) {
                 const nextPos = currentPos + direction;
-                if (nextPos >= 0 && nextPos < indices.length) {
-                    renderQuestion(indices[nextPos]);
-                }
+                if (nextPos >= 0 && nextPos < indices.length) renderQuestion(indices[nextPos]);
             } else {
                 renderQuestion(indices[0]);
             }
@@ -736,25 +733,30 @@
             if(appState.flags.has(i)) appState.flags.delete(i);
             else appState.flags.add(i);
             updateKPIs();
-            renderQuestion(i); // Refresh flag btn state
+            renderQuestion(i); 
         }
 
         function handleOptionSelect(qIdx, optIdx) {
             if (appState.isSubmitted) return;
             appState.answers[qIdx] = optIdx;
             updateKPIs();
+            if (studyMode === 'practice') renderQuestion(qIdx); 
+        }
+
+        // PERFORMANCE FIX: Debounce/optimize textarea to stop layout thrashing on every keystroke
+        function handleTextareaInput(textarea) {
+            if (appState.isSubmitted) return;
+            const wasEmpty = !appState.answers[appState.currentIndex];
+            const isEmpty = textarea.value.trim() === "";
+            appState.answers[appState.currentIndex] = textarea.value;
             
-            // In practice mode, show correct/incorrect immediately
-            if (studyMode === 'practice') {
-                renderQuestion(qIdx); 
+            // Only force heavy DOM recalculations if state changes between empty/answered
+            if (wasEmpty !== isEmpty) {
+                updateKPIs();
             }
         }
 
-        function handleTextareaInput(textarea) {
-            if (appState.isSubmitted) return;
-            appState.answers[appState.currentIndex] = textarea.value;
-            updateKPIs();
-        }
+        let currentActiveCanvas = null; // PERFORMANCE FIX: Track which canvas is active
 
         function renderQuestion(index) {
             appState.currentIndex = index;
@@ -769,15 +771,15 @@
             flagBtn.classList.toggle('active', appState.flags.has(index));
             flagBtn.innerText = appState.flags.has(index) ? "🚩 Flagged" : "🚩 Flag for Review";
 
-            // Code Snippet
             const codeEl = document.getElementById('q-code');
             if (item.code) { codeEl.style.display = 'block'; codeEl.innerText = item.code; } 
             else { codeEl.style.display = 'none'; }
 
-            // Visualizer Canvas Relocation
+            // Visualizer Canvas Relocation & Tracking
+            currentActiveCanvas = item.vis || null; // Tells animation loop what to draw
             const visContainer = document.getElementById('q-vis-container');
             const visMount = document.getElementById('q-vis-mount');
-            // return previous canvas to storage safely
+            
             document.getElementById('canvas-storage').append(...visMount.childNodes);
             if (item.vis) {
                 visContainer.style.display = 'flex';
@@ -787,7 +789,6 @@
                 visContainer.style.display = 'none';
             }
 
-            // Options / Textarea rendering
             const optsContainer = document.getElementById('q-options');
             const txtContainer = document.getElementById('q-textarea-container');
             const expBox = document.getElementById('q-exp');
@@ -823,19 +824,17 @@
                 if (appState.isSubmitted) ta.style.borderColor = hasAnswer ? 'var(--accent-green)' : 'var(--accent-red)';
             }
 
-            // Explanation box
             if (showAnswerLogic) {
                 expBox.innerHTML = `<strong>${item.type === 'mcq' ? 'EXPLANATION' : 'EXACT SOLUTION'}:</strong><br><br>${item.exp}`;
                 expBox.classList.add('visible');
             }
 
-            // Prev/Next Btn States
             const indices = getFilteredIndices();
             const pos = indices.indexOf(index);
             document.getElementById('prev-btn').disabled = pos <= 0;
             document.getElementById('next-btn').disabled = pos === -1 || pos === indices.length - 1;
 
-            updateKPIs(); // to update current outline in grid
+            updateKPIs(); 
         }
 
         // =========================================================================
@@ -880,14 +879,13 @@
             document.getElementById('reset-btn').style.display = 'block';
             document.getElementById('answer-key').classList.add('visible');
             
-            // Show new filters for review mode
             document.getElementById('filter-correct').style.display = 'block';
             document.getElementById('filter-incorrect').style.display = 'block';
             document.getElementById('kpi-correct').innerText = appState.exam.length - missedQuestions.length;
             document.getElementById('kpi-incorrect').innerText = missedQuestions.length;
 
             updateKPIs();
-            renderQuestion(appState.currentIndex); // Force re-render of current question to show correct/incorrect styling
+            renderQuestion(appState.currentIndex); 
             
             window.scrollTo({ top: 0, behavior: 'smooth' });
             if (studyMode !== 'practice') openNameModal(totalScore);
@@ -901,7 +899,7 @@
         }
 
         // =========================================================================
-        // 6. LIVE CANVAS VISUALIZERS (5 CONCURRENT ENGINES)
+        // 6. LIVE CANVAS VISUALIZERS (OPTIMIZED EXECUTION)
         // =========================================================================
         let time = 0;
         let ctxList = {};
@@ -916,9 +914,8 @@
             };
         }
 
-        // --- DRAW FUNCTIONS (unchanged logic, optimized execution) ---
         function drawVectors(ctx) {
-            if(!ctx) return; const w = ctx.canvas.width, h = ctx.canvas.height;
+            const w = ctx.canvas.width, h = ctx.canvas.height;
             ctx.clearRect(0, 0, w, h); const cx = w / 2, cy = h / 2 + 20;
             const nx = 0, ny = -70; const lx = Math.cos(time * 0.02) * 70; const ly = Math.sin(time * 0.02) * -70;
             ctx.strokeStyle = '#3f3f46'; ctx.lineWidth = 1;
@@ -944,7 +941,7 @@
         const nodes = [[-1,-1,-1],[-1,-1,1],[-1,1,-1],[-1,1,1],[1,-1,-1],[1,-1,1],[1,1,-1],[1,1,1]];
         const edges = [[0,1],[1,3],[3,2],[2,0],[4,5],[5,7],[7,6],[6,4],[0,4],[1,5],[2,6],[3,7]];
         function drawCube(ctx) {
-            if(!ctx) return; const w = ctx.canvas.width, h = ctx.canvas.height;
+            const w = ctx.canvas.width, h = ctx.canvas.height;
             ctx.clearRect(0, 0, w, h); const scale = 40, cx = w/2, cy = h/2;
             const aX = time * 0.01, aY = time * 0.015;
             const proj = nodes.map(n => {
@@ -957,7 +954,7 @@
         }
 
         function drawPhong(ctx) {
-            if(!ctx) return; const w = ctx.canvas.width, h = ctx.canvas.height;
+            const w = ctx.canvas.width, h = ctx.canvas.height;
             ctx.clearRect(0, 0, w, h); const cx = w/2, cy = h/2, radius = 55, lx = cx + Math.sin(time * 0.03) * 55;
             const grad = ctx.createRadialGradient(lx, cy-20, 5, cx, cy, radius);
             grad.addColorStop(0, '#ffffff'); grad.addColorStop(0.25, '#38bdf8'); grad.addColorStop(1, '#082f49');
@@ -966,7 +963,7 @@
         }
 
         function drawAlpha(ctx) {
-            if(!ctx) return; const w = ctx.canvas.width, h = ctx.canvas.height;
+            const w = ctx.canvas.width, h = ctx.canvas.height;
             ctx.clearRect(0, 0, w, h); const cx = w/2, cy = h/2, offset = Math.sin(time * 0.02) * 40;
             ctx.globalCompositeOperation = 'screen'; 
             ctx.beginPath(); ctx.arc(cx - 20 + offset, cy, 45, 0, Math.PI*2); ctx.fillStyle = 'rgba(248, 113, 113, 0.8)'; ctx.fill();
@@ -975,7 +972,7 @@
         }
 
         function drawBarycentric(ctx) {
-            if(!ctx) return; const w = ctx.canvas.width, h = ctx.canvas.height;
+            const w = ctx.canvas.width, h = ctx.canvas.height;
             ctx.clearRect(0, 0, w, h); const cx = w/2, cy = h/2, a = time * 0.01, r = 60;
             const v1 = { x: cx + Math.cos(a)*r, y: cy + Math.sin(a)*r, color: '#f87171' };
             const v2 = { x: cx + Math.cos(a + 2.094)*r, y: cy + Math.sin(a + 2.094)*r, color: '#4ade80' };
@@ -991,12 +988,15 @@
         }
 
         function animate() {
-            time++;
-            if(ctxList.vectors) drawVectors(ctxList.vectors);
-            if(ctxList.cube) drawCube(ctxList.cube);
-            if(ctxList.phong) drawPhong(ctxList.phong);
-            if(ctxList.alpha) drawAlpha(ctxList.alpha);
-            if(ctxList.bary) drawBarycentric(ctxList.bary);
+            // PERFORMANCE FIX: Only advance time and draw if a canvas is currently active!
+            if (currentActiveCanvas) {
+                time++;
+                if (currentActiveCanvas === 'vectors' && ctxList.vectors) drawVectors(ctxList.vectors);
+                else if (currentActiveCanvas === 'cube' && ctxList.cube) drawCube(ctxList.cube);
+                else if (currentActiveCanvas === 'phong' && ctxList.phong) drawPhong(ctxList.phong);
+                else if (currentActiveCanvas === 'alpha' && ctxList.alpha) drawAlpha(ctxList.alpha);
+                else if (currentActiveCanvas === 'bary' && ctxList.bary) drawBarycentric(ctxList.bary);
+            }
             requestAnimationFrame(animate);
         }
 
@@ -1068,7 +1068,7 @@
                 });
                 closeNameModal();
                 document.getElementById('player-name').value = '';
-                toggleLeaderboard(); // Show updated board
+                toggleLeaderboard(); 
             } catch (error) {
                 alert("Failed to save score globally. Check your internet connection.");
             } finally {
@@ -1082,12 +1082,16 @@
         window.onload = () => {
             loadStats();
             bindCanvasContexts();
-            generateNewSet(true); // Loads data instantly in background
+            generateNewSet(true); 
             animate();
 
-            // Strictly remove loading screen after 1s maximum
+            // PERFORMANCE FIX: Strictly hide AND destroy the loading screen rendering
             setTimeout(() => {
-                document.getElementById('loading-screen').classList.add('hidden');
+                const loader = document.getElementById('loading-screen');
+                loader.classList.add('hidden');
+                setTimeout(() => {
+                    loader.style.display = 'none'; // Completely removes from render tree
+                }, 400); 
             }, 1000);
         };
     </script>

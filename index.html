@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RenderQuest | Computer Graphics Programming</title>
 
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2309090b'/%3E%3Cpath d='M16 4 L28 24 L4 24 Z' fill='none' stroke='%2322d3ee' stroke-width='2.5'/%3E%3Ccircle cx='16' cy='4' r='2.5' fill='%23f4f4f5'/%3E%3Ccircle cx='28' cy='24' r='2.5' fill='%23f4f4f5'/%3E%3Ccircle cx='4' cy='24' r='2.5' fill='%23f4f4f5'/%3E%3Ccircle cx='16' cy='17' r='2' fill='%23facc15'/%3E%3C/svg%3E"><rect width='32' height='32' rx='6' fill='%2309090b'/><path d='M16 4 L28 24 L4 24 Z' fill='none' stroke='%2322d3ee' stroke-width='2.5'/><circle cx='16' cy='4' r='2.5' fill='%23f4f4f5'/><circle cx='28' cy='24' r='2.5' fill='%23f4f4f5'/><circle cx='4' cy='24' r='2.5' fill='%23f4f4f5'/><circle cx='16' cy='17' r='2' fill='%23facc15'/></svg>](<data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%2309090b'/><path d='M16 4 L28 24 L4 24 Z' fill='none' stroke='%2322d3ee' stroke-width='2.5'/><circle cx='16' cy='4' r='2.5' fill='%23f4f4f5'/><circle cx='28' cy='24' r='2.5' fill='%23f4f4f5'/><circle cx='4' cy='24' r='2.5' fill='%23f4f4f5'/><circle cx='16' cy='17' r='2' fill='%23facc15'/></svg>>)">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2309090b'/%3E%3Cpath d='M16 4 L28 24 L4 24 Z' fill='none' stroke='%2322d3ee' stroke-width='2.5'/%3E%3Ccircle cx='16' cy='4' r='2.5' fill='%23f4f4f5'/%3E%3Ccircle cx='28' cy='24' r='2.5' fill='%23f4f4f5'/%3E%3Ccircle cx='4' cy='24' r='2.5' fill='%23f4f4f5'/%3E%3Ccircle cx='16' cy='17' r='2' fill='%23facc15'/%3E%3C/svg%3E">
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
@@ -430,7 +430,7 @@
 
             list.push({ type: 'computational', q: `Cross product (5 pts). A triangle has edge vectors A = [1, 0, 0] and B = [0, 1, 0]. (a) Compute A × B. (b) Interpret what this vector is called and used for.`, exp: `<strong>(a) Compute A × B:</strong><br>X: (0*0 - 0*1) = 0<br>Y: (0*0 - 1*0) = 0<br>Z: (1*1 - 0*0) = 1<br>Result = [0, 0, 1]<br><br><strong>(b) Interpretation:</strong><br>This is the <strong>Surface Normal</strong>. Used for lighting and backface culling.` });
 
-            list.push({ type: 'computational', q: `Shader writing (5 pts). Complete vertex shader setup (GLSL 460) taking attribute location 0 (vec3 pos), uniform mat4 model, outputting gl_Position. Why extend vec3 to vec4?`, exp: `<strong>Shader Code:</strong>\n#version 460\nlayout (location = 0) in vec3 pos;\nuniform mat4 model;\nvoid main() {\n   gl_Position = model * vec4(pos, 1.0);\n}\n\n<strong>Explanation:</strong><br>A 4x4 matrix needs a 4-component vector (w=1.0) for valid affine transformations like translation.` });
+            list.push({ type: 'computational', q: `Shader writing (5 pts). Complete vertex shader setup (GLSL 460) taking attribute location 0 (vec3 pos), uniform mat4 model, outputting gl_Position. Why extend vec3 to vec4?`, exp: `<strong>Shader Code:</strong>\n#version 460\nlayout (location = 0) in vec3 pos;\nuniform mat4 model;\nvoid main() {\n    gl_Position = model * vec4(pos, 1.0);\n}\n\n<strong>Explanation:</strong><br>A 4x4 matrix needs a 4-component vector (w=1.0) for valid affine transformations like translation.` });
 
             list.push({ type: 'computational', q: `Debugging (5 pts). Shaders compile/link cleanly, glGetUniformLocation returns valid location for 'xMove', glUniform1f is called every frame, but the triangle never moves. (a) Diagnose cause. (b) State fix.`, exp: `<strong>(a) Diagnosis:</strong><br>glUniform writes directly to the currently bound shader program. The program is likely not bound.<br><br><strong>(b) Fix:</strong><br>Call <code>glUseProgram(shaderProgram);</code> immediately <em>before</em> calling glUniform1f.` });
 
@@ -1064,7 +1064,7 @@
             currentActiveCanvas = null;
         }
 
-        // 6. MODALS        // 6. MODALS
+        // 6. MODALS
         let isLeaderboardOpen = false;
         let isFormulaOpen = false;
         let leaderboardLoaded = false;
@@ -1135,7 +1135,7 @@
             } catch (error) { alert("Failed to save score globally. Check your internet connection."); } finally { btn.innerText = "Submit to Global Ranking"; btn.disabled = false; }
         }
 
-// INITIALIZATION
+        // INITIALIZATION
         window.addEventListener('load', () => {
             loadStats();
             bindCanvasContexts();
@@ -1153,4 +1153,3 @@
     </script>
 </body>
 </html>
-

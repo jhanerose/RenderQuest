@@ -268,10 +268,10 @@
             
             <!-- SEPARATED NAVIGATION GRIDS -->
             <div style="max-height: 180px; overflow-y: auto;">
-                <div class="nav-section-title">Part I — Multiple Choice (1-50)</div>
+                <div class="nav-section-title">Part I — Multiple Choice (1–50)</div>
                 <div class="q-nav-grid" id="q-nav-grid-p1" style="max-height: none; overflow-y: visible;"></div>
                 
-                <div class="nav-section-title" style="margin-top: 12px;">Part II — Practical & Computational (51-60)</div>
+                <div class="nav-section-title" style="margin-top: 12px;">Part II — Practical & Computational (51–60)</div>
                 <div class="q-nav-grid" id="q-nav-grid-p2" style="max-height: none; overflow-y: visible;"></div>
             </div>
         </div>
@@ -529,7 +529,6 @@
 
         function generatePart2(setId) {
             const chosenSet = part2QuestionsDatabase[setId] || part2QuestionsDatabase['A'];
-            // Return structured copy
             return chosenSet.map(item => ({
                 type: 'computational',
                 points: item.points || 5,
@@ -651,7 +650,6 @@
 
             const p2 = generatePart2(activeSet);
             shuffleArray(p1);
-            // Part 2 is sequentially arranged for computational clarity
             appState.exam = [...p1, ...p2];
 
             buildNavGrid();
@@ -875,7 +873,6 @@
             const item = appState.exam[index];
             const hasAnswer = appState.answers[index] !== undefined && appState.answers[index] !== '';
 
-            // Update title based on item type
             document.getElementById('q-meta-title').innerText =
                 item.type === 'mcq' ? 'PART I — MULTIPLE CHOICE' : 'PART II — PRACTICAL / COMPUTATIONAL';
             document.getElementById('q-meta-subtitle').innerText =
@@ -1223,12 +1220,18 @@
 
                 globalScores.sort((a, b) => Number(b.score) - Number(a.score));
 
-                lbContent.innerHTML = globalScores.slice(0, 10).map((entry, index) => `
-                    <div class="lb-row">
-                        <span class="lb-name">#${index + 1} ${entry.name}</span>
-                        <span class="lb-score">${entry.score}/100</span>
-                    </div>
-                `).join('');
+                // FIXED: Safely handling undefined entry names and scores
+                lbContent.innerHTML = globalScores.slice(0, 10).map((entry, index) => {
+                    const playerName = (entry && entry.name) ? entry.name : "Anonymous";
+                    const playerScore = (entry && entry.score !== undefined) ? entry.score : 0;
+
+                    return `
+                        <div class="lb-row">
+                            <span class="lb-name">#${index + 1} ${playerName}</span>
+                            <span class="lb-score">${playerScore}/100</span>
+                        </div>
+                    `;
+                }).join('');
 
                 leaderboardLoaded = true;
             } catch (error) {

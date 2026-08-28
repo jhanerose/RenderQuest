@@ -98,7 +98,7 @@
             border: 1px solid var(--glass-border); border-radius: 12px; box-shadow: var(--glass-shadow);
         }
 
-        /* KPI DASHBOARD (Overflow visible to prevent clipping shadows) */
+        /* KPI DASHBOARD */
         .kpi-dashboard { padding: 16px; margin-bottom: 24px; display: flex; flex-direction: column; gap: 16px; overflow: visible; }
         .kpi-stats { display: flex; gap: 10px; flex-wrap: wrap; }
         .kpi-box { flex: 1; min-width: 120px; padding: 12px; background: rgba(0,0,0,0.2); border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); text-align: center; }
@@ -408,37 +408,115 @@
             { vis: "alpha", code: "gl_Position = model * vec4(pos, 1.0);", q: "Executed for every vertex of a moving object, which statement best analyzes what happens in the line above?", opts: ["The matrix is recomputed by the GPU for each vertex, so vertices drift apart", "Each vertex's position is multiplied by the same model matrix sent in through a uniform, moving the whole object consistently", "pos is a uniform, so all vertices collapse to one point", "The multiplication happens on the CPU before the shader runs"], ans: 1, exp: "The uniform `model` matrix applies an identical spatial transform (translation/rotation/scale) to all vertices, preserving object rigidity." }
         ];
 
-        function generatePart2() {
-            const rInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
-            let list = [];
+        // 80 REAL GROUNDED QUESTIONS (SETS A THROUGH H)
+        const part2QuestionsDatabase = {
+            'A': [
+                { type: 'computational', points: 5, q: "Displacement calculation. An entity at position p = [3, 1, 4] moves along translation vector t = [2, 5, 1] and then encounters a drag offset d = [1, 2, 2] (subtract d). Compute the resulting position vector, showing intermediate steps.", exp: "<strong>Step 1:</strong><br>[3, 1, 4] + [2, 5, 1] = [5, 6, 5]<br><br><strong>Step 2:</strong><br>[5, 6, 5] - [1, 2, 2] = [4, 4, 3]<br><br><strong>Final Result:</strong><br>[4, 4, 3]" },
+                { type: 'computational', points: 5, q: "Distance evaluation. A scene object sits at displacement v = [1, 2, 2] from the world origin. Calculate the Euclidean distance |v| by writing out the 3D Pythagorean formula explicitly before substituting components.", exp: "<strong>Formula:</strong><br>|v| = √(vx² + vy² + vz²)<br><br><strong>Substitution:</strong><br>|v| = √(1² + 2² + 2²) = √(1 + 4 + 4) = √9 = 3<br><br><strong>Final Distance:</strong><br>3" },
+                { type: 'computational', points: 5, q: "Direction normalization. A directional light vector is defined as d = [2, 3, 6]. (a) Normalize d to produce a unit vector u = d / |d|. (b) Verify that your result has a length of 1 using the sum-of-squares self-check rule.", exp: "<strong>(a) Normalize:</strong><br>|d| = √(2² + 3² + 6²) = √(4 + 9 + 36) = √49 = 7.<br>u = [2/7, 3/7, 6/7]<br><br><strong>(b) Verification:</strong><br>√((2/7)² + (3/7)² + (6/7)²) = √(4/49 + 9/49 + 36/49) = √(49/49) = 1" },
+                { type: 'computational', points: 5, q: "Component-wise product. Given vectors a = [1, 2, 3] and b = [4, 5, 6], compute their dot product a · b using the component formula. Explain why this operation is also known as the scalar product based on its output type.", exp: "<strong>Calculation:</strong><br>a · b = (1*4) + (2*5) + (3*6) = 4 + 10 + 18 = 32.<br><br><strong>Explanation:</strong><br>It is called the scalar product because the result is a single scalar number, not a vector." },
+                { type: 'computational', points: 5, q: "Angular derivation. Two vectors satisfy v1 · v2 = 14, with |v1| = √14 and |v2| = √28. (a) Compute cos(θ) using the rearranged dot product formula. (b) Determine θ. (c) Name the graphics subsystem calculation where finding this angular orientation is critical.", exp: "<strong>(a) cos(θ):</strong><br>cos(θ) = 14 / (√14 * √28) = 14 / √392 = 14 / (14√2) = 1/√2 ≈ 0.707<br><br><strong>(b) Angle:</strong><br>θ = 45°<br><br><strong>(c) Graphics System:</strong><br>Surface lighting (Phong / Lambertian diffuse shading)." },
+                { type: 'computational', points: 5, q: "Normal derivation. Two edges of a coplanar triangle are A = [1, 0, 0] and B = [0, 1, 0]. (a) Calculate A × B using the cross-product component formula (AyBz - AzBy, AzBx - AxBz, AxBy - AyBx). (b) State the geometric name and graphics purpose of this resulting vector.", exp: "<strong>(a) Computation:</strong><br>[(0*0 - 0*1), (0*0 - 1*0), (1*1 - 0*0)] = [0, 0, 1]<br><br><strong>(b) Name & Purpose:</strong><br>Surface Normal vector. Used to determine the plane's facing direction for lighting and culling." },
+                { type: 'computational', points: 5, q: "Column matrix construction. (a) Write the vector v = [4, 6, 2] in its column-vector matrix form. (b) Explain why expressing vectors as single-column matrices is foundational to transformations in graphics engines.", exp: "<strong>(a) Column Form:</strong><br>[4]<br>[6]<br>[2]<br><br><strong>(b) Explanation:</strong><br>A column vector acts as a single-column matrix (4x1), allowing matrix-by-vector multiplication for spatial transformations." },
+                { type: 'computational', points: 5, q: "Orthogonality diagnosis. A programmer calculates the dot product between a surface normal n and an incident light ray l and obtains exactly 0. (a) Diagnose what geometric angle exists between the two vectors. (b) Explain how this dot product value impacts diffuse lighting according to the Phong model.", exp: "<strong>(a) Diagnosis:</strong><br>The vectors sit at 90° (perpendicular / orthogonal) because cos(90°) = 0.<br><br><strong>(b) Impact:</strong><br>Diffuse light contribution becomes zero (no direct illumination)." },
+                { type: 'computational', points: 5, q: "Coordinate space transformation tracing. Trace a 3D character mesh as it is processed from local creation to display: (a) Which initial space defines coordinates relative only to the object itself? (b) Which space reorients the scene relative to the camera viewpoint? (c) Which space flattens 3D coordinates toward 2D with perspective? (d) Which final space matches positions to monitor pixels?", exp: "<strong>(a)</strong> Model Space<br><strong>(b)</strong> View Space<br><strong>(c)</strong> Clip Space<br><strong>(d)</strong> Screen Space" },
+                { type: 'computational', points: 5, q: "Math library selection. A graphics developer debates writing a custom matrix multiplication engine in C++ versus using GLM. Formulate a short recommendation (3–5 sentences) identifying what GLM stands for, why it is standard in modern graphics workflows, and what core mathematical constructs it manages.", exp: "<strong>Recommendation:</strong><br>Use GLM (OpenGL Mathematics). It is a header-only library designed specifically around GLSL conventions. It manages vectors, matrices, and projection mathematics natively and reliably." }
+            ],
+            'B': [
+                { type: 'computational', points: 5, q: "Aspect ratio scaling. A GLFW window is initialized at 800 × 600 pixels. If the window is resized to a width of 1600 pixels while maintaining the exact same aspect ratio, compute the new window height, showing the scaling factor step.", exp: "<strong>Aspect Ratio:</strong><br>800 / 600 = 4/3.<br>Scale Factor = 1600 / 800 = 2.0.<br>New Height = 600 * 2.0 = 1200 pixels." },
+                { type: 'computational', points: 5, q: "Frame budget evaluation. A real-time rendering simulation runs at a fixed target frame rate of 60 frames per second (FPS). Using the formula Time per frame = 1 / FPS, calculate the maximum frame budget available in milliseconds, showing your working.", exp: "<strong>Working:</strong><br>Time = 1 / 60 ≈ 0.01667 seconds.<br>0.01667 * 1000 ms = 16.67 ms frame budget." },
+                { type: 'computational', points: 5, q: "GLFW configuration validation. A program calls glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3) and glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3). (a) Identify the exact OpenGL core specification version requested. (b) Explain the purpose of setting context hints prior to calling glfwCreateWindow.", exp: "<strong>(a) Version:</strong><br>OpenGL 3.3 Core.<br><br><strong>(b) Purpose:</strong><br>Informs the driver to create a context matching the specified profile and capabilities." },
+                { type: 'computational', points: 5, q: "Thread context binding. A program successfully calls glfwCreateWindow(800, 600, \"Render\", 0, 0) but fails to render any geometry. (a) State which GLFW function must be called immediately following window creation to attach the OpenGL context to the calling thread. (b) Explain why OpenGL context calls fail if this function is omitted.", exp: "<strong>(a) Function:</strong><br><code>glfwMakeContextCurrent(win);</code><br><br><strong>(b) Explanation:</strong><br>OpenGL is a state machine tied to the current execution thread; without binding the context, GL calls have no valid state." },
+                { type: 'computational', points: 5, q: "Event loop evaluation. A basic interactive loop contains glfwPollEvents() and glfwSwapBuffers(win). (a) State what role glfwPollEvents() plays in handling user input. (b) Describe how glfwSwapBuffers updates the visible screen. (c) Name the GLFW loop condition that checks if the window close button was pressed.", exp: "<strong>(a)</strong> Processes OS window events and triggers input callbacks.<br><strong>(b)</strong> Swaps the back buffer (newly rendered) to the visible front buffer.<br><strong>(c)</strong> <code>!glfwWindowShouldClose(win)</code>" },
+                { type: 'computational', points: 5, q: "GLFW minimal entry writing. Write a minimal, syntactically correct C++ main() function utilizing GLFW that initializes the library, sets major/minor hints to 3.3, opens an 800 × 600 window titled \"App\", and terminates cleanly.", exp: "<code>int main() {\n  glfwInit();\n  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);\n  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);\n  GLFWwindow* win = glfwCreateWindow(800, 600, \"App\", 0, 0);\n  glfwMakeContextCurrent(win);\n  glfwTerminate();\n  return 0;\n}</code>" },
+                { type: 'computational', points: 5, q: "Black screen debugging. An application opens a window and enters a render loop, but the screen stays frozen on the initial window background without drawing new frames. The code contains draw calls but is missing a buffer swap. Diagnose the missing function call and identify its exact placement in the frame loop.", exp: "<strong>Diagnosis & Placement:</strong><br>Missing <code>glfwSwapBuffers(win);</code>. It must be called at the very end of the per-frame loop after drawing." },
+                { type: 'computational', points: 5, q: "GLFW lifecycle tracing. Trace the lifecycle of a GLFW application across four discrete phases: (a) Library startup, (b) Context creation and binding, (c) Per-frame event polling and buffer flipping, and (d) Final shutdown/resource cleanup. Provide the exact GLFW function name for each phase.", exp: "<strong>(a)</strong> <code>glfwInit()</code><br><strong>(b)</strong> <code>glfwCreateWindow()</code> & <code>glfwMakeContextCurrent()</code><br><strong>(c)</strong> <code>glfwPollEvents()</code> & <code>glfwSwapBuffers()</code><br><strong>(d)</strong> <code>glfwTerminate()</code>" },
+                { type: 'computational', points: 5, q: "Input architecture comparison. A project requires both continuous keyboard state polling and instantaneous mouse click handling. Explain how GLFW supports both polled input state and callback-driven event handling, citing the input types GLFW manages.", exp: "GLFW supports polling via <code>glfwGetKey</code> and asynchronous events via registered callbacks (keyboard, mouse position, mouse clicks, joystick)." },
+                { type: 'computational', points: 5, q: "Framework selection analysis. A student wants to integrate SDL for a simple 3D visualization solely because \"major commercial games use it\". Write a 3–5 sentence evaluation comparing SDL and GLFW, identifying three extra features SDL provides (audio, threading, filesystems), and justifying why GLFW remains the preferred lightweight tool for focused OpenGL graphics coursework.", exp: "SDL includes audio, threading, and filesystem systems that are beyond standard OpenGL graphics focus. GLFW is lightweight, modular, and does windowing and input with minimal overhead." }
+            ],
+            'C': [
+                { type: 'computational', points: 5, q: "Version delta computation. Standard Windows dynamic libraries natively guarantee direct linkage only up to OpenGL version 1.1. If a modern course lab targets OpenGL version 4.6, compute the numeric version offset that requires dynamic runtime function pointer loading.", exp: "<strong>Calculation:</strong><br>4.6 - 1.1 = 3.5 major/minor version delta requiring runtime loading via extension loaders." },
+                { type: 'computational', points: 5, q: "GLEW status evaluation. A program executes GLenum result = glewInit(). Using standard GLEW return types, state the exact constant representing a successful initialization.", exp: "<strong>Exact Constant:</strong><br><code>GLEW_OK</code>" },
+                { type: 'computational', points: 5, q: "Experimental flag verification. Modern OpenGL core profiles often require setting glewExperimental = GL_TRUE prior to calling glewInit(). (a) Identify where this variable assignment must appear relative to glewInit(). (b) Explain why failing to enable experimental bindings can cause function pointer queries to fail in core profiles.", exp: "<strong>(a) Placement:</strong><br>Must be assigned immediately before calling <code>glewInit()</code>.<br><br><strong>(b) Reason:</strong><br>Forces GLEW to query modern core-profile function pointers that standard legacy driver queries might miss." },
+                { type: 'computational', points: 5, q: "Driver pointer resolution. Explain what dynamic loading means in the context of GLEW. Contrast an OpenGL specification against the GPU vendor driver implementation, explaining why function addresses must be queried at runtime.", exp: "OpenGL is an API specification; the GPU driver provides actual binary entry points. GLEW queries those function pointers from the driver at runtime." },
+                { type: 'computational', points: 5, q: "Extension guarding logic. Write a practical C++ code snippet demonstrating how an application checks for the availability of GLEW_EXT_framebuffer_object before utilizing framebuffer calls, including an error print branch.", exp: "<code>if (!GLEW_EXT_framebuffer_object) {\n    std::cerr << \"FBO extension not supported!\" << std::endl;\n    return false;\n}</code>" },
+                { type: 'computational', points: 5, q: "GLEW error decoding snippet. Construct a minimal C++ block that executes glewInit(), checks whether the return value equals GLEW_OK, and prints the translated human-readable error string using glewGetErrorString(result) if it fails.", exp: "<code>GLenum result = glewInit();\nif (result != GLEW_OK) {\n    std::cerr << \"GLEW Error: \" << glewGetErrorString(result) << std::endl;\n}</code>" },
+                { type: 'computational', points: 5, q: "Initialization crash diagnosis. A student calls glewInit() at the very first line of main(), before calling glfwInit() or glfwCreateWindow(). The program immediately crashes with a null pointer exception. (a) Diagnose why glewInit() failed. (b) State the exact prerequisite state required before calling glewInit().", exp: "<strong>(a) Cause:</strong><br>No active OpenGL context exists to fetch function addresses from.<br><br><strong>(b) Prerequisite:</strong><br>Create a window and call <code>glfwMakeContextCurrent(win)</code> first." },
+                { type: 'computational', points: 5, q: "Setup sequence tracing. Trace the exact four-step order required to get a modern OpenGL program running with GLFW and GLEW: (1) GLFW initialization & window creation, (2) Context binding, (3) GLEW initialization, and (4) Rendering loop execution.", exp: "1. <code>glfwInit()</code> & <code>glfwCreateWindow()</code><br>2. <code>glfwMakeContextCurrent(win)</code><br>3. <code>glewExperimental = GL_TRUE; glewInit();</code><br>4. Enter <code>while(!glfwWindowShouldClose(win))</code>" },
+                { type: 'computational', points: 5, q: "Platform-specific header integration. Explain the role of wglew.h in a Windows-based OpenGL graphics application, citing the specific types of extensions it exposes.", exp: "<code>wglew.h</code> exposes Windows-specific (WGL) extensions and context creation features unique to the Microsoft Windows platform." },
+                { type: 'computational', points: 5, q: "Loader tool evaluation. A teammate suggests replacing GLEW with alternative loaders like GLAD, GL3W, or libepoxy. Write a short 3–5 sentence assessment summarizing why multiple loaders exist, what functional purpose they all share, and why GLEW remains a standard foundation in educational environments.", exp: "All loaders perform the same essential role: loading OpenGL function pointers from GPU drivers at runtime. Alternatives exist for custom version generation, but GLEW is simple, mature, and ubiquitous in education." }
+            ],
+            'D': [
+                { type: 'computational', points: 5, q: "Buffer memory footprint. A triangle mesh consists of 6 vertices, where each vertex stores a 3D position using 3 single-precision 32-bit floating-point numbers (float = 4 bytes). Calculate the total size in bytes required for this Vertex Buffer Object (VBO), showing intermediate steps.", exp: "<strong>Per-Vertex:</strong> 3 floats * 4 bytes = 12 bytes.<br><strong>Total VBO:</strong> 6 vertices * 12 bytes = 72 bytes." },
+                { type: 'computational', points: 5, q: "Vertex stride computation. A vertex buffer interleaves a 3-component position (vec3) and a 4-component color vector (vec4), where each component is a 4-byte float. Compute the total vertex stride in bytes.", exp: "<strong>Components:</strong> (3 position + 4 color) = 7 floats.<br><strong>Stride:</strong> 7 floats * 4 bytes = 28 bytes per vertex." },
+                { type: 'computational', points: 5, q: "Primitive triangle count derivation. An application issues a draw call using glDrawArrays(GL_TRIANGLES, 0, 18). (a) Compute how many individual triangles will be assembled by the pipeline. (b) Verify the calculation using the vertex-to-triangle ratio (3 vertices = 1 triangle).", exp: "<strong>(a) Count:</strong> 18 / 3 = 6 triangles.<br><strong>(b) Verification:</strong> 6 triangles * 3 vertices = 18 total vertices processed." },
+                { type: 'computational', points: 5, q: "VAO vs. VBO functional role. Differentiate between a Vertex Array Object (VAO) and a Vertex Buffer Object (VBO). State precisely which object holds the raw data in GPU memory and which object records the attribute configuration.", exp: "<strong>VBO:</strong> Stores raw numerical vertex data in GPU memory.<br><strong>VAO:</strong> Stores the attribute layout state and formats describing how shaders interpret that data." },
+                { type: 'computational', points: 5, q: "Attribute configuration breakdown. An attribute is defined with glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0). (a) Identify the attribute index targeted. (b) State the number of components per vertex. (c) State which companion function must be called to enable this layout index.", exp: "<strong>(a)</strong> Index 0.<br><strong>(b)</strong> 3 components (X, Y, Z).<br><strong>(c)</strong> <code>glEnableVertexAttribArray(0);</code>" },
+                { type: 'computational', points: 5, q: "VAO/VBO setup construction. Write the complete C++ sequence of OpenGL calls required to generate, bind, allocate data for a VBO, set attribute pointer 0, enable the attribute, and unbind the VAO cleanly.", exp: "<code>glGenVertexArrays(1, &vao); glBindVertexArray(vao);\nglGenBuffers(1, &vbo); glBindBuffer(GL_ARRAY_BUFFER, vbo);\nglBufferData(GL_ARRAY_BUFFER, sizeof(data), data, GL_STATIC_DRAW);\nglVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);\nglEnableVertexAttribArray(0);\nglBindVertexArray(0);</code>" },
+                { type: 'computational', points: 5, q: "Invisible geometry diagnosis. A developer uploads valid vertex data to a VBO and binds the VAO during rendering, but nothing displays on screen. Inspection reveals that glEnableVertexAttribArray(0) was never called. (a) Diagnose why the shader failed to receive position data. (b) State the exact line of code to resolve this issue.", exp: "<strong>(a) Cause:</strong> Attribute index 0 is disabled by default in the VAO.<br><strong>(b) Fix:</strong> <code>glEnableVertexAttribArray(0);</code>" },
+                { type: 'computational', points: 5, q: "Pipeline initiation sequence tracing. Trace the three specific OpenGL commands that must be executed every single frame to initiate GPU rendering of a bound mesh: (1) Shader activation, (2) VAO binding, and (3) Draw command execution.", exp: "1. <code>glUseProgram(shaderProgram);</code><br>2. <code>glBindVertexArray(vao);</code><br>3. <code>glDrawArrays(GL_TRIANGLES, 0, count);</code>" },
+                { type: 'computational', points: 5, q: "Primitive geometry classification. (a) Name four basic primitive types supported in OpenGL vertex specification. (b) State which primitive type is standard for constructing complex 3D meshes and explain why.", exp: "<strong>(a) Types:</strong> Points, Lines, Triangles, Quads.<br><strong>(b) Standard:</strong> Triangles, because they are always planar and represent any complex surface." },
+                { type: 'computational', points: 5, q: "Drawing call optimization evaluation. A junior developer proposes generating and binding a new VBO and VAO from scratch inside the main render loop on every frame. Write a short 3–5 sentence critique explaining why buffer allocation belongs in initialization rather than the per-frame loop.", exp: "Generating and allocating GPU memory every frame causes severe CPU-GPU bus stalls. Vertex buffers should be allocated once during setup and rendered efficiently per frame." }
+            ],
+            'E': [
+                { type: 'computational', points: 5, q: "Shader pipeline stage tally. The OpenGL rendering pipeline consists of 9 total sequential stages. If 4 of these stages are programmable via custom GLSL shaders, compute the exact number of fixed-function stages, listing the programmable stages by name.", exp: "<strong>Calculation:</strong> 9 - 4 = 5 fixed-function stages.<br><strong>Programmable:</strong> Vertex, Tessellation, Geometry, Fragment Shaders." },
+                { type: 'computational', points: 5, q: "GLSL vector dimensionality expansion. In a vertex shader, a 3D position attribute is declared as in vec3 pos;. Compute the component expansion required to assign pos to the built-in 4-component vector gl_Position, showing the final assignment statement.", exp: "<code>gl_Position = vec4(pos, 1.0);</code><br>Expands the 3D position with a homogeneous coordinate (w = 1.0)." },
+                { type: 'computational', points: 5, q: "Shader compilation error verification. A shader source string is compiled with glCompileShader(shaderID). (a) State which OpenGL function compiles shader source code. (b) State which function links compiled shaders into a program object.", exp: "<strong>(a) Compile:</strong> <code>glCompileShader</code><br><strong>(b) Link:</strong> <code>glLinkProgram</code>" },
+                { type: 'computational', points: 5, q: "Vertex vs. Fragment execution frequency. Contrast the execution frequency and primary responsibility of the Vertex Shader against the Fragment Shader.", exp: "<strong>Vertex Shader:</strong> Runs once per vertex; transforms geometry into clip space.<br><strong>Fragment Shader:</strong> Runs once per rasterized fragment/pixel; calculates final RGBA color." },
+                { type: 'computational', points: 5, q: "Pipeline culling stage analysis. (a) Name the pipeline stage where Primitive Assembly and Face Culling occur. (b) Explain the practical rendering benefit of discarding primitives that face away from the camera.", exp: "<strong>(a) Stage:</strong> Stage 6: Primitive Assembly.<br><strong>(b) Benefit:</strong> Saves rasterization and fragment shading fill rate on hidden back surfaces." },
+                { type: 'computational', points: 5, q: "Minimal vertex shader construction. Write a complete, valid GLSL core vertex shader (version 460) that accepts a vec3 from attribute location = 0 and outputs it directly as gl_Position with a homogeneous coordinate of 1.0.", exp: "<code>#version 460\nlayout (location = 0) in vec3 pos;\nvoid main() {\n    gl_Position = vec4(pos, 1.0);\n}</code>" },
+                { type: 'computational', points: 5, q: "Shader link failure diagnosis. An application compiles its vertex and fragment shaders without errors, but calling glDrawArrays renders nothing. It is discovered that glAttachShader was called, but glLinkProgram was skipped. (a) Diagnose why the GPU cannot execute the shader stages. (b) State the exact function required to resolve the program executable.", exp: "<strong>(a) Diagnosis:</strong> Shaders are compiled separately and cannot execute until combined into a linked GPU program.<br><strong>(b) Fix:</strong> <code>glLinkProgram(programID);</code>" },
+                { type: 'computational', points: 5, q: "Shader program lifecycle tracing. Trace the complete 7-step sequence required to construct and validate a usable Shader Program object from raw GLSL strings.", exp: "1. <code>glCreateProgram</code><br>2. <code>glCreateShader</code><br>3. <code>glShaderSource</code><br>4. <code>glCompileShader</code><br>5. <code>glAttachShader</code><br>6. <code>glLinkProgram</code><br>7. <code>glValidateProgram</code>" },
+                { type: 'computational', points: 5, q: "Interpolation mechanism. Explain what happens during the Rasterization stage (Stage 7) when primitive triangles are converted into fragments, detailing how vertex attribute data is interpolated across pixel centers.", exp: "Rasterization calculates barycentric weights based on fragment centers and blends vertex attributes (colors, normals, UVs) smoothly across the face." },
+                { type: 'computational', points: 5, q: "Shader validation recommendation. A teammate suggests skipping glValidateProgram during engine startup to save a few microseconds of initialization time. Write a 3–5 sentence justified recommendation explaining why validation is strongly advised in graphics development.", exp: "Validation catches silent configuration errors between shader interfaces and OpenGL states. Debugging shaders is notoriously difficult, so validating upfront prevents costly runtime diagnostic failures." }
+            ],
+            'F': [
+                { type: 'computational', points: 5, q: "Transform matrix component count. A 3D transformation uses a 4 × 4 floating-point matrix uniform (mat4). Calculate the total number of single-precision floating-point values transferred when uploading this matrix to the GPU.", exp: "4 rows * 4 columns = 16 floating-point values." },
+                { type: 'computational', points: 5, q: "Uniform query evaluation. A uniform is declared in a shader as uniform float u_Scale;. State the exact OpenGL function signature used to query its integer location ID from the application program.", exp: "<code>int location = glGetUniformLocation(shaderID, \"u_Scale\");</code>" },
+                { type: 'computational', points: 5, q: "Function-to-type verification. Match each data type to its dedicated uniform upload call: (a) Single float, (b) Single integer, (c) 4-component float vector, and (d) 4 × 4 matrix by pointer.", exp: "<strong>(a)</strong> <code>glUniform1f</code><br><strong>(b)</strong> <code>glUniform1i</code><br><strong>(c)</strong> <code>glUniform4f</code><br><strong>(d)</strong> <code>glUniformMatrix4fv</code>" },
+                { type: 'computational', points: 5, q: "Uniform vs. Attribute data flow. Contrast the conceptual purpose of a uniform variable with that of an in attribute variable in GLSL, specifically referencing whether the value varies per vertex.", exp: "<code>in</code> attributes provide distinct data for each individual vertex (e.g., position). Uniforms remain constant across all vertices in the draw call." },
+                { type: 'computational', points: 5, q: "Matrix-vector transform pipeline. Given a vertex position attribute pos and a transformation uniform model, show the GLSL multiplication statement within main() that computes gl_Position.", exp: "<code>gl_Position = model * vec4(pos, 1.0);</code>" },
+                { type: 'computational', points: 5, q: "Dynamic uniform update construction. Construct a C++ snippet that looks up the uniform named \"xOffset\", activates the shader program, and binds a float value of 1.75f using the correct uniform function.", exp: "<code>glUseProgram(shaderID);\nint loc = glGetUniformLocation(shaderID, \"xOffset\");\nglUniform1f(loc, 1.75f);</code>" },
+                { type: 'computational', points: 5, q: "Unbound program diagnosis. An application successfully queries a uniform location ID as 0 and calls glUniform1f(0, 5.0f). The variable inside the shader does not update. Diagnose why the uniform state failed to bind, identifying the missing activation function.", exp: "<strong>Diagnosis:</strong> <code>glUniform*</code> updates the currently bound program. If <code>glUseProgram</code> was not called, values go nowhere." },
+                { type: 'computational', points: 5, q: "Uniform binding lifecycle tracing. Trace the complete 4-step sequence required to transmit a transformation matrix from a C++ GLM structure into an active vertex shader uniform.", exp: "1. Build matrix in GLM<br>2. Activate program with <code>glUseProgram</code><br>3. Find location with <code>glGetUniformLocation</code><br>4. Pass data with <code>glUniformMatrix4fv</code>" },
+                { type: 'computational', points: 5, q: "Matrix uniform pointer requirement. Explain why matrix uniform uploads require the pointer-based function glUniformMatrix4fv rather than passing 16 separate discrete float arguments.", exp: "C++ cannot pass 16 separate float parameters cleanly; array/pointer passing allows the GPU driver to copy the contiguous 64-byte block in one operation." },
+                { type: 'computational', points: 5, q: "Uniform architecture decision. A programmer wants to pass a unique color for every single individual vertex by calling glUniform4f inside a loop before every vertex is drawn. Write a 3–5 sentence recommendation explaining why per-vertex data belongs in vertex buffer attributes (in vec4) rather than uniforms.", exp: "Uniforms are constant per draw call; updating a uniform per vertex forces thousands of CPU-GPU pipeline stalls. Vertex data should be streamed via VBOs." }
+            ],
+            'G': [
+                { type: 'computational', points: 5, q: "Fragment coverage estimation. A screen viewport is configured for 800 × 600 pixels. If a rendered fullscreen quad covers exactly 25% of the total screen area, compute the total number of fragments generated during rasterization.", exp: "800 * 600 = 480,000 total pixels.<br>480,000 * 0.25 = 120,000 fragments generated." },
+                { type: 'computational', points: 5, q: "Clipping boundary evaluation. In Vertex Post-Processing (Stage 5), primitives outside the visible clip space are eliminated. State the technical name for this discarding process and explain why it saves GPU processing power.", exp: "<strong>Clipping:</strong> Discards non-visible primitives outside the view volume, preventing unnecessary rasterization and shading overhead." },
+                { type: 'computational', points: 5, q: "Depth test verification. Two overlapping triangles are drawn to the same pixel location: Triangle A has depth z = 0.3 and Triangle B has depth z = 0.7 (where smaller values are nearer). (a) Determine which triangle passes the depth test. (b) State whether the fragment behind is drawn.", exp: "<strong>(a)</strong> Triangle A passes because z = 0.3 is closer than 0.7.<br><strong>(b)</strong> The fragment for Triangle B is rejected and discarded." },
+                { type: 'computational', points: 5, q: "Fragment definition & role. Provide the precise definition of a \"fragment\" as established in Stage 7 of the rendering pipeline, distinguishing it from an output pixel.", exp: "A fragment contains all per-pixel data (interpolated attributes, depth, coordinates) needed to compute a final color before it is written to the pixel framebuffer." },
+                { type: 'computational', points: 5, q: "Per-sample pipeline breakdown. Identify the three core operations that occur during Per-Sample Operations (Stage 9) before the final image is presented to the display.", exp: "1. Depth / Stencil Testing<br>2. Color Blending<br>3. Framebuffer Writing / Buffer Swap" },
+                { type: 'computational', points: 5, q: "Fragment color output snippet. Construct a minimal GLSL fragment shader (version 460) that declares a vec4 output variable and assigns it a solid green color with full opacity.", exp: "<code>#version 460\nout vec4 colour;\nvoid main() {\n    colour = vec4(0.0, 1.0, 0.0, 1.0);\n}</code>" },
+                { type: 'computational', points: 5, q: "Z-fighting / Depth failure diagnosis. A 3D scene renders distant objects on top of nearer objects, creating visual artifacts whenever the camera rotates. Diagnose the missing OpenGL stage test in Per-Sample operations and state how to resolve it.", exp: "<strong>Diagnosis:</strong> Depth testing is disabled.<br><strong>Resolution:</strong> Call <code>glEnable(GL_DEPTH_TEST);</code> during setup." },
+                { type: 'computational', points: 5, q: "Fragment-to-pixel tracing. Trace a fragment from its creation in Stage 7 through Stage 8 (Fragment Shader) and Stage 9 (Per-Sample Operations) until it is written to the framebuffer.", exp: "Stage 7 generates fragments via interpolation -> Stage 8 executes GLSL shader to calculate color -> Stage 9 performs depth test & blends color into framebuffer." },
+                { type: 'computational', points: 5, q: "Color blending mechanism. Explain how color blending in Per-Sample Operations handles semi-transparent overlapping surfaces.", exp: "Color blending mixes the incoming fragment's color with the existing framebuffer pixel color based on alpha values to simulate transparency." },
+                { type: 'computational', points: 5, q: "Rasterization vs. Ray tracing recommendation. A technical director is choosing a rendering technique for a fast-paced multiplayer 3D action game. Write a 3–5 sentence recommendation comparing rasterization against ray tracing, citing why rasterization is the foundation of real-time OpenGL pipelines.", exp: "Rasterization projects triangles to pixels in parallel, providing high performance (>60 FPS) on standard GPUs. Ray tracing is computationally heavy and better suited for offline cinema or hybrid pipelines." }
+            ],
+            'H': [
+                { type: 'computational', points: 5, q: "Phong lighting total intensity. In the Phong lighting model, total illumination combines ambient, diffuse, and specular components. If ambient contribution is 0.2, diffuse is 0.55, and specular highlight is 0.2, calculate the total light intensity scalar.", exp: "Total Intensity = Ambient + Diffuse + Specular = 0.20 + 0.55 + 0.20 = 0.95." },
+                { type: 'computational', points: 5, q: "Surface normal cross product. A triangle in 3D space is formed by edge vectors u = [0, 2, 0] and v = [0, 0, 3]. Compute the unnormalized surface normal N = u × v using the cross-product formula.", exp: "X = (2*3 - 0*0) = 6<br>Y = (0*0 - 0*3) = 0<br>Z = (0*0 - 2*0) = 0<br>Result: N = [6, 0, 0]." },
+                { type: 'computational', points: 5, q: "Unit normal verification. Take the vector result N = [6, 0, 0] obtained from a surface cross product. (a) Normalize N to find the unit surface normal uN. (b) Verify that the resulting unit normal has a magnitude of 1.", exp: "<strong>(a) Normalize:</strong> |N| = 6. uN = [6/6, 0/6, 0/6] = [1, 0, 0].<br><strong>(b) Verification:</strong> √(1² + 0² + 0²) = √1 = 1." },
+                { type: 'computational', points: 5, q: "Phong reflection model components. Define the three distinct lighting components that make up the Phong model (Ambient, Diffuse, Specular), explaining what physical effect each simulates.", exp: "<strong>Ambient:</strong> Constant baseline light reaching all surfaces.<br><strong>Diffuse:</strong> Direction-dependent matte reflection based on light angle.<br><strong>Specular:</strong> Shiny reflection highlights on glossy surfaces." },
+                { type: 'computational', points: 5, q: "Texture mapping & UV coordinates. (a) Define what UV mapping coordinates represent when wrapping a 2D texture onto a 3D surface. (b) Explain why textures provide surface detail more efficiently than adding geometric polygons.", exp: "<strong>(a)</strong> UV coordinates map 2D texture space points [0.0 to 1.0] to 3D surface vertices.<br><strong>(b)</strong> High visual fidelity is achieved through pixel images without increasing geometric vertex counts." },
+                { type: 'computational', points: 5, q: "Full pipeline shader integration snippet. Write a combined vertex shader and fragment shader in GLSL (version 460) for an unlit colored mesh: the vertex shader transforms pos by uniform mat4 model, and the fragment shader outputs solid blue.", exp: "<strong>Vertex Shader:</strong><br><code>#version 460\nlayout(location=0) in vec3 pos;\nuniform mat4 model;\nvoid main() { gl_Position = model * vec4(pos, 1.0); }</code><br><br><strong>Fragment Shader:</strong><br><code>#version 460\nout vec4 col;\nvoid main() { col = vec4(0.0, 0.0, 1.0, 1.0); }</code>" },
+                { type: 'computational', points: 5, q: "Pipeline stage mismatch diagnosis. A program compiles a geometry shader and passes raw points with the intent of emitting triangle quads. However, primitive assembly fails because the draw call uses an incompatible primitive mode. Diagnose what input and output primitives a geometry shader can bridge.", exp: "Geometry shaders take in an input primitive (e.g., <code>points</code>) and can emit a completely different output primitive stream (e.g., <code>triangle_strip</code>)." },
+                { type: 'computational', points: 5, q: "End-to-end rendering pipeline trace. Trace an entire rendering frame from the initial CPU draw call glDrawArrays through all active pipeline stages until the backbuffer is flipped.", exp: "CPU Draw Call -> Vertex Shader -> Primitive Assembly/Culling -> Rasterization -> Fragment Shader -> Per-Sample (Depth Test) -> <code>glfwSwapBuffers</code>." },
+                { type: 'computational', points: 5, q: "CPU vs. GPU architectural roles. Contrast the architectural role of the CPU (\"the brain\") against the GPU (\"the artist\") in modern real-time computer graphics.", exp: "CPU handles sequential application and game logic with few high-speed cores; GPU processes millions of vertices and pixel fragments simultaneously using massive parallel hardware." },
+                { type: 'computational', points: 5, q: "Production framework design trade-off. A development lead must select between GLFW and SDL for an interactive 3D simulation that requires future expansions into spatial audio and multithreaded physics. Write a 3–5 sentence justified recommendation explaining when expanding to SDL becomes necessary versus when GLFW is sufficient.", exp: "If the application remains strictly focused on rendering, GLFW is optimal and lightweight. If audio, multi-threading, and game controllers are required, transitioning to SDL provides an integrated engine architecture." }
+            ]
+        };
 
-            let a = [rInt(4, 9), rInt(2, 6), rInt(4, 8)], b = [rInt(1, 3), rInt(1, 3), rInt(1, 3)];
-            let inter = [a[0]-b[0], a[1]-b[1], a[2]-b[2]], res51 = [inter[0]*2, inter[1]*2, inter[2]*2];
-            list.push({ type: 'computational', q: `Vector operations (5 pts). A game character's intended step is a = [${a}]. An obstacle pushes it back by b = [${b}] (subtract b). The result is doubled for a sprint boost. Compute intermediate and final displacement.`, exp: `<strong>Step 1 (Subtract):</strong><br>[${a}] - [${b}] = [${inter}]<br><br><strong>Step 2 (Double/Multiply):</strong><br>[${inter}] * 2 = [${res51}]<br><br><strong>Final Answer:</strong><br>Intermediate: [${inter}], Final: [${res51}]` });
-
-            const pythTriples = [[2,3,6, 7], [1,2,2, 3], [2,10,11, 15], [1,4,8, 9], [4,4,7, 9]];
-            let trip = pythTriples[rInt(0, pythTriples.length - 1)];
-            list.push({ type: 'computational', q: `Magnitude (5 pts). Vector from camera to target is v = [${trip[0]}, ${trip[1]}, ${trip[2]}]. Compute |v| showing formula and solution.`, exp: `<strong>Formula:</strong><br>|v| = √(x² + y² + z²)<br><br><strong>Calculation:</strong><br>|v| = √(${trip[0]}² + ${trip[1]}² + ${trip[2]}²)<br>|v| = √(${trip[0]*trip[0]} + ${trip[1]*trip[1]} + ${trip[2]*trip[2]})<br>|v| = √(${trip[3]*trip[3]})<br><br><strong>Final Answer:</strong><br>${trip[3]}` });
-
-            list.push({ type: 'computational', q: `Unit vector (5 pts). Spotlight points along d = [3, 4, 0], needing a direction of length 1. (a) Normalize d. (b) Verify with self-check.`, exp: `<strong>(a) Normalization:</strong><br>Length |d| = √(3² + 4² + 0) = 5.<br>d_norm = [3/5, 4/5, 0] = [0.6, 0.8, 0.0]<br><br><strong>(b) Verification:</strong><br>√(0.6² + 0.8² + 0²) = √(0.36 + 0.64) = √(1.0) = 1.0` });
-
-            let dpA = [rInt(1, 4), rInt(1, 4), rInt(1, 4)], dpB = [rInt(1, 4), rInt(1, 4), rInt(1, 4)];
-            let dotVal = (dpA[0]*dpB[0]) + (dpA[1]*dpB[1]) + (dpA[2]*dpB[2]);
-            list.push({ type: 'computational', q: `Dot product (5 pts). Compute [${dpA}] · [${dpB}]. State whether result is scalar/vector and why.`, exp: `<strong>Calculation:</strong><br>(${dpA[0]} * ${dpB[0]}) + (${dpA[1]} * ${dpB[1]}) + (${dpA[2]} * ${dpB[2]})<br>= ${dpA[0]*dpB[0]} + ${dpA[1]*dpB[1]} + ${dpA[2]*dpB[2]}<br>= ${dotVal}<br><br><strong>Final Answer:</strong><br>${dotVal}. It is a <strong>scalar</strong> because the operation yields a single numerical value.` });
-
-            list.push({ type: 'computational', q: `Angle between vectors (5 pts). Two direction vectors have v1·v2 = 6, with |v1| = 3 and |v2| = 4. (a) Compute cos(θ). (b) Find θ. (c) State where in graphics this matters.`, exp: `<strong>(a) Compute cos(θ):</strong><br>cos(θ) = (A · B) / (|A| * |B|)<br>cos(θ) = 6 / (3 * 4) = 0.5<br><br><strong>(b) Find θ:</strong><br>θ = arccos(0.5) = 60°<br><br><strong>(c) Graphics Application:</strong><br>Used heavily in Lambertian (diffuse) and Specular lighting.` });
-
-            list.push({ type: 'computational', q: `Cross product (5 pts). A triangle has edge vectors A = [1, 0, 0] and B = [0, 1, 0]. (a) Compute A × B. (b) Interpret what this vector is called and used for.`, exp: `<strong>(a) Compute A × B:</strong><br>X: (0*0 - 0*1) = 0<br>Y: (0*0 - 1*0) = 0<br>Z: (1*1 - 0*0) = 1<br>Result = [0, 0, 1]<br><br><strong>(b) Interpretation:</strong><br>This is the <strong>Surface Normal</strong>. Used for lighting and backface culling.` });
-
-            list.push({ type: 'computational', q: `Shader writing (5 pts). Complete vertex shader setup (GLSL 460) taking attribute location 0 (vec3 pos), uniform mat4 model, outputting gl_Position. Why extend vec3 to vec4?`, exp: `<strong>Shader Code:</strong>\n#version 460\nlayout (location = 0) in vec3 pos;\nuniform mat4 model;\nvoid main() {\n    gl_Position = model * vec4(pos, 1.0);\n}\n\n<strong>Explanation:</strong><br>A 4x4 matrix needs a 4-component vector (w=1.0) for valid affine transformations like translation.` });
-
-            list.push({ type: 'computational', q: `Debugging (5 pts). Shaders compile/link cleanly, glGetUniformLocation returns valid location for 'xMove', glUniform1f is called every frame, but the triangle never moves. (a) Diagnose cause. (b) State fix.`, exp: `<strong>(a) Diagnosis:</strong><br>glUniform writes directly to the currently bound shader program. The program is likely not bound.<br><br><strong>(b) Fix:</strong><br>Call <code>glUseProgram(shaderProgram);</code> immediately <em>before</em> calling glUniform1f.` });
-
-            list.push({ type: 'computational', q: `Pipeline tracing (5 pts). A draw call sends 9 vertices as triangles. (a) Triangles from primitive assembly? (b) 1 faces away — what happens and where? (c) Remaining cover 5000 pixels — fragment runs? (d) Deciding test?`, exp: `<strong>(a)</strong> 3 triangles.<br><strong>(b)</strong> Discarded by Face Culling in Primitive Assembly.<br><strong>(c)</strong> Fragment Shader runs 5,000 times.<br><strong>(d)</strong> The Depth Test (Z-Buffer).` });
-
-            list.push({ type: 'computational', q: `Design decision (5 pts). A visualization needs only window, input, and OpenGL 3.3 context. Teammate insists on SDL 'because big games use it.' What is the evaluation and the 3 GLFW render loop calls?`, exp: `<strong>Evaluation:</strong><br>GLFW is lightweight and focused on exactly those three things. SDL adds unnecessary overhead.<br><br><strong>GLFW Calls:</strong><br>1. <code>glClear(GL_COLOR_BUFFER_BIT);</code><br>2. <code>glfwSwapBuffers(window);</code><br>3. <code>glfwPollEvents();</code>` });
-
-            return list;
+        function generatePart2(setId) {
+            const chosenSet = part2QuestionsDatabase[setId] || part2QuestionsDatabase['A'];
+            // Return structured copy
+            return chosenSet.map(item => ({
+                type: 'computational',
+                points: item.points || 5,
+                q: item.q,
+                exp: item.exp
+            }));
         }
 
         let appState = {
@@ -534,7 +612,8 @@
             document.getElementById('filter-incorrect').style.display = 'none';
 
             const setIDs = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
-            document.getElementById('set-indicator').innerText = `Active Exam: Set ${setIDs[Math.floor(Math.random() * setIDs.length)]}`;
+            const activeSet = setIDs[Math.floor(Math.random() * setIDs.length)];
+            document.getElementById('set-indicator').innerText = `Active Exam: Set ${activeSet}`;
 
             const p1 = rawPart1.map((item) => {
                 const optsWithMeta = item.opts.map((text, i) => ({ text, isCorrect: i === item.ans }));
@@ -551,9 +630,9 @@
                 };
             });
 
-            const p2 = generatePart2();
+            const p2 = generatePart2(activeSet);
             shuffleArray(p1);
-            shuffleArray(p2);
+            // Part 2 is sequentially arranged for computational clarity
             appState.exam = [...p1, ...p2];
 
             buildNavGrid();
@@ -653,10 +732,6 @@
             } else {
                 updateNavigationButtons();
             }
-        }
-
-        function getFilteredIndices() {
-            return filteredIndices;
         }
 
         function updateNavigationButtons() {
@@ -867,21 +942,27 @@
         let currentFinalScore = 0;
 
         function submitExam() {
-            clearInterval(timerInterval); appState.isSubmitted = true;
-            let totalScore = 0; let missedQuestions = [];
+            clearInterval(timerInterval); 
+            appState.isSubmitted = true;
+            let totalScore = 0; 
+            let missedQuestions = [];
 
             appState.exam.forEach((item, index) => {
-                const ans = appState.answers[index]; const hasAnswer = (ans !== undefined && ans !== "");
+                const ans = appState.answers[index]; 
+                const hasAnswer = (ans !== undefined && ans !== "");
                 if (item.type === 'mcq') {
-                    if (ans === item.ans) totalScore += item.points; else missedQuestions.push({ num: index + 1, q: item.q, exp: item.exp });
+                    if (ans === item.ans) totalScore += item.points; 
+                    else missedQuestions.push({ num: index + 1, q: item.q, exp: item.exp });
                 } else if (item.type === 'computational') {
-                    if (hasAnswer) totalScore += item.points; else missedQuestions.push({ num: index + 1, q: item.q, exp: "No computation provided. Self-verify against exact solution." });
+                    if (hasAnswer) totalScore += item.points; 
+                    else missedQuestions.push({ num: index + 1, q: item.q, exp: "No computation provided. Self-verify against exact solution." });
                 }
                 updateSingleNavButton(index);
             });
 
             currentFinalScore = totalScore;
-            document.getElementById('score-display').innerText = `${totalScore}/100`; saveScore(totalScore);
+            document.getElementById('score-display').innerText = `${totalScore}/100`; 
+            saveScore(totalScore);
 
             const summaryDiv = document.getElementById('weak-points-summary');
             if (missedQuestions.length === 0) {
@@ -907,16 +988,18 @@
         }
 
         function saveScore(scorePercent) {
-            const scores = JSON.parse(localStorage.getItem('renderquest_scores') || '[]'); scores.push(scorePercent);
-            localStorage.setItem('renderquest_scores', JSON.stringify(scores)); loadStats();
+            const scores = JSON.parse(localStorage.getItem('renderquest_scores') || '[]'); 
+            scores.push(scorePercent);
+            localStorage.setItem('renderquest_scores', JSON.stringify(scores)); 
+            loadStats();
         }
 
-        // 5. LIVE CANVAS VISUALIZERS — PERFORMANCE OPTIMIZED
+        // LIVE CANVAS VISUALIZERS
         let time = 0;
         let ctxList = {};
         let animationFrameId = null;
         let lastFrameTime = 0;
-        const TARGET_FRAME_MS = 33; // ~30 FPS is enough for educational visualizers.
+        const TARGET_FRAME_MS = 33;
 
         function bindCanvasContexts() {
             ctxList = {
@@ -1064,7 +1147,7 @@
             currentActiveCanvas = null;
         }
 
-        // 6. MODALS
+        // MODALS & LEADERBOARD
         let isLeaderboardOpen = false;
         let isFormulaOpen = false;
         let leaderboardLoaded = false;
@@ -1123,16 +1206,36 @@
             }
         }
 
-        function openNameModal(score) { document.getElementById('final-score-display').innerText = score; document.getElementById('name-modal').classList.add('active'); document.getElementById('player-name').focus(); }
-        function closeNameModal() { document.getElementById('name-modal').classList.remove('active'); }
+        function openNameModal(score) { 
+            document.getElementById('final-score-display').innerText = score; 
+            document.getElementById('name-modal').classList.add('active'); 
+            document.getElementById('player-name').focus(); 
+        }
+        function closeNameModal() { 
+            document.getElementById('name-modal').classList.remove('active'); 
+        }
 
         async function submitScoreToFirebase() {
-            const nameInput = document.getElementById('player-name').value.trim(); if (!nameInput) { alert("Please enter a codename!"); return; }
-            const btn = document.getElementById('btn-submit-score'); btn.innerText = "Syncing..."; btn.disabled = true;
+            const nameInput = document.getElementById('player-name').value.trim(); 
+            if (!nameInput) { alert("Please enter a codename!"); return; }
+            const btn = document.getElementById('btn-submit-score'); 
+            btn.innerText = "Syncing..."; 
+            btn.disabled = true;
             try {
-                await fetch('https://renderquest-9a48c-default-rtdb.firebaseio.com/leaderboard.json', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: nameInput.substring(0, 20), score: currentFinalScore, timestamp: new Date().getTime() }) });
-                closeNameModal(); document.getElementById('player-name').value = ''; toggleLeaderboard();
-            } catch (error) { alert("Failed to save score globally. Check your internet connection."); } finally { btn.innerText = "Submit to Global Ranking"; btn.disabled = false; }
+                await fetch('https://renderquest-9a48c-default-rtdb.firebaseio.com/leaderboard.json', { 
+                    method: 'POST', 
+                    headers: { 'Content-Type': 'application/json' }, 
+                    body: JSON.stringify({ name: nameInput.substring(0, 20), score: currentFinalScore, timestamp: new Date().getTime() }) 
+                });
+                closeNameModal(); 
+                document.getElementById('player-name').value = ''; 
+                toggleLeaderboard();
+            } catch (error) { 
+                alert("Failed to save score globally. Check your internet connection."); 
+            } finally { 
+                btn.innerText = "Submit to Global Ranking"; 
+                btn.disabled = false; 
+            }
         }
 
         // INITIALIZATION
@@ -1141,7 +1244,6 @@
             bindCanvasContexts();
             generateNewSet(true);
 
-            // Loader is shown only once, on initial page load.
             const loader = document.getElementById('loading-screen');
             setTimeout(() => {
                 loader.classList.add('hidden');
